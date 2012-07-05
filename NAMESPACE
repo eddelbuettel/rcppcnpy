@@ -1,0 +1,3 @@
+useDynLib(RcppCNPy)
+exportPattern("^[[:alpha:]]+")
+import(Rcpp)

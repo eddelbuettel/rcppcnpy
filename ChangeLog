@@ -1,0 +1,10 @@
+2012-07-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* Initial version 0.0.1
+
+	* src/cnpy.{cpp,h}: Numerous minor changes to conform to CRAN Policy
+
+	* src/cnpyMod.cpp: Rcpp modules wrapping of two function npyLoad and
+	npySave which work on one- and two-dimensional objects of integer or
+	numeric type.  Note that Matrices need a transpose due to numpy
+	Fortran ordering.
