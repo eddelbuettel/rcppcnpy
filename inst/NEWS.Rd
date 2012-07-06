@@ -7,6 +7,7 @@
     \item Added automatic use of transpose to automagically account for
     Fortran-vs-C major storage defaults between Python and R.
     \item Added support for reading gzip'ed files ending in ".npy.gz"
+  }
 }
 \section{Changes in version 0.0.1 (2012-07-04)}{
   \itemize{

@@ -61,9 +61,15 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) {
         if (type == "numeric") {
             double *p = reinterpret_cast<double*>(arr.data);
             ret = Rcpp::NumericVector(p, p + shape[0]);
-        } else if (type == "integer") {
-            int *p = reinterpret_cast<int*>(arr.data);
-            ret = Rcpp::IntegerVector(p, p + shape[0]);
+//         } else if (type == "integer") {
+// #ifdef __i386__
+//             Rcpp::Rcout << "i386 sees " << sizeof(void*) << std::endl;
+//             long int *p = reinterpret_cast<long int*>(arr.data);
+// #else
+//             Rcpp::Rcout << "x64 sees " << sizeof(void*) << std::endl;
+//             long int *p = reinterpret_cast<long int*>(arr.data);
+// #endif
+//             ret = Rcpp::IntegerVector(p, p + shape[0]);
         } else {
             arr.destruct();
             REprintf("Unsupported type in npyLoad");
@@ -72,9 +78,19 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) {
         if (type == "numeric") {
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             ret = transpose(Rcpp::NumericMatrix(shape[1], shape[0], reinterpret_cast<double*>(arr.data)));
-        } else if (type == "integer") {
-            // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
-            ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], reinterpret_cast<double*>(arr.data)));
+//         } else if (type == "integer") {
+//             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
+// #ifdef __i386__
+//             Rcpp::Rcout << "i386 sees " << sizeof(void*) << std::endl;
+//             ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], reinterpret_cast<int*>(arr.data)));
+//             for (int i=0; i<shape[0]*shape[1]; i++){
+//                 Rcpp::Rcout << static_cast<double>(arr.data[i]) << ", ";
+//             }
+//             Rcpp::Rcout << std::endl;
+// #else
+//             Rcpp::Rcout << "x64 sees " << sizeof(void*) << std::endl;
+//             ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], reinterpret_cast<long int*>(arr.data)));
+// #endif
         } else {
             arr.destruct();
             REprintf("Unsupported type in npyLoad");
