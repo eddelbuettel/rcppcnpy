@@ -1,7 +1,9 @@
 2012-07-06  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpy.h: Include cstdint for int64_t if C++11 has been enabled
-	* src/cnpyMod.cpp (npyLoad): Support integer types if C++11 avail.
+	* src/cnpyMod.cpp: Support integer types if C++11 available
+
+	* tests/: Simple set of regression tests added
 
 2012-07-05  Dirk Eddelbuettel  <edd@dexter>
 

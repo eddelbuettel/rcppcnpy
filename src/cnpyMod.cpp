@@ -92,26 +92,34 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) {
 
 void npySave(std::string filename, Rcpp::RObject x, std::string mode) { 
     if (::Rf_isMatrix(x)) {
-        if (::Rf_isInteger(x)) {
-            Rcpp::IntegerMatrix mat(x);
-            std::vector<unsigned int> shape = Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(mat.nrow(), mat.ncol()));
+        if (::Rf_isNumeric(x)) {
+            Rcpp::NumericMatrix mat = transpose(Rcpp::NumericMatrix(x));
+            std::vector<unsigned int> shape = 
+                Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(mat.ncol(), mat.nrow()));
             cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
-        } else if (::Rf_isNumeric(x)) {
-            Rcpp::NumericMatrix mat(x);
-            std::vector<unsigned int> shape = Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(mat.nrow(), mat.ncol()));
+#ifdef RCPP_HAS_LONG_LONG_TYPES
+        } else if (::Rf_isInteger(x)) {
+            Rcpp::IntegerMatrix mat = transpose(Rcpp::IntegerMatrix(x));
+            std::vector<unsigned int> shape = 
+                Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(mat.ncol(), mat.nrow()));
             cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
+#endif
         } else {
             REprintf("Unsupported matrix type\n");
         }
     } else if (::Rf_isVector(x)) {
-        if (::Rf_isInteger(x)) {
-            Rcpp::IntegerVector vec(x);
-            std::vector<unsigned int> shape = Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
-            cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
-        } else if (::Rf_isNumeric(x)) {
+        if (::Rf_isNumeric(x)) {
             Rcpp::NumericVector vec(x);
-            std::vector<unsigned int> shape = Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
+            std::vector<unsigned int> shape = 
+                Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
             cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
+#ifdef RCPP_HAS_LONG_LONG_TYPES
+        } else if (::Rf_isInteger(x)) {
+            Rcpp::IntegerVector vec(x);
+            std::vector<unsigned int> shape = 
+                Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
+            cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
+#endif
         } else {
             REprintf("Unsupported vector type\n");
         }
