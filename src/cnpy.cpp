@@ -146,7 +146,8 @@ cnpy::NpyArray gzload_the_npy_file(gzFile fp) {
     arr.shape = std::vector<unsigned int>(shape,shape+ndims);
     arr.data = new char[size*word_size];    
     //int nread = fread(arr.data,word_size,size,fp);
-    if (gzread(fp,arr.data,word_size*size) < 0) REprintf("cnpy::gzload_the_npy_file error");
+    //if (gzread(fp,arr.data,word_size*size) < 0) REprintf("cnpy::gzload_the_npy_file error");
+    gzread(fp,arr.data,word_size*size);
     return arr;
 }
 
