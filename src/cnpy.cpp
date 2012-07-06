@@ -133,6 +133,23 @@ cnpy::NpyArray load_the_npy_file(FILE* fp) {
     return arr;
 }
 
+cnpy::NpyArray gzload_the_npy_file(gzFile fp) {
+    unsigned int* shape;
+    unsigned int ndims, word_size;
+    cnpy::parse_npy_gzheader(fp,word_size,shape,ndims);
+    //unsigned long long size = 1; //long long so no overflow when multiplying by word_size
+    unsigned long size = 1; //long long so no overflow when multiplying by word_size
+    for(unsigned int i = 0;i < ndims;i++) size *= shape[i];
+
+    cnpy::NpyArray arr;
+    arr.word_size = word_size;
+    arr.shape = std::vector<unsigned int>(shape,shape+ndims);
+    arr.data = new char[size*word_size];    
+    //int nread = fread(arr.data,word_size,size,fp);
+    if (gzread(fp,arr.data,word_size*size) < 0) REprintf("cnpy::gzload_the_npy_file error");
+    return arr;
+}
+
 cnpy::npz_t cnpy::npz_load(std::string fname) {
     FILE* fp = fopen(fname.c_str(),"rb");
 
@@ -225,5 +242,51 @@ cnpy::NpyArray cnpy::npy_load(std::string fname) {
     return arr;
 }
 
+cnpy::NpyArray cnpy::npy_gzload(std::string fname) {
+    gzFile fp = gzopen(fname.c_str(), "rb");
+    if(!fp) {
+        REprintf("npy_gzload: Error! Unable to open file %s!\n",fname.c_str());
+    }
+    NpyArray arr = gzload_the_npy_file(fp);
+    gzclose(fp);
+    return arr;
+}
 
+void cnpy::parse_npy_gzheader(gzFile fp, unsigned int& word_size, unsigned int*& shape, unsigned int& ndims) {  
+    char buffer[256];
+    if (gzread(fp,buffer,sizeof(char)*11) != 11) REprintf("cnpy::parse_npy_gzheader read discprepancy");
+    std::string header = gzgets(fp, buffer,256);
+    Rassert(header[header.size()-1] == '\n', "header ended improperly");
 
+    int loc1, loc2;
+
+    //fortran order
+    loc1 = header.find("fortran_order")+16;
+    bool fortran_order = (header.substr(loc1,5) == "True" ? true : false);
+    Rassert(!fortran_order, "fortran_order error");
+
+    //shape
+    loc1 = header.find("(");
+    loc2 = header.find(")");
+    std::string str_shape = header.substr(loc1+1,loc2-loc1-1);
+    if(str_shape[str_shape.size()-1] == ',') ndims = 1;
+    else ndims = std::count(str_shape.begin(),str_shape.end(),',')+1;
+    shape = new unsigned int[ndims];
+    for(unsigned int i = 0;i < ndims;i++) {
+        loc1 = str_shape.find(",");
+        shape[i] = atoi(str_shape.substr(0,loc1).c_str());
+        str_shape = str_shape.substr(loc1+1);
+    }
+
+    //endian, word size, data type
+    loc1 = header.find("descr")+9;
+    bool littleEndian = (header[loc1] == '<' ? true : false);
+    Rassert(littleEndian, "littleEndian error");
+
+    //char type = header[loc1+1];
+    //assert(type == map_type(T);
+
+    std::string str_ws = header.substr(loc1+2);
+    loc2 = str_ws.find("'");
+    word_size = atoi(str_ws.substr(0,loc2).c_str());
+}

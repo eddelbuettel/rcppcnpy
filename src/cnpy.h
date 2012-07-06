@@ -47,6 +47,8 @@ namespace cnpy {
     npz_t npz_load(std::string fname);
     NpyArray npz_load(std::string fname, std::string varname);
     NpyArray npy_load(std::string fname);
+    NpyArray npy_gzload(std::string fname);
+    void parse_npy_gzheader(gzFile fp,unsigned int& word_size, unsigned int*& shape, unsigned int& ndims);
 
     template<typename T> std::vector<char>& operator+=(std::vector<char>& lhs, const T rhs) {
         //write in little endian

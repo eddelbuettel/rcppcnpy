@@ -1,3 +1,14 @@
+2012-07-05  Dirk Eddelbuettel  <edd@dexter>
+
+	* DESCRIPTION (Version): Version 0.0.2
+
+	* src/cnpyMod.cpp: Added transpose() method to transparently deal
+	with the Fortran-vs-C storage order difference between Python and R.
+	Also added support for reading vectors.
+
+	* src/cnpy.{cpp,h}: Added support for loading from .npy.gz files
+	which is automagically enabled if the filename ends in ".gz"
+
 2012-07-04  Dirk Eddelbuettel  <edd@debian.org>
 
 	* Initial version 0.0.1

@@ -22,20 +22,67 @@
 #include <Rcpp.h>               // need to include the main Rcpp header file only
 #include "cnpy.h"               // (local copy of) header for cnpy library
 
-Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) { 
-    cnpy::NpyArray arr = cnpy::npy_load(filename);
-    std::vector<unsigned int> shape = arr.shape;
-    if (shape.size() != 2)  Rf_error("Wrong dimension");
-    SEXP ret = R_NilValue;      		// allows us to assign either int or numeric 
-    if (type == "numeric") {
-        ret = Rcpp::NumericMatrix(shape[0], shape[1], reinterpret_cast<double*>(arr.data));
-    } else if (type == "integer") {
-        ret = Rcpp::IntegerMatrix(shape[0], shape[1], reinterpret_cast<int*>(arr.data));
-    } else {
-        arr.destruct();
-        REprintf("Unsupported type in npyLoad");
+template <typename T>
+T transpose(const T & m) {      // tranpose for IntegerMatrix / NumericMatrix, see array.c in R
+    int k = m.rows(), n = m.cols();
+    //Rcpp::Rcout << "Transposing " << n << " by " << k << std::endl;
+    T z(n, k);
+    int sz1 = n*k-1;
+    typename T::iterator mit, zit;
+    for (mit = m.begin(), zit = z.begin(); mit != m.end(); mit++, zit += n) {
+        if (zit >= z.end()) zit -= sz1;
+        *zit = *mit;
     }
-    arr.destruct();
+    return(z);
+}
+
+// cf stackoverflow.com/questions/874134
+bool hasEnding(std::string const &full, std::string const &ending) {
+    if (full.length() >= ending.length()) {
+        return(0 == full.compare(full.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
+
+Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) { 
+
+    cnpy::NpyArray arr;
+
+    if (hasEnding(filename, ".gz")) {
+        arr = cnpy::npy_gzload(filename);
+    } else {
+        arr = cnpy::npy_load(filename);
+    }
+
+    std::vector<unsigned int> shape = arr.shape;
+    SEXP ret = R_NilValue;      		// allows us to assign either int or numeric 
+    if (shape.size() == 1) {
+        if (type == "numeric") {
+            double *p = reinterpret_cast<double*>(arr.data);
+            ret = Rcpp::NumericVector(p, p + shape[0]);
+        } else if (type == "integer") {
+            int *p = reinterpret_cast<int*>(arr.data);
+            ret = Rcpp::IntegerVector(p, p + shape[0]);
+        } else {
+            arr.destruct();
+            REprintf("Unsupported type in npyLoad");
+        } 
+    } else if (shape.size() == 2) {
+        if (type == "numeric") {
+            // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
+            ret = transpose(Rcpp::NumericMatrix(shape[1], shape[0], reinterpret_cast<double*>(arr.data)));
+        } else if (type == "integer") {
+            // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
+            ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], reinterpret_cast<double*>(arr.data)));
+        } else {
+            arr.destruct();
+            REprintf("Unsupported type in npyLoad");
+        }
+    } else {
+        Rf_error("Unsupported dimension in npyLoad");
+        arr.destruct();
+    }
     return ret;
 }
 
@@ -77,7 +124,7 @@ RCPP_MODULE(cnpy){
              &npyLoad,          		// function pointer to helper function defined above
              List::create( Named("filename"),   // function arguments including default value
                            Named("type") = "numeric"),
-             "read an npy file into a numeric or integer matrix");
+             "read an npy file into a numeric or integer vector or matrix");
 
     function("npySave",         		// name of the identifier at the R level
              &npySave,          		// function pointer to helper function defined above

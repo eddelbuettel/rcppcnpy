@@ -15,8 +15,7 @@
   Support is currently still pretty limited to reading and writing of
   either vectors or matrices of either numeric or integer type.
 
-  \emph{Note that matrices must be transposed first to make up for
-    Fortran ordering.}
+  Files with \code{gzip} compression can be transparently read as well.
 }
 \usage{
   npyLoad(filename, type="numeric")
