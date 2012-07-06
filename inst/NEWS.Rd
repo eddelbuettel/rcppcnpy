@@ -2,10 +2,13 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in version 0.0.2 (2012-07-05)}{
+\section{Changes in version 0.0.2 (2012-07-xx)}{
   \itemize{
     \item Added automatic use of transpose to automagically account for
     Fortran-vs-C major storage defaults between Python and R.
+    \item Support for integer types in dependent on the \code{int64_t}
+    type which is available only when the \code{-std=c++0x} switch is
+    used at build-time (and CRAN still discourages use of it)
     \item Added support for reading gzip'ed files ending in ".npy.gz"
   }
 }

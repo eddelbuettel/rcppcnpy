@@ -15,7 +15,10 @@
 #include<zlib.h>
 #include<map>
 
-#include <R_ext/Print.h>      // for REprintf
+#ifdef RCPP_HAS_LONG_LONG_TYPES
+#include <cstdint>		// for std::int64_t, needs c++11 switch
+#endif
+#include <R_ext/Print.h>      	// for REprintf
 
 namespace cnpy {
 

@@ -1,6 +1,9 @@
-2012-07-05  Dirk Eddelbuettel  <edd@dexter>
+2012-07-06  Dirk Eddelbuettel  <edd@debian.org>
 
-	* DESCRIPTION (Version): Version 0.0.2
+	* src/cnpy.h: Include cstdint for int64_t if C++11 has been enabled
+	* src/cnpyMod.cpp (npyLoad): Support integer types if C++11 avail.
+
+2012-07-05  Dirk Eddelbuettel  <edd@dexter>
 
 	* src/cnpyMod.cpp: Added transpose() method to transparently deal
 	with the Fortran-vs-C storage order difference between Python and R.
