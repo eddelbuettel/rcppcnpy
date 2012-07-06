@@ -1,0 +1,56 @@
+
+R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #!/usr/bin/Rscript
+> 
+> library(RcppCNPy)
+Loading required package: Rcpp
+> 
+> fmat <- npyLoad("fmat.npy")
+> fmat
+     [,1] [,2] [,3] [,4]
+[1,]  0.0  1.1  2.2  3.3
+[2,]  4.4  5.5  6.6  7.7
+[3,]  8.8  9.9 11.0 12.1
+> stopifnot(all.equal(fmat, t(matrix(seq(0,11) * 1.1, 4, 3))))
+> 
+> fmat <- npyLoad("fmat.npy.gz")
+> fmat
+     [,1] [,2] [,3] [,4]
+[1,]  0.0  1.1  2.2  3.3
+[2,]  4.4  5.5  6.6  7.7
+[3,]  8.8  9.9 11.0 12.1
+> stopifnot(all.equal(fmat, t(matrix(seq(0,11) * 1.1, 4, 3))))
+> 
+> #imat <- npyLoad("imat.npy", "integer")
+> #imat
+> #stopifnot(all.equal(imat, t(matrix(seq(0,11), 4, 3))))
+> 
+> fvec <- npyLoad("fvec.npy")
+> fvec
+[1] 0.0 1.1 2.2 3.3 4.4
+> stopifnot(all.equal(fvec, seq(0,4) * 1.1))
+> 
+> #ivec <- npyLoad("ivec.npy", "integer")
+> #ivec
+> #stopifnot(all.equal(ivec, seq(0,4)))
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  0.596   0.024   0.460 
