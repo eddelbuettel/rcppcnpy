@@ -68,7 +68,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) {
 #endif
         } else {
             arr.destruct();
-            REprintf("Unsupported type in npyLoad");
+            Rf_error("Unsupported type in npyLoad");
         } 
     } else if (shape.size() == 2) {
         if (type == "numeric") {
@@ -81,7 +81,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) {
 #endif
         } else {
             arr.destruct();
-            REprintf("Unsupported type in npyLoad");
+            Rf_error("Unsupported type in npyLoad");
         }
     } else {
         Rf_error("Unsupported dimension in npyLoad");
@@ -105,7 +105,7 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
 #endif
         } else {
-            REprintf("Unsupported matrix type\n");
+            Rf_error("Unsupported matrix type\n");
         }
     } else if (::Rf_isVector(x)) {
         if (::Rf_isNumeric(x)) {
@@ -121,10 +121,10 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
 #endif
         } else {
-            REprintf("Unsupported vector type\n");
+            Rf_error("Unsupported vector type\n");
         }
     } else {
-        REprintf("Unsupported type\n");
+        Rf_error("Unsupported type\n");
     }
 }
 

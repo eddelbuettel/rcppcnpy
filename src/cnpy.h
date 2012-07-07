@@ -18,12 +18,12 @@
 #ifdef RCPP_HAS_LONG_LONG_TYPES
 #include <cstdint>		// for std::int64_t, needs c++11 switch
 #endif
-#include <R_ext/Print.h>      	// for REprintf
+#include <Rinternals.h>      	// for Rf_error
 
 namespace cnpy {
 
     inline void Rassert(bool val, std::string txt) {
-       if ( ! val) REprintf(txt.c_str());
+       if ( ! val) Rf_error(txt.c_str());
     }
 
     struct NpyArray {
@@ -84,17 +84,17 @@ namespace cnpy {
             parse_npy_header(fp,word_size,tmp_shape,tmp_dims);
 
             if(word_size != sizeof(T)) {
-  	        REprintf("cnpy error: %s has word size %d but npy_save appending data sized %d\n", fname.c_str(), word_size, sizeof(T));
+  	        Rf_error("cnpy error: %s has word size %d but npy_save appending data sized %d\n", fname.c_str(), word_size, sizeof(T));
 		//assert( word_size == sizeof(T) );
             }
             if(tmp_dims != ndims) {
-	        REprintf("cnpy error: npy_save attempting to append misdimensioned data to %s\n", fname.c_str());
+	        Rf_error("cnpy error: npy_save attempting to append misdimensioned data to %s\n", fname.c_str());
                 //assert(tmp_dims == ndims);
             }
 
             for(unsigned int i = 1; i < ndims; i++) {
                 if(shape[i] != tmp_shape[i]) {
-		    REprintf("cnpy error: npy_save attempting to append misshaped data to %s\n", fname.c_str());
+		    Rf_error("cnpy error: npy_save attempting to append misshaped data to %s\n", fname.c_str());
                     //assert(shape[i] == tmp_shape[i]);
                 }
             }
