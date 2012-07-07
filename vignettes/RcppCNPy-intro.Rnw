@@ -16,7 +16,7 @@
 %\usepackage[T1]{fontenc}
 
 
-\usepackage{color,alltt,url}
+\usepackage{color,alltt,url,booktabs}
 \usepackage[authoryear,round,longnamesfirst]{natbib}
 \usepackage[colorlinks]{hyperref}
 \definecolor{link}{rgb}{0,0,0.3}	%% next few lines courtesy of RJournal.sty
@@ -276,11 +276,8 @@ data.
   \hlstd{}\hlopt{{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{,{]}}\hlstd{\ \ }\hlopt{}\hlstd{}\hlnum{0.0}\hlstd{\ \ }\hlnum{1.1}\hlstd{\ \ }\hlnum{2.2}\hlstd{\ \ }\hlnum{3.3}\hspace*{\fill}\\
   \hlstd{}\hlopt{{[}}\hlstd{}\hlnum{2}\hlstd{}\hlopt{,{]}}\hlstd{\ \ }\hlopt{}\hlstd{}\hlnum{4.4}\hlstd{\ \ }\hlnum{5.5}\hlstd{\ \ }\hlnum{6.6}\hlstd{\ \ }\hlnum{7.7}\hspace*{\fill}\\
   \hlstd{}\hlopt{{[}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{,{]}}\hlstd{\ \ }\hlopt{}\hlstd{}\hlnum{8.8}\hlstd{\ \ }\hlnum{9.9\ 11.0\ 12.1}\hspace*{\fill}\\
-  \hlstd{R}\hlopt{$>$\ }\hlstd{}\hspace*{\fill}\\
-  \mbox{}
   \normalfont
   \normalsize
-
 \end{quote}
 
 Support for compressed file is currently limited to reading, but could be
@@ -327,7 +324,6 @@ function.
   \hlstd{R}\hlopt{$>$\ }\hlstd{v}\hspace*{\fill}\\
   \hlopt{{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ }\hlstd{}\hlnum{10\ 11\ 12}\hspace*{\fill}\\
   \hlstd{R}\hlopt{$>$\ }\hlstd{}\hlkwd{npySave}\hlstd{}\hlopt{(}\hlstd{}\hlstr{"simplevec.npy"}\hlstd{}\hlopt{,\ }\hlstd{v}\hlopt{)}\hspace*{\fill}\\
-  \hlstd{R}\hlopt{$>$\ }\hlstd{}\hspace*{\fill}\\
   \mbox{}
   \normalfont
   \normalsize
@@ -349,6 +345,7 @@ function.
 
 \subsection{Data reading in \Python}
 
+Reading the data back in \Python is straightforward too:
 \begin{quote}
   \small
 
@@ -363,35 +360,85 @@ function.
   \hlstd{}\hlopt{$>$$>$$>$\ }\hlstd{v\ }\hlopt{=\ }\hlstd{np}\hlopt{.}\hlstd{}\hlkwd{load}\hlstd{}\hlopt{(}\hlstd{}\hlstr{"simpleve.npy"}\hlstd{}\hlopt{)}\hspace*{\fill}\\
   \hlstd{}\hlopt{$>$$>$$>$\ }\hlstd{v}\hspace*{\fill}\\
   \hlkwd{array}\hlstd{}\hlopt{({[}\ }\hlstd{}\hlnum{10}\hlstd{}\hlopt{.,}\hlstd{\ \ }\hlopt{}\hlstd{}\hlnum{11}\hlstd{}\hlopt{.,}\hlstd{\ \ }\hlopt{}\hlstd{}\hlnum{12}\hlstd{}\hlopt{.{]})}\hspace*{\fill}\\
-  \hlstd{}\hlopt{$>$$>$$>$\ }\hlstd{}\hspace*{\fill}\\
-  \mbox{}
   \normalfont
   \normalsize
 \end{quote}
+
+\section{Performance}
+
+The \R script \code{timing} in the \code{demo/} directory of package
+\pkg{RcppCNPy} provides a sinple benchmark.  Given two values $n$ and $k$, a
+matrix of size $n \times k$ is created with $n$ rows and $k$ columns. It is
+written to temporary files in
+% \begin{enumerate}
+% \item ascii format using \code{write.table()};
+% \item \code{NumPy} format using \code{npySave()}; and
+% \item \code{NumPy} format using \code{npySave()} followed by a call to \code{gzip}.
+% \end{enumerate}
+i) ascii format using \code{write.table()};
+ii) \code{NumPy} format using \code{npySave()}; and
+iii) \code{NumPy} format using \code{npySave()} followed by a call to \code{gzip}.
+
+Table~\ref{tab:benchmark} shows some timing comparisons for a matrix with
+five million elements.  Reading the \code{npy} is clearly fastest as it
+required only parsing of the header, followed by a single large binary read
+(and the tranpose required to translate the representation used by \Rns). The
+compressed file requires only one-fourth of the disk space, but takes
+approximately 2.5 times as long to read as the binary stream has be
+transformed.  Lastly, the default ascii reading mode is clearly by far the
+slowest.
+
+\begin{table}[bt]
+  \begin{center}
+    \begin{small}
+      \begin{tabular}{rrr}
+        \toprule
+        {\bf Access method \phantom{X}} & {\bf Time in sec.} & {\bf Relative to best} \\
+        \cmidrule(r){1-3}
+     \code{npyLoad(pyfile)}   &    1.95 &  1.00 \\
+   \code{npyLoad(pygzfile)}   &    4.92 &  2.53 \\
+ \code{read.table(}txtfile)   &  128.85 & 66.24 \\
+        \bottomrule
+      \end{tabular}
+    \end{small}
+    \caption{Performance comparison of data reads using a matrix of size
+      $10^5 \times 50$. File size are 39.7mb for ascii, 40.0mb for npy and
+      10.8mb for npy.gz. Ten replications were performaned, and total times
+      are shown.}
+    \label{tab:benchmark}
+  \end{center}
+\end{table}
+
+
 
 \section{Limitations}
 
 \subsection{Integer support}
 
-Support for integer data types is available, but conditional on use of the
-\code{-std=c++11} compiler extension. Only the newer standard supports the
-\code{long long int} type needed to represent \code{int64} data on a 32-bit
-OS.  So until \R switches to allowing \code{-std=c++11} on CRAN packages,
-users will need to rebuild both \pkg{Rcpp} and \pkg{RcppCNPy} with the switch
-enabled.
-
-As shown in the previous examples, integers also transparently convert to
-float types.
+Support for integer data types is conditional on use of the \code{-std=c++11}
+compiler extension. Only the newer standard supports the \code{long long int}
+type needed to represent \code{int64} data on a 32-bit OS.  So until \R
+switches to allowing \code{-std=c++11} on CRAN packages, users will need to
+rebuild both \pkg{Rcpp} and \pkg{RcppCNPy} with the switch enabled. As shown
+in the previous examples, integers also transparently convert to float types.
 
 \subsection{Higher-dimensional arrays}
 
 \pkg{Rcpp} supports three-dimensional arrays, this could be support in
 \pkg{RcppCNPy} as well.
 
+\subsection{\code{npz} files}
+
+The \pkg{cnpy} library supports reading and writing of sets of arrays; this
+feature could also be exported.
+
 \section{Summary}
 
 The \pkg{RcppCNPy} package provides simple reading and writing of \pkg{NumPy}
-files, using the \pkg{cnpy} library.  Reading of compressed files is also
-supported as an extension.
+files, using the \pkg{cnpy} library.
+
+Reading of compressed files is also supported as an extension. This offers
+users a balance between more compact storage at the prices of slightly longer
+read times.
 
 \end{document}

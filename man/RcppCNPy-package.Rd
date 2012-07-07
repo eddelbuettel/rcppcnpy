@@ -12,8 +12,10 @@
   which provides read and write facilities for files created with (or for) the
   NumPy extension for Python.
 
-  Support is currently still pretty limited to reading and writing of
-  either vectors or matrices of either numeric or integer type.
+  Support is currently limited to reading and writing of either vectors
+  or matrices of numeric types. Integer support can be added if the
+  package, as well \pkg{Rcpp} are recompiled using the \code{-std=c++11}
+  flag.
 
   Files with \code{gzip} compression can be transparently read as well.
 }
@@ -33,27 +35,16 @@
   \tabular{ll}{
     Package: \tab RcppCNPy\cr
     Type: \tab Package\cr
-    Version: \tab 0.0.1\cr
-    Date: \tab 2012-07-04\cr
-    License: \tab What license is it under?\cr
-    LazyLoad: \tab yes\cr
+    Version: \tab 0.1.0\cr
+    Date: \tab 2012-07-07\cr
+    License: \tab GPL (>= 2)\cr
   }
 
-  The package uses Rcpp modules to provide R bindings \code{npyLoadNM()}
-  and \code{npyLoadIM()} which wrap the \code{npy_load()}
-  function. Currently, only two-dimensional matrices are suppported but
-  this can be extended easily to vectors.
-
-  The following minor changes were made to \code{cnpy}:
-  \itemize{
-    \item the \code{printf(...); abort()} combination was replaced in
-    three instances with \code{REprintf(...)} per CRAN Policy guidelines.
-    \item \code{long long} was commented out in two places (which we can revert once
-    CRAN switches to a new compiler and c++11 becomes standard) and one
-    \code{unsigned long long} was replaced by \code{unsigned long}.
-    \item several unused variables were commented out.
-  }
-  
+  The package uses Rcpp modules to provide R bindings \code{npyLoad()}
+  and \code{npySave()} which wrap the \code{npy_load()} and
+  \code{npy_save()} functions. Currently, only one- and two-dimensional
+  vectors and matrices are suppported; higher-dimensional arrays could
+  be added.
 }
 \author{
   Dirk Eddelbuettel provide the binding to R (using the Rcpp package).
@@ -73,5 +64,5 @@
   \code{\link[Rcpp:Rcpp-package]{Rcpp}} 
 }
 \examples{
-  ## TODO
+  ## TODO, but see demo()
 }
