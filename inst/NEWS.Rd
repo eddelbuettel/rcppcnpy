@@ -10,7 +10,8 @@
     type which is available only when the \code{-std=c++0x} switch is
     used at build-time (and CRAN still discourages use of it)
     \item Added support for reading gzip'ed files ending in ".npy.gz"
-    \item Added (simple) regression tests in directory \code{tests/}
+    \item Added regression tests in directory \code{tests/}
+    \item Added a vignette describing the package}
   }
 }
 \section{Changes in version 0.0.1 (2012-07-04)}{
