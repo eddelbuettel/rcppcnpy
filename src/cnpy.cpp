@@ -25,12 +25,16 @@ char cnpy::map_type(const std::type_info& t)
     if(t == typeid(char) ) return 'i';
     if(t == typeid(short) ) return 'i';
     if(t == typeid(long) ) return 'i';
-    //if(t == typeid(long long) ) return 'i';
+#ifdef RCPP_HAS_LONG_LONG_TYPES
+    if(t == typeid(long long) ) return 'i';
+#endif
 
     if(t == typeid(unsigned char) ) return 'u';
     if(t == typeid(unsigned short) ) return 'u';
     if(t == typeid(unsigned long) ) return 'u';
-    //if(t == typeid(unsigned long long) ) return 'u';
+#ifdef RCPP_HAS_LONG_LONG_TYPES
+    if(t == typeid(unsigned long long) ) return 'u';
+#endif
     if(t == typeid(unsigned int) ) return 'u';
 
     if(t == typeid(bool) ) return 'b';
