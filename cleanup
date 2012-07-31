@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rm -f src/*.o src/*.so 
+rm -f src/*.o src/*.so src/symbols.rds
 
 rm -rf vignettes/auto/ vignettes/*.log vignettes/*.aux vignettes/*.out vignettes/*.tex
 

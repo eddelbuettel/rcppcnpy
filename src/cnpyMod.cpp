@@ -45,7 +45,7 @@ bool hasEnding(std::string const &full, std::string const &ending) {
     }
 }
 
-Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) { 
+Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, const bool dotranspose) { 
 
     cnpy::NpyArray arr;
 
@@ -73,20 +73,29 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type) {
     } else if (shape.size() == 2) {
         if (type == "numeric") {
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
-            ret = transpose(Rcpp::NumericMatrix(shape[1], shape[0], reinterpret_cast<double*>(arr.data)));
+            if (dotranspose) {
+                ret = transpose(Rcpp::NumericMatrix(shape[1], shape[0], reinterpret_cast<double*>(arr.data)));
+            } else {
+                ret = Rcpp::NumericMatrix(shape[0], shape[1], reinterpret_cast<double*>(arr.data));
+            }
 #ifdef RCPP_HAS_LONG_LONG_TYPES
         } else if (type == "integer") {
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
-            ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], reinterpret_cast<int64_t*>(arr.data)));
+            if (dotranspose) {
+                ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], reinterpret_cast<int64_t*>(arr.data)));
+            } else {
+                ret = transpose(Rcpp::IntegerMatrix(shape[0], shape[1], reinterpret_cast<int64_t*>(arr.data)));
+            }
 #endif
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");
         }
     } else {
-        Rf_error("Unsupported dimension in npyLoad");
         arr.destruct();
+        Rf_error("Unsupported dimension in npyLoad");
     }
+    arr.destruct();
     return ret;
 }
 
@@ -96,13 +105,22 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             Rcpp::NumericMatrix mat = transpose(Rcpp::NumericMatrix(x));
             std::vector<unsigned int> shape = 
                 Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(mat.ncol(), mat.nrow()));
-            cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
+            
+            if (hasEnding(filename, ".gz")) {
+                cnpy::npy_gzsave(filename, mat.begin(), &(shape[0]), 2); 	// no mode, overwrite only
+            } else {
+                cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
+            }
 #ifdef RCPP_HAS_LONG_LONG_TYPES
         } else if (::Rf_isInteger(x)) {
             Rcpp::IntegerMatrix mat = transpose(Rcpp::IntegerMatrix(x));
             std::vector<unsigned int> shape = 
                 Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(mat.ncol(), mat.nrow()));
-            cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
+            if (hasEnding(filename, ".gz")) {
+                cnpy::npy_gzsave(filename, mat.begin(), &(shape[0]), 2); 	// no mode, overwrite only
+            } else {
+                cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
+            }
 #endif
         } else {
             Rf_error("Unsupported matrix type\n");
@@ -112,13 +130,21 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             Rcpp::NumericVector vec(x);
             std::vector<unsigned int> shape = 
                 Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
-            cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
+            if (hasEnding(filename, ".gz")) {
+                cnpy::npy_gzsave(filename, vec.begin(), &(shape[0]), 1); 	// no mode, append only
+            } else {
+                cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
+            }
 #ifdef RCPP_HAS_LONG_LONG_TYPES
         } else if (::Rf_isInteger(x)) {
             Rcpp::IntegerVector vec(x);
             std::vector<unsigned int> shape = 
                 Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
-            cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
+            if (hasEnding(filename, ".gz")) {
+                cnpy::npy_gzsave(filename, vec.begin(), &(shape[0]), 1);	// no mode, append only
+            } else {
+                cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
+            }
 #endif
         } else {
             Rf_error("Unsupported vector type\n");
@@ -135,7 +161,8 @@ RCPP_MODULE(cnpy){
     function("npyLoad",         		// name of the identifier at the R level
              &npyLoad,          		// function pointer to helper function defined above
              List::create( Named("filename"),   // function arguments including default value
-                           Named("type") = "numeric"),
+                           Named("type") = "numeric",
+                           Named("dotranspose") = true),
              "read an npy file into a numeric or integer vector or matrix");
 
     function("npySave",         		// name of the identifier at the R level

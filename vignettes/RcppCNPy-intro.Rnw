@@ -3,60 +3,15 @@
 %\VignetteKeywords{Python, NumPy, R, data transfer}
 %\VignettePackage{RcppCNPy}
 
-%\usepackage[sf,bf,compact,small]{titlesec}
-\usepackage[sf,bf,compact,small]{titlesec}
+\usepackage[bf,sf,compact,small]{titlesec}
 
-\usepackage[USletter]{vmargin}
-\setmargrb{0.75in}{0.75in}{0.75in}{0.75in}
+\usepackage[margin=0.85in,paper=letterpaper]{geometry}
 
-\usepackage{utopia} % not bad
-%\usepackage{newcent} % not bad
-%\usepackage{palatino} % not bad
-%\usepackage[bitstream-charter]{mathdesign}
-%\usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc}
+\usepackage{pslatex}        % just like RJournal
+\usepackage{palatino,mathpazo}
 
-
-\usepackage{color,alltt,url,booktabs}
-\usepackage[authoryear,round,longnamesfirst]{natbib}
-\usepackage[colorlinks]{hyperref}
-\definecolor{link}{rgb}{0,0,0.3}	%% next few lines courtesy of RJournal.sty
-\hypersetup{
-    colorlinks,%
-    citecolor=link,%
-    filecolor=link,%
-    linkcolor=link,%
-    urlcolor=link
-}
-
-\usepackage{listings}           % code examples
-\definecolor{darkgray}{rgb}{0.975,0.975,0.975}
-\lstset{backgroundcolor=\color{darkgray}}
-\lstset{numbers=left, numberstyle=\tiny, stepnumber=2, numbersep=5pt}
-\lstset{keywordstyle=\color{black}\bfseries\tt}
-\lstset{ %
-  %language=Octave,                % the language of the code
-  %basicstyle=\footnotesize,       % the size of the fonts that are used for the code
-  basicstyle=\small,              % the size of the fonts that are used for the code
-  numbers=left,                   % where to put the line-numbers
-  %numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
-  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line
-                                  % will be numbered
-  numbersep=5pt,                  % how far the line-numbers are from the code
-  %backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
-  showspaces=false,               % show spaces adding particular underscores
-  showstringspaces=false,         % underline spaces within strings
-  showtabs=false,                 % show tabs within strings adding particular underscores
-  %frame=single,                   % adds a frame around the code
-  tabsize=2,                      % sets default tabsize to 2 spaces
-  captionpos=b,                   % sets the caption-position to bottom
-  breaklines=true,                % sets automatic line breaking
-  breakatwhitespace=false         % sets if automatic breaks should only happen at whitespace
-  %title=\lstname,                 % show the filename of files included with \lstinputlisting;
-                                  % also try caption instead of title
-  %escapeinside={\%*}{*)},         % if you want to add a comment within your code
-  %morekeywords={*,...}            % if you want to add more keywords to the set
-}
-
+\usepackage{color,url,booktabs}
 
 \newcommand{\proglang}[1]{\textsf{#1}}
 \newcommand{\pkg}[1]{{\fontseries{b}\selectfont #1}}
@@ -280,9 +235,7 @@ data.
   \normalsize
 \end{quote}
 
-Support for compressed file is currently limited to reading, but could be
-implemented for writing as well.
-
+Support for writing compressed files has been added in version 0.2.0.
 
 \subsection{Data writing in \R}
 
@@ -377,7 +330,8 @@ written to temporary files in
 % \end{enumerate}
 i) ascii format using \code{write.table()};
 ii) \code{NumPy} format using \code{npySave()}; and
-iii) \code{NumPy} format using \code{npySave()} followed by a call to \code{gzip}.
+iii) \code{NumPy} format using \code{npySave()} with compression via
+the \code{zlib} library (used also by \code{gzip}).
 
 Table~\ref{tab:benchmark} shows some timing comparisons for a matrix with
 five million elements.  Reading the \code{npy} is clearly fastest as it
@@ -415,10 +369,10 @@ slowest.
 
 \subsection{Integer support}
 
-Support for integer data types is conditional on use of the \code{-std=c++11}
+Support for integer data types is conditional on use of the \code{-std=c++0x}
 compiler extension. Only the newer standard supports the \code{long long int}
 type needed to represent \code{int64} data on a 32-bit OS.  So until \R
-switches to allowing \code{-std=c++11} on CRAN packages, users will need to
+switches to allowing \code{-std=c++0x} on CRAN packages, users will need to
 rebuild both \pkg{Rcpp} and \pkg{RcppCNPy} with the switch enabled. As shown
 in the previous examples, integers also transparently convert to float types.
 

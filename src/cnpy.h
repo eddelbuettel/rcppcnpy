@@ -2,6 +2,10 @@
 //Released under MIT License
 //license available in LICENSE file, or at http://www.opensource.org/licenses/mit-license.php
 
+// Changes for RcppCNPy are 
+// Copyright (C) 2012  Dirk Eddelbuettel
+// and licensed under GNU GPL (>= 2) 
+
 #ifndef LIBCNPY_H_
 #define LIBCNPY_H_
 
@@ -118,6 +122,21 @@ namespace cnpy {
 
         fwrite(data,sizeof(T),nels,fp);
         fclose(fp);
+    }
+
+    template<typename T> void npy_gzsave(std::string fname, const T* data, const unsigned int* shape, const unsigned int ndims) {
+        gzFile fp = gzopen(fname.c_str(),"wb");
+	if(!fp) {
+	  Rf_error("npy_gzsave: Error! Unable to open file %s!\n",fname.c_str());
+	}
+	std::vector<char> header = create_npy_header(data,shape,ndims);
+	gzwrite(fp, &header[0], sizeof(char) * header.size());
+
+        unsigned int nels = 1;
+        for (unsigned int i = 0;i < ndims;i++) nels *= shape[i];
+
+        gzwrite(fp, data, sizeof(T)*nels);
+        gzclose(fp);
     }
 
     template<typename T> void npz_save(std::string zipname, std::string fname, const T* data, const unsigned int* shape, const unsigned int ndims, std::string mode = "w")

@@ -12,13 +12,11 @@ M <- matrix(seq(1.0, n*k, by=1.0), n, k)
 txtfile <- tempfile(fileext=".txt")
 write.table(M, file=txtfile)
 
-pyfile <- tempfile(fileext=".py")
+pyfile <- tempfile(fileext=".npy")
 npySave(pyfile, M)
 
-pygzfile <- tempfile(fileext=".py")
+pygzfile <- tempfile(fileext=".npy.gz")
 npySave(pygzfile, M)
-system(paste("gzip -9", pygzfile))
-pygzfile <- paste(pygzfile, ".gz", sep="")
 
 print(do.call(rbind, (lapply(c(txtfile, pyfile, pygzfile),
                              function(f) file.info(f)["size"]))))

@@ -2,6 +2,16 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.0 (2012-07-30)}{
+  \itemize{
+    \item Support for writing of \code{gzip}-ed \code{npy} files has
+    been added.
+    \item A new option \code{dotranspose} has been added to
+    \code{npyLoad()} to support data sets that do not need to be
+    transposed to be used in R.
+    \item A memory leak in reading files has been corrected.
+  }
+}
 \section{Changes in version 0.1.0 (2012-07-07)}{
   \itemize{
     \item Added automatic use of transpose to automagically account for

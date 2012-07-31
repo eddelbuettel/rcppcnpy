@@ -17,19 +17,30 @@
   package, as well \pkg{Rcpp} are recompiled using the \code{-std=c++11}
   flag.
 
-  Files with \code{gzip} compression can be transparently read as well.
+  Files with \code{gzip} compression can be transparently read and
+  written as well.
 }
 \usage{
-  npyLoad(filename, type="numeric")
+  npyLoad(filename, type="numeric", dotranspose=TRUE)
   npySave(filename, object, mode="w")
 }
 \arguments{
-  \item{filename}{string with (path and) filename for a \code{npy} object file}
-  \item{type}{string with type 'numeric' (default) or 'integer'}
+  \item{filename}{string with (path and) filename for a \code{npy}
+    object file. If the string ends with \code{.gz}, compressed files
+    can be read or written.}
+  \item{type}{string with type 'numeric' (default) or 'integer'. Integer
+    support is available only if Rcpp and RcppCNPy have been compiled
+    with the \code{-std=c++0x} option as the required \code{int64_t}
+    types are not available otherwise.}
   \item{object}{an R object, currently limited to a vector or matrix of
     either integer or numeric type}
+  \item{dotranspose}{a boolean variable indicating whether a
+  two-dimensional object should be transposed after reading, default is yes}
   \item{mode}{a one-character string indicating whether files are
-    appended to ("a") or written ("w", the default)}
+    appended to ("a") or written ("w", the default). In case of writing
+    \code{gzip}-ed file, this option is not supported as such files can
+    only be (over-)written, and bot appended.
+  }
 }
 \details{
   \tabular{ll}{
