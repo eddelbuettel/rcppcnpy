@@ -73,11 +73,11 @@ prettyDate <- format(Sys.Date(), "%B %e, %Y")
 \proglang{Python}\footnote{\url{http://www.python.org}} is a widely-used
 programming language. It is deployed for use cases ranging from simple
 scripting to larger-scale application development. \Python is also popular
-for quantitative and scientific application due to the existenve of extension
+for quantitative and scientific application due to the existence of extension
 modules such as \pkg{NumPy}\footnote{\url{http://numpy.scipy.org/}} (which is
 shorthand for Numeric Python).
 
-\pkg{NumPy} can be used for $N$-dimenional arrays, and provides an efficient
+\pkg{NumPy} can be used for $N$-dimensional arrays, and provides an efficient
 binary storage model for these files.  In practice, $N$ is often equal to
 two, and matrices processed or generated in \Python can be stored in this
 form.
@@ -157,7 +157,7 @@ As illustrated, \Python uses the \proglang{Fortran} convention for storing
 matrices and higher-dimensional arrays: a matrix constructed from a single
 sequence has its first consecutive elements in its first row---whereas \Rns,
 following the \proglang{C} convention, has these first few values in its first
-column. This shows that to go back and forth we need to tranpose these
+column. This shows that to go back and forth we need to transpose these
 matrices (which represented internally as two-dimensional arrays).
 
 \subsection{Data reading in \R}
@@ -320,7 +320,7 @@ Reading the data back in \Python is straightforward too:
 \section{Performance}
 
 The \R script \code{timing} in the \code{demo/} directory of package
-\pkg{RcppCNPy} provides a sinple benchmark.  Given two values $n$ and $k$, a
+\pkg{RcppCNPy} provides a simple benchmark.  Given two values $n$ and $k$, a
 matrix of size $n \times k$ is created with $n$ rows and $k$ columns. It is
 written to temporary files in
 % \begin{enumerate}
@@ -336,7 +336,7 @@ the \code{zlib} library (used also by \code{gzip}).
 Table~\ref{tab:benchmark} shows some timing comparisons for a matrix with
 five million elements.  Reading the \code{npy} is clearly fastest as it
 required only parsing of the header, followed by a single large binary read
-(and the tranpose required to translate the representation used by \Rns). The
+(and the transpose required to translate the representation used by \Rns). The
 compressed file requires only one-fourth of the disk space, but takes
 approximately 2.5 times as long to read as the binary stream has be
 transformed.  Lastly, the default ascii reading mode is clearly by far the
@@ -357,7 +357,7 @@ slowest.
     \end{small}
     \caption{Performance comparison of data reads using a matrix of size
       $10^5 \times 50$. File size are 39.7mb for ascii, 40.0mb for npy and
-      10.8mb for npy.gz. Ten replications were performaned, and total times
+      10.8mb for npy.gz. Ten replications were performed, and total times
       are shown.}
     \label{tab:benchmark}
   \end{center}
