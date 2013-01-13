@@ -58,7 +58,7 @@
   be added.
 }
 \author{
-  Dirk Eddelbuettel provide the binding to R (using the Rcpp package).
+  Dirk Eddelbuettel provided the binding to R (using the Rcpp package).
 
   Carl Rogers wrote the underlying \code{cnpy} library, which is
   released under the MIT license.
