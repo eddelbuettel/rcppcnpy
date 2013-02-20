@@ -231,6 +231,8 @@ cnpy::NpyArray cnpy::npz_load(std::string fname, std::string varname) {
     fclose(fp);
     Rf_error("npz_load: Error! Variable name %s not found in %s!\n",varname.c_str(),fname.c_str());
     // never reached -- not satisfying -Wall -pedantic 
+    NpyArray unused;
+    return unused;
 }
 
 cnpy::NpyArray cnpy::npy_load(std::string fname) {

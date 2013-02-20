@@ -22,6 +22,8 @@
 #ifdef RCPP_HAS_LONG_LONG_TYPES
 #include <cstdint>		// for std::int64_t, needs c++11 switch
 #endif
+
+#define R_NO_REMAP
 #include <Rinternals.h>      	// for Rf_error
 
 namespace cnpy {

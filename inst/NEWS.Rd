@@ -2,6 +2,13 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.1 (2013-02-19)}{
+  \itemize{
+    \item Ensure that inclusion of \code{Rinternal.h} does not affect
+    other headers by adding RF_NO_REMAP
+  }
+}
+
 \section{Changes in version 0.2.0 (2012-07-30)}{
   \itemize{
     \item Support for writing of \code{gzip}-ed \code{npy} files has

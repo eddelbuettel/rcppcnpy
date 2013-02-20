@@ -1,3 +1,11 @@
+2013-02-19  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/cnpy.h: Define R_NO_REMAP before including Rinternals to not
+	define length(), error(), ... but rather Rf_length(), Rf_error()
+
+	* src/cnpy.cpp: Add a bogus unused variable at the never-reached end
+	of code (after an error exit) to silence the pedantic mode of g++ 
+
 2012-07-30  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Version 0.2.0
