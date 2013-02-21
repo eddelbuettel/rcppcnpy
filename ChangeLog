@@ -6,6 +6,13 @@
 
 	* tests/loadFiles.R: Updated regression test to use run-time integer
 	support check, and test integer support if available
+	* tests/loadFiles.Rout.save: Updated accordingly
+
+	* RcppCNPy-intro.Rnw: Updated the discussion of integer support and
+	clarified that only RcppCNPy needs to be rebuilt with -std=c++11
+	* DESCRIPTION: Idem
+
+	* inst/THANKS: Added to show thanks to Carl and Gong
 
 2013-02-19  Dirk Eddelbuettel  <edd@debian.org>
 
