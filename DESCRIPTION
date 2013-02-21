@@ -9,8 +9,8 @@ Description: This package provides R with access to the cnpy library written
  by Carl Rogers which provides read and write facilities for files created
  with (or for) the NumPy extension for Python.  Vectors and matrices of
  numeric types can be read or written to and from files as well as compressed
- files. Support for integer files is available if the package (and Rcpp) have
- been compiled with -std=c++0x.
+ files. Support for integer files is available if the package has been built
+ with -std=c++0x or -std=c++11 which is needed for long long int support.
 License: GPL (>= 2)
 LazyLoad: yes
 Depends: methods, Rcpp (>= 0.9.13)

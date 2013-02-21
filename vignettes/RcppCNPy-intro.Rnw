@@ -5,11 +5,14 @@
 
 \usepackage[bf,sf,compact,small]{titlesec}
 
-\usepackage[margin=0.85in,paper=letterpaper]{geometry}
+\usepackage[margin=0.95in,paper=letterpaper]{geometry}
 
 \usepackage[T1]{fontenc}
-\usepackage{pslatex}        % just like RJournal
-\usepackage{palatino,mathpazo}
+%\usepackage{pslatex}        % just like RJournal
+%\usepackage{palatino,mathpazo}
+%% Cf http://www.khirevich.com/latex/font/
+\usepackage[T1]{fontenc}
+\usepackage[bitstream-charter]{mathdesign}
 
 \usepackage{color,url,booktabs}
 
@@ -369,12 +372,13 @@ slowest.
 
 \subsection{Integer support}
 
-Support for integer data types is conditional on use of the \code{-std=c++0x}
-compiler extension. Only the newer standard supports the \code{long long int}
-type needed to represent \code{int64} data on a 32-bit OS.  So until \R
-switches to allowing \code{-std=c++0x} on CRAN packages, users will need to
-rebuild both \pkg{Rcpp} and \pkg{RcppCNPy} with the switch enabled. As shown
-in the previous examples, integers also transparently convert to float types.
+Support for integer data types is conditional on use of either the
+\code{-std=c++0x} or the newer \code{-std=c++11} compiler extension
+switches. Only the newer standard supports the \code{long long int} type
+needed to represent \code{int64} data on a 32-bit OS.  So until \R allows
+\code{-std=c++0x} on CRAN packages, users will need to rebuild \pkg{RcppCNPy}
+with the switch enabled. As shown in the previous examples, integers also
+transparently convert to float types.
 
 \subsection{Higher-dimensional arrays}
 

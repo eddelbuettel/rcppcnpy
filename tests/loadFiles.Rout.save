@@ -1,5 +1,5 @@
 
-R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
 Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
@@ -37,20 +37,24 @@ Loading required package: Rcpp
 [3,]  8.8  9.9 11.0 12.1
 > stopifnot(all.equal(fmat, t(matrix(seq(0,11) * 1.1, 4, 3))))
 > 
-> #imat <- npyLoad("imat.npy", "integer")
-> #imat
-> #stopifnot(all.equal(imat, t(matrix(seq(0,11), 4, 3))))
+> if (npyHasIntegerSupport()) {
++     imat <- npyLoad("imat.npy", "integer")
++     imat
++     stopifnot(all.equal(imat, t(matrix(seq(0,11), 4, 3))))
++ }
 > 
 > fvec <- npyLoad("fvec.npy")
 > fvec
 [1] 0.0 1.1 2.2 3.3 4.4
 > stopifnot(all.equal(fvec, seq(0,4) * 1.1))
 > 
-> #ivec <- npyLoad("ivec.npy", "integer")
-> #ivec
-> #stopifnot(all.equal(ivec, seq(0,4)))
+> if (npyHasIntegerSupport()) {
++     ivec <- npyLoad("ivec.npy", "integer")
++     ivec
++     stopifnot(all.equal(ivec, seq(0,4)))
++ }
 > 
 > 
 > proc.time()
    user  system elapsed 
-  0.596   0.024   0.460 
+  0.588   0.024   0.456 
