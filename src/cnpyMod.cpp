@@ -154,6 +154,14 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
     }
 }
 
+bool npyHasIntegerSupport() {
+#ifdef RCPP_HAS_LONG_LONG_TYPES
+    return true;
+#else
+    return false;
+#endif
+}
+
 RCPP_MODULE(cnpy){
 
     using namespace Rcpp;
@@ -172,4 +180,6 @@ RCPP_MODULE(cnpy){
                            Named("mode") = "w"),
              "save an R object (vector or matrix of type integer or numeric) to an npy file");
 
+    function("npyHasIntegerSupport", &npyHasIntegerSupport, 
+             "return logical value indicating whether package has integer support (which need C++11)");
 }
