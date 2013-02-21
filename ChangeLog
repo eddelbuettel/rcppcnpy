@@ -2,6 +2,10 @@
 
 	* src/cnpyMod.cpp (npyHasIntegerSupport): New function to test if
 	integer support was compiled in, also exported via Rcpp Modules to R
+	* man/RcppCNPy-package.Rd: Added documentation entry
+
+	* tests/loadFiles.R: Updated regression test to use run-time integer
+	support check, and test integer support if available
 
 2013-02-19  Dirk Eddelbuettel  <edd@debian.org>
 

@@ -3,6 +3,7 @@
 \alias{RcppCNPy}
 \alias{npyLoad}
 \alias{npySave}
+\alias{npyHasIntegerSupport}
 \docType{package}
 \title{
   File access to data files written by (or for) NumPy (Numeric Python) modules
@@ -23,6 +24,7 @@
 \usage{
   npyLoad(filename, type="numeric", dotranspose=TRUE)
   npySave(filename, object, mode="w")
+  npyHasIntegerSupport()
 }
 \arguments{
   \item{filename}{string with (path and) filename for a \code{npy}
@@ -43,14 +45,6 @@
   }
 }
 \details{
-  \tabular{ll}{
-    Package: \tab RcppCNPy\cr
-    Type: \tab Package\cr
-    Version: \tab 0.1.0\cr
-    Date: \tab 2012-07-07\cr
-    License: \tab GPL (>= 2)\cr
-  }
-
   The package uses Rcpp modules to provide R bindings \code{npyLoad()}
   and \code{npySave()} which wrap the \code{npy_load()} and
   \code{npy_save()} functions. Currently, only one- and two-dimensional
