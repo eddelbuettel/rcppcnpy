@@ -1,3 +1,8 @@
+2013-11-28  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Import methods and Rcpp
+	* NAMESPACE: Idem
+
 2013-02-20  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpyMod.cpp (npyHasIntegerSupport): New function to test if
