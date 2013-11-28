@@ -1,8 +1,6 @@
-# rcppcnpy
+# RcppCNPy: Rcpp bindings for NumPy files
 
 [![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.png)](https://travis-ci.org/eddelbuettel/rcppcnpy)
-
-Rcpp bindings for NumPy files
 
 This package uses the [cnpy](https://github.com/rogersce/cnpy) library
 written by Carl Rogers to provide read and write facilities for files created
