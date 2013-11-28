@@ -1,7 +1,7 @@
 Package: RcppCNPy
 Type: Package
 Title: Rcpp bindings for NumPy files
-Version: 0.2.0.3
+Version: 0.2.1
 Date: 2013-11-28
 Author: Dirk Eddelbuettel
 Maintainer: Dirk Eddelbuettel <edd@debian.org>

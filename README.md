@@ -1,4 +1,4 @@
-# RcppCNPy: Rcpp bindings for NumPy files
+## RcppCNPy: Rcpp bindings for NumPy files
 
 [![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.png)](https://travis-ci.org/eddelbuettel/rcppcnpy)
 

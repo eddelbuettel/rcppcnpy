@@ -1,15 +1,18 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
+
 //Copyright (C) 2011  Carl Rogers
 //Released under MIT License
 //license available in LICENSE file, or at http://www.opensource.org/licenses/mit-license.php
 
 // Changes for RcppCNPy are 
-// Copyright (C) 2012  Dirk Eddelbuettel
+// Copyright (C) 2012 - 2013  Dirk Eddelbuettel
 // and licensed under GNU GPL (>= 2) 
 
 #ifndef LIBCNPY_H_
 #define LIBCNPY_H_
 
 #include<string>
+#include<stdexcept>
 #include<sstream>
 #include<vector>
 #include<cstdio>
@@ -36,6 +39,7 @@ namespace cnpy {
         char* data;
         std::vector<unsigned int> shape;
         unsigned int word_size;
+        bool fortran_order;
         void destruct() {delete[] data;}
     };
     
@@ -51,13 +55,13 @@ namespace cnpy {
     char BigEndianTest();
     char map_type(const std::type_info& t);
     template<typename T> std::vector<char> create_npy_header(const T* data, const unsigned int* shape, const unsigned int ndims);
-    void parse_npy_header(FILE* fp,unsigned int& word_size, unsigned int*& shape, unsigned int& ndims);
+    void parse_npy_header(FILE* fp,unsigned int& word_size, unsigned int*& shape, unsigned int& ndims, bool& fortran_order);
     void parse_zip_footer(FILE* fp, unsigned short& nrecs, unsigned int& global_header_size, unsigned int& global_header_offset);
     npz_t npz_load(std::string fname);
     NpyArray npz_load(std::string fname, std::string varname);
     NpyArray npy_load(std::string fname);
     NpyArray npy_gzload(std::string fname);
-    void parse_npy_gzheader(gzFile fp,unsigned int& word_size, unsigned int*& shape, unsigned int& ndims);
+    void parse_npy_gzheader(gzFile fp,unsigned int& word_size, unsigned int*& shape, unsigned int& ndims, bool& fortran_order);
 
     template<typename T> std::vector<char>& operator+=(std::vector<char>& lhs, const T rhs) {
         //write in little endian
@@ -87,7 +91,9 @@ namespace cnpy {
             //file exists. we need to append to it. read the header, modify the array size
             unsigned int word_size, tmp_dims;
             unsigned int* tmp_shape = 0;
-            parse_npy_header(fp,word_size,tmp_shape,tmp_dims);
+            bool fortran_order;
+            parse_npy_header(fp,word_size,tmp_shape,tmp_dims,fortran_order);
+            Rassert(!fortran_order, "Data in Fortran order");
 
             if(word_size != sizeof(T)) {
   	        Rf_error("cnpy error: %s has word size %d but npy_save appending data sized %d\n", fname.c_str(), word_size, sizeof(T));
@@ -163,7 +169,10 @@ namespace cnpy {
             parse_zip_footer(fp,nrecs,global_header_size,global_header_offset);
             fseek(fp,global_header_offset,SEEK_SET);
             global_header.resize(global_header_size);
-            fread(&global_header[0],sizeof(char),global_header_size,fp);
+            size_t res = fread(&global_header[0],sizeof(char),global_header_size,fp);
+            if(res != global_header_size){
+                throw std::runtime_error("npz_save: header read error while adding to existing zip");
+            }
             fseek(fp,global_header_offset,SEEK_SET);
         }
         else {

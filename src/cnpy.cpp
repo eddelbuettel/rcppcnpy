@@ -1,6 +1,12 @@
+// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
+
 //Copyright (C) 2011  Carl Rogers
 //Released under MIT License
 //license available in LICENSE file, or at http://www.opensource.org/licenses/mit-license.php
+
+// Changes for RcppCNPy are 
+// Copyright (C) 2012 - 2013  Dirk Eddelbuettel
+// and licensed under GNU GPL (>= 2) 
 
 #include"cnpy.h"
 #include<complex>
@@ -53,16 +59,19 @@ template<> std::vector<char>& cnpy::operator+=(std::vector<char>& lhs, const std
 
 template<> std::vector<char>& cnpy::operator+=(std::vector<char>& lhs, const char* rhs) {
     //write in little endian
-    unsigned char len = strlen(rhs);
-    for(unsigned char byte = 0; byte < len; byte++) {
+    size_t len = strlen(rhs);
+    lhs.reserve(len);
+    for(size_t byte = 0; byte < len; byte++) {
         lhs.push_back(rhs[byte]);
     }
     return lhs;
 }
 
-void cnpy::parse_npy_header(FILE* fp, unsigned int& word_size, unsigned int*& shape, unsigned int& ndims) {  
+void cnpy::parse_npy_header(FILE* fp, unsigned int& word_size, unsigned int*& shape, unsigned int& ndims, bool& fortran_order) {  
     char buffer[256];
-    if (fread(buffer,sizeof(char),11,fp) != 11) Rf_error("cnpy::parse_npy_header read discprepancy");
+    size_t res = fread(buffer,sizeof(char),11,fp);       
+    if (res != 11)
+        Rf_error("cnpy::parse_npy_header read discprepancy");
     std::string header = fgets(buffer,256,fp);
     Rassert(header[header.size()-1] == '\n', "header ended improperly");
 
@@ -70,8 +79,7 @@ void cnpy::parse_npy_header(FILE* fp, unsigned int& word_size, unsigned int*& sh
 
     //fortran order
     loc1 = header.find("fortran_order")+16;
-    bool fortran_order = (header.substr(loc1,5) == "True" ? true : false);
-    Rassert(!fortran_order, "fortran_order error");
+    fortran_order = (header.substr(loc1,5) == "True" ? true : false);
 
     //shape
     loc1 = header.find("(");
@@ -87,12 +95,14 @@ void cnpy::parse_npy_header(FILE* fp, unsigned int& word_size, unsigned int*& sh
     }
 
     //endian, word size, data type
+    //byte order code | stands for not applicable. 
+    //not sure when this applies except for byte array
     loc1 = header.find("descr")+9;
-    bool littleEndian = (header[loc1] == '<' ? true : false);
+    bool littleEndian = (header[loc1] == '<' || header[loc1] == '|' ? true : false);
     Rassert(littleEndian, "littleEndian error");
 
     //char type = header[loc1+1];
-    //assert(type == map_type(T);
+    //assert(type == map_type(T));
 
     std::string str_ws = header.substr(loc1+2);
     loc2 = str_ws.find("'");
@@ -103,7 +113,9 @@ void cnpy::parse_zip_footer(FILE* fp, unsigned short& nrecs, unsigned int& globa
 {
     std::vector<char> footer(22);
     fseek(fp,-22,SEEK_END);
-    if (fread(&footer[0],sizeof(char),22,fp) != 22) Rf_error("cnpy::parse_zip_footer read discprepancy");
+    size_t res = fread(&footer[0],sizeof(char),22,fp);
+    if (res != 22)
+       Rf_error("cnpy::parse_zip_footer read discprepancy");
 
     unsigned short disk_no, disk_start, nrecs_on_disk, comment_len;
     disk_no = *(unsigned short*) &footer[4];
@@ -123,7 +135,8 @@ void cnpy::parse_zip_footer(FILE* fp, unsigned short& nrecs, unsigned int& globa
 cnpy::NpyArray load_the_npy_file(FILE* fp) {
     unsigned int* shape;
     unsigned int ndims, word_size;
-    cnpy::parse_npy_header(fp,word_size,shape,ndims);
+    bool fortran_order;
+    cnpy::parse_npy_header(fp,word_size,shape,ndims,fortran_order);
     //unsigned long long size = 1; //long long so no overflow when multiplying by word_size
     unsigned long size = 1; //long long so no overflow when multiplying by word_size
     for(unsigned int i = 0;i < ndims;i++) size *= shape[i];
@@ -132,15 +145,18 @@ cnpy::NpyArray load_the_npy_file(FILE* fp) {
     arr.word_size = word_size;
     arr.shape = std::vector<unsigned int>(shape,shape+ndims);
     arr.data = new char[size*word_size];    
-    //int nread = fread(arr.data,word_size,size,fp);
-    if (fread(arr.data,word_size,size,fp) != size) Rf_error("cnpy::load_the_npy_file read size discrepancy");
+    arr.fortran_order = fortran_order;
+    size_t nread = fread(arr.data,word_size,size,fp);
+    if (nread != size)
+        Rf_error("cnpy::load_the_npy_file read size discrepancy");
     return arr;
 }
 
 cnpy::NpyArray gzload_the_npy_file(gzFile fp) {
     unsigned int* shape;
     unsigned int ndims, word_size;
-    cnpy::parse_npy_gzheader(fp,word_size,shape,ndims);
+    bool fortran_order;
+    cnpy::parse_npy_gzheader(fp,word_size,shape,ndims,fortran_order);
     //unsigned long long size = 1; //long long so no overflow when multiplying by word_size
     unsigned long size = 1; //long long so no overflow when multiplying by word_size
     for(unsigned int i = 0;i < ndims;i++) size *= shape[i];
@@ -149,9 +165,10 @@ cnpy::NpyArray gzload_the_npy_file(gzFile fp) {
     arr.word_size = word_size;
     arr.shape = std::vector<unsigned int>(shape,shape+ndims);
     arr.data = new char[size*word_size];    
-    //int nread = fread(arr.data,word_size,size,fp);
-    //if (gzread(fp,arr.data,word_size*size) < 0) Rf_error("cnpy::gzload_the_npy_file error");
-    gzread(fp,arr.data,word_size*size);
+    arr.fortran_order = fortran_order;
+    size_t nread = gzread(fp,arr.data,word_size*size);
+    if (nread != size*word_size)
+        Rf_error("cnpy::gzload_the_npy_file read size discrepancy");
     return arr;
 }
 
@@ -165,7 +182,9 @@ cnpy::npz_t cnpy::npz_load(std::string fname) {
 
     while(1) {
         std::vector<char> local_header(30);
-        if (fread(&local_header[0],sizeof(char),30,fp) != 30) Rf_error("cnpy::npz_load read discprepancy on header");
+        size_t headerres = fread(&local_header[0],sizeof(char),30,fp);
+        if (headerres != 30)
+	    Rf_error("cnpy::npz_load read discprepancy on header");
 
         //if we've reached the global header, stop reading
         if(local_header[2] != 0x03 || local_header[3] != 0x04) break;
@@ -173,7 +192,9 @@ cnpy::npz_t cnpy::npz_load(std::string fname) {
         //read in the variable name
         unsigned short name_len = *(unsigned short*) &local_header[26];
         std::string varname(name_len,' ');
-        if (fread(&varname[0],sizeof(char),name_len,fp) != name_len) Rf_error("cnpy::npz_load read discprepancy on name_len");
+        size_t vname_res = fread(&varname[0],sizeof(char),name_len,fp);
+        if (vname_res != name_len) 
+            Rf_error("cnpy::npz_load read discprepancy on name_len");
 
         //erase the lagging .npy        
         varname.erase(varname.end()-4,varname.end());
@@ -182,7 +203,9 @@ cnpy::npz_t cnpy::npz_load(std::string fname) {
         unsigned short extra_field_len = *(unsigned short*) &local_header[28];
         if(extra_field_len > 0) {
             std::vector<char> buff(extra_field_len);
-            if (fread(&buff[0],sizeof(char),extra_field_len,fp) != extra_field_len) Rf_error("cnpy::npz_load read discprepancy on extra_field_len");
+            size_t efield_res = fread(&buff[0],sizeof(char),extra_field_len,fp);
+            if (efield_res != extra_field_len) 
+                Rf_error("cnpy::npz_load read discprepancy on extra_field_len");
         }
 
         arrays[varname] = load_the_npy_file(fp);
@@ -201,7 +224,9 @@ cnpy::NpyArray cnpy::npz_load(std::string fname, std::string varname) {
 
     while(1) {
         std::vector<char> local_header(30);
-        if (fread(&local_header[0],sizeof(char),30,fp) != 30) Rf_error("cnpy::npz_load read discprepancy on header");
+        size_t header_res = fread(&local_header[0],sizeof(char),30,fp);
+        if (header_res != 30)
+            Rf_error("cnpy::npz_load read discprepancy on header");
 
         //if we've reached the global header, stop reading
         if(local_header[2] != 0x03 || local_header[3] != 0x04) break;
@@ -209,7 +234,9 @@ cnpy::NpyArray cnpy::npz_load(std::string fname, std::string varname) {
         //read in the variable name
         unsigned short name_len = *(unsigned short*) &local_header[26];
         std::string vname(name_len,' ');
-        if (fread(&vname[0],sizeof(char),name_len,fp) != name_len) Rf_error("cnpy::npz_load read discprepancy on name_len");      
+        size_t vname_res = fread(&vname[0],sizeof(char),name_len,fp);      
+        if (vname_res != name_len)
+	    Rf_error("cnpy::npz_load read discprepancy on name_len");      
         vname.erase(vname.end()-4,vname.end()); //erase the lagging .npy
 
         //read in the extra field
@@ -261,9 +288,11 @@ cnpy::NpyArray cnpy::npy_gzload(std::string fname) {
     return arr;
 }
 
-void cnpy::parse_npy_gzheader(gzFile fp, unsigned int& word_size, unsigned int*& shape, unsigned int& ndims) {  
+void cnpy::parse_npy_gzheader(gzFile fp, unsigned int& word_size, unsigned int*& shape, unsigned int& ndims, bool& fortran_order) {  
     char buffer[256];
-    if (gzread(fp,buffer,sizeof(char)*11) != 11) Rf_error("cnpy::parse_npy_gzheader read discprepancy");
+    size_t res = gzread(fp,buffer,sizeof(char)*11);
+    if (res != 11)
+        Rf_error("cnpy::parse_npy_gzheader read discprepancy");
     std::string header = gzgets(fp, buffer,256);
     Rassert(header[header.size()-1] == '\n', "header ended improperly");
 
@@ -271,8 +300,7 @@ void cnpy::parse_npy_gzheader(gzFile fp, unsigned int& word_size, unsigned int*&
 
     //fortran order
     loc1 = header.find("fortran_order")+16;
-    bool fortran_order = (header.substr(loc1,5) == "True" ? true : false);
-    Rassert(!fortran_order, "fortran_order error");
+    fortran_order = (header.substr(loc1,5) == "True" ? true : false);
 
     //shape
     loc1 = header.find("(");

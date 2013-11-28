@@ -2,8 +2,16 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in version 0.2.1 (2013-02-19)}{
+\section{Changes in version 0.2.1 (2013-11-28)}{
   \itemize{
+    \item Synchronized code with the \code{cnpy} repository
+    \item Added new function to test from R whether integers supported
+    \item Updated tests for integer support, if available
+    \item Updated vignette and discussion about need for rebuilding only
+    \cpkg{RcppCNPy} with the \code{-std=c++11} flag if integer support is
+    desired 
+    \item Updated tests for integer support, if available
+    \item Updated THANKS file
     \item Ensure that inclusion of \code{Rinternal.h} does not affect
     other headers by adding RF_NO_REMAP
   }
