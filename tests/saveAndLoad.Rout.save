@@ -1,0 +1,42 @@
+
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: i686-pc-linux-gnu (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #!/usr/bin/Rscript
+> 
+> library(RcppCNPy)
+> 
+> set.seed(42)
+> M1 <- matrix(rnorm(1e6, 1e3, 1e3))
+> 
+> tempmatfile <- tempfile(pattern="npymat", fileext=".npy")
+> npySave(tempmatfile, M1)
+> 
+> M2 <- npyLoad(tempmatfile)
+> identical(M1, M2)
+[1] TRUE
+> 
+> tempmatfile <- tempfile(pattern="npymat", fileext=".npy.gz")
+> npySave(tempmatfile, M1)
+> 
+> M3 <- npyLoad(tempmatfile)
+> identical(M1, M3)
+[1] TRUE
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  1.420   0.496   1.428 
