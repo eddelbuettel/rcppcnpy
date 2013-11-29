@@ -2,6 +2,16 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.2 (2013-11-29)}{
+  \itemize{
+    \item Switched to using the result from the compile-time configuration 
+    for R to determine big or little endian (as needed for the \code{NPy} 
+    headers)
+    \item Added a new test (and test validation result file) for a complete 
+    save-reload cycle and comparison
+  }
+}
+
 \section{Changes in version 0.2.1 (2013-11-28)}{
   \itemize{
     \item Synchronized code with the \code{cnpy} repository

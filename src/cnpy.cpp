@@ -15,10 +15,14 @@
 #include<cstring>
 #include<iomanip>
 
+#include <Rconfig.h>            // use R configuration test result for endianness
+
 char cnpy::BigEndianTest() {
-    unsigned char x[] = {1,0};
-    short y = *(short*) x;
-    return y == 1 ? '<' : '>';
+#ifdef WORDS_BIGENDIAN
+    return '>';                 // if defined, we have big endian
+#else
+    return '<';                 // else (the default) it is little endian
+#endif
 }
 
 char cnpy::map_type(const std::type_info& t)

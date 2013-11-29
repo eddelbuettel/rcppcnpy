@@ -1,3 +1,13 @@
+2013-11-29  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Version 0.2.2
+
+	* src/cnpy.cpp (BigEndianTest): Re-use the R compile-time
+	configuration result to switch between little and big endian
+
+	* tests/saveAndLoad.R: New test file for save and load cycle
+	* tests/saveAndLoad.Rout.save: And result for comparison
+
 2013-11-28  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Version 0.2.1
