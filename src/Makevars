@@ -1,5 +1,6 @@
-## Use the R_HOME indirection to support installations of multiple R version
-PKG_LIBS = `$(R_HOME)/bin/Rscript -e "Rcpp:::LdFlags()"` -lz
+## We need the compression library
+PKG_LIBS = -lz
 
-
+## We want C++11 as it gets us 'long long' as well
+CXX_STD = CXX11
 

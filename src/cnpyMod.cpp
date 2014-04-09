@@ -2,7 +2,7 @@
 //
 // cnpyMod.cpp: Rcpp R/C++ modules interface to cnpy
 //
-// Copyright (C) 2012  Dirk Eddelbuettel
+// Copyright (C) 2012 - 2014  Dirk Eddelbuettel
 //
 // This file is part of RcppCNPy.
 //
@@ -61,11 +61,9 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
         if (type == "numeric") {
             double *p = reinterpret_cast<double*>(arr.data);
             ret = Rcpp::NumericVector(p, p + shape[0]);
-#ifdef RCPP_HAS_LONG_LONG_TYPES
         } else if (type == "integer") {
             int64_t *p = reinterpret_cast<int64_t*>(arr.data);
             ret = Rcpp::IntegerVector(p, p + shape[0]);
-#endif
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");
@@ -78,7 +76,6 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             } else {
                 ret = Rcpp::NumericMatrix(shape[0], shape[1], reinterpret_cast<double*>(arr.data));
             }
-#ifdef RCPP_HAS_LONG_LONG_TYPES
         } else if (type == "integer") {
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
@@ -86,7 +83,6 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             } else {
                 ret = transpose(Rcpp::IntegerMatrix(shape[0], shape[1], reinterpret_cast<int64_t*>(arr.data)));
             }
-#endif
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");
@@ -111,7 +107,6 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             } else {
                 cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
             }
-#ifdef RCPP_HAS_LONG_LONG_TYPES
         } else if (::Rf_isInteger(x)) {
             Rcpp::IntegerMatrix mat = transpose(Rcpp::IntegerMatrix(x));
             std::vector<unsigned int> shape = 
@@ -121,7 +116,6 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             } else {
                 cnpy::npy_save(filename, mat.begin(), &(shape[0]), 2, mode);
             }
-#endif
         } else {
             Rf_error("Unsupported matrix type\n");
         }
@@ -135,7 +129,6 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             } else {
                 cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
             }
-#ifdef RCPP_HAS_LONG_LONG_TYPES
         } else if (::Rf_isInteger(x)) {
             Rcpp::IntegerVector vec(x);
             std::vector<unsigned int> shape = 
@@ -145,7 +138,6 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             } else {
                 cnpy::npy_save(filename, vec.begin(), &(shape[0]), 1, mode);
             }
-#endif
         } else {
             Rf_error("Unsupported vector type\n");
         }
@@ -155,11 +147,7 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
 }
 
 bool npyHasIntegerSupport() {
-#ifdef RCPP_HAS_LONG_LONG_TYPES
-    return true;
-#else
-    return false;
-#endif
+    return true;                // no longer conditional
 }
 
 RCPP_MODULE(cnpy){
