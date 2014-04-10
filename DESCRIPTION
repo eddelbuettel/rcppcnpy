@@ -17,3 +17,5 @@ Depends: R (>= 3.1.0)
 Imports: methods, Rcpp
 LinkingTo: Rcpp
 RcppModules: cnpy
+Suggests: highlight
+VignetteBuilder: highlight
