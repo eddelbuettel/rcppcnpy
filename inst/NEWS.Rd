@@ -2,6 +2,18 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.3 (2014-04-10)}{
+  \itemize{
+    \item \code{src/Makevars} now sets \code{CXX_STD = CXX11} which also
+    provides the \code{long long} type on all platforms, so integer file
+    support is no longer conditional
+    \item Consequently, code conditional on \code{RCPP_HAS_LONG_LONG_TYPES}
+    has been simplified and is no longer conditional.
+    \item The package now depends on R 3.1.0 or later to allow this.
+    \item The vignette has been updated and refreshed to reflect this.
+  }
+}
+
 \section{Changes in version 0.2.2 (2013-11-29)}{
   \itemize{
     \item Switched to using the result from the compile-time configuration 
