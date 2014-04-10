@@ -1,10 +1,14 @@
 2014-04-09  Dirk Eddelbuettel  <edd@debian.org>
 
 	* vignettes/RcppCNPy-intro.Rnw:
-	  - Updated vignette to reflect integer
-	    support on all platforms thanks to 'long long'
+	  - Updated vignette to reflect integer support on all
+	    platforms thanks to 'long long'
 	  - Switched to font used in Rcpp vignettes
 	  - Switched to vignette processing via highlight
+
+	* man/RcppCNPy-package.Rd: Updated to reflect integer support
+
+	* src/Makevars.win: Updated as well
 
 	* .travis.yml: Added _R_CHECK_FORCE_SUGGESTS_=FALSE to not
 	  stumble over Suggests: highlight not being installed

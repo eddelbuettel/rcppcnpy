@@ -13,10 +13,8 @@
   which provides read and write facilities for files created with (or for) the
   NumPy extension for Python.
 
-  Support is currently limited to reading and writing of either vectors
-  or matrices of numeric types. Integer support can be added if the
-  package, as well \pkg{Rcpp} are recompiled using the \code{-std=c++11}
-  flag.
+  Support is provided to reading and writing of either vectors
+  or matrices of numeric or integer types. 
 
   Files with \code{gzip} compression can be transparently read and
   written as well.
@@ -30,10 +28,7 @@
   \item{filename}{string with (path and) filename for a \code{npy}
     object file. If the string ends with \code{.gz}, compressed files
     can be read or written.}
-  \item{type}{string with type 'numeric' (default) or 'integer'. Integer
-    support is available only if Rcpp and RcppCNPy have been compiled
-    with the \code{-std=c++0x} option as the required \code{int64_t}
-    types are not available otherwise.}
+  \item{type}{string with type 'numeric' (default) or 'integer'.}
   \item{object}{an R object, currently limited to a vector or matrix of
     either integer or numeric type}
   \item{dotranspose}{a boolean variable indicating whether a
@@ -50,6 +45,11 @@
   \code{npy_save()} functions. Currently, only one- and two-dimensional
   vectors and matrices are suppported; higher-dimensional arrays could
   be added.
+
+  Integer support requires access to the \code{long long} type which is
+  available if the package is built using the C++11 standard; this is
+  the default since release 0.2.3 which came out after R 3.1.0 permitted
+  used of C++11 in CRAN packages.
 }
 \author{
   Dirk Eddelbuettel provided the binding to R (using the Rcpp package).
