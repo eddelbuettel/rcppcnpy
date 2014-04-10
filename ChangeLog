@@ -6,6 +6,9 @@
 	  - Switched to font used in Rcpp vignettes
 	  - Switched to vignette processing via highlight
 
+	* .travis.yml: Added _R_CHECK_FORCE_SUGGESTS_=FALSE to not
+	  stumble over Suggests: highlight not being installed
+
 2014-04-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/Makevars: Set 'CXX_STD = CXX11' which gets us 'long long'
