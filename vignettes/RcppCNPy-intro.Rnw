@@ -175,13 +175,8 @@ same data as we stored.
 A useful extension to the \pkg{cnpy} is the support of \pkg{gzip}-compressed
 data.
 
-<<print=FALSE,echo=FALSE>>=
-system("gzip -f fmat.npy")
-@ 
-
-<<>>=
+<<eval=FALSE>>=
 mat2 <- npyLoad("fmat.npy.gz")
-mat2
 @ 
 
 Support for writing compressed files has been added in version 0.2.0.
@@ -299,7 +294,7 @@ users a balance between more compact storage at the prices of slightly longer
 read times.
 
 <<print=FALSE,echo=FALSE>>=
-unlink("fmat.npy.gz")
+unlink("fmat.npy")
 unlink("fvec.npy")
 unlink("randmat.npy")
 unlink("simplevec.npy")
