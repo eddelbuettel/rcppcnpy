@@ -15,8 +15,10 @@ before_install:
   - ./travis-tool.sh bootstrap
 
 install:
-  - ./travis-tool.sh install_r Rcpp highlight
-
+  - ./travis-tool.sh install_r highlight
+  - if [ "$RCPP" = "release" ]; then ./travis-tool.sh install_r Rcpp; fi
+  - if [ "$RCPP" = "constcorrect" ]; then cd ..; git clone https://github.com/romainfrancois/Rcpp.git; R CMD INSTALL Rcpp; cd -; fi
+  
 script:
   - ./travis-tool.sh run_tests
 
@@ -24,4 +26,8 @@ notifications:
   email:
     on_success: change
     on_failure: change
+
+env:
+  - RCPP=release 
+  - RCPP=constcorrect 
 
