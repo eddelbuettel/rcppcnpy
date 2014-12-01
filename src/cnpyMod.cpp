@@ -28,7 +28,8 @@ T transpose(const T & m) {      // tranpose for IntegerMatrix / NumericMatrix, s
     //Rcpp::Rcout << "Transposing " << n << " by " << k << std::endl;
     T z(n, k);
     int sz1 = n*k-1;
-    typename T::iterator mit, zit;
+    typename T::const_iterator mit ;
+    typename T::iterator zit;
     for (mit = m.begin(), zit = z.begin(); mit != m.end(); mit++, zit += n) {
         if (zit >= z.end()) zit -= sz1;
         *zit = *mit;
