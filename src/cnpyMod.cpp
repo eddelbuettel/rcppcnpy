@@ -37,6 +37,22 @@ T transpose(const T & m) {      // tranpose for IntegerMatrix / NumericMatrix, s
     return(z);
 }
 
+// cf http://stackoverflow.com/a/4956493/143305
+template <typename T>
+T swap_endian(T u) {
+    union {
+        T u;
+        unsigned char u8[sizeof(T)];
+    } source, dest;
+
+    source.u = u;
+
+    for (size_t k = 0; k < sizeof(T); k++)
+        dest.u8[k] = source.u8[sizeof(T) - k - 1];
+
+    return dest.u;
+}
+
 // cf stackoverflow.com/questions/874134
 bool hasEnding(std::string const &full, std::string const &ending) {
     if (full.length() >= ending.length()) {
@@ -62,9 +78,15 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
         if (type == "numeric") {
             double *p = reinterpret_cast<double*>(arr.data);
             ret = Rcpp::NumericVector(p, p + shape[0]);
+#ifdef WORDS_BIGENDIAN
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>());
+#endif
         } else if (type == "integer") {
             int64_t *p = reinterpret_cast<int64_t*>(arr.data);
             ret = Rcpp::IntegerVector(p, p + shape[0]);
+#ifdef WORDS_BIGENDIAN
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>());
+#endif
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");
@@ -77,6 +99,9 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             } else {
                 ret = Rcpp::NumericMatrix(shape[0], shape[1], reinterpret_cast<double*>(arr.data));
             }
+#ifdef WORDS_BIGENDIAN
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>());
+#endif
         } else if (type == "integer") {
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
@@ -84,6 +109,9 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             } else {
                 ret = transpose(Rcpp::IntegerMatrix(shape[0], shape[1], reinterpret_cast<int64_t*>(arr.data)));
             }
+#ifdef WORDS_BIGENDIAN
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>());
+#endif
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");

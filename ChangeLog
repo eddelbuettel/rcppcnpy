@@ -2,6 +2,10 @@
 
 	* src/cnpyMod.cpp: Use const_iterator
 
+2014-08-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/cnpyMod.cpp: Attempt to deal with big endian for int64 and double
+
 2014-08-04  Dirk Eddelbuettel  <edd@debian.org>
 
 	* vignettes/RcppCNPy-intro.Rnw: Do not assume 'system("gzip ...")'
