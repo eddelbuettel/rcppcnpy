@@ -1,7 +1,6 @@
 
-R version 2.15.2 (2012-10-26) -- "Trick or Treat"
-Copyright (C) 2012 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -19,10 +18,9 @@ Type 'q()' to quit R.
 > #!/usr/bin/Rscript
 > 
 > library(RcppCNPy)
-Loading required package: Rcpp
 > 
 > fmat <- npyLoad("fmat.npy")
-> fmat
+> print(fmat)
      [,1] [,2] [,3] [,4]
 [1,]  0.0  1.1  2.2  3.3
 [2,]  4.4  5.5  6.6  7.7
@@ -30,31 +28,33 @@ Loading required package: Rcpp
 > stopifnot(all.equal(fmat, t(matrix(seq(0,11) * 1.1, 4, 3))))
 > 
 > fmat <- npyLoad("fmat.npy.gz")
-> fmat
+> print(fmat)
      [,1] [,2] [,3] [,4]
 [1,]  0.0  1.1  2.2  3.3
 [2,]  4.4  5.5  6.6  7.7
 [3,]  8.8  9.9 11.0 12.1
 > stopifnot(all.equal(fmat, t(matrix(seq(0,11) * 1.1, 4, 3))))
 > 
-> if (npyHasIntegerSupport()) {
-+     imat <- npyLoad("imat.npy", "integer")
-+     imat
-+     stopifnot(all.equal(imat, t(matrix(seq(0,11), 4, 3))))
-+ }
+> imat <- npyLoad("imat.npy", "integer")
+> print(imat)
+     [,1] [,2] [,3] [,4]
+[1,]    0    1    2    3
+[2,]    4    5    6    7
+[3,]    8    9   10   11
+> stopifnot(all.equal(imat, t(matrix(seq(0,11), 4, 3))))
 > 
 > fvec <- npyLoad("fvec.npy")
-> fvec
+> print(fvec)
 [1] 0.0 1.1 2.2 3.3 4.4
 > stopifnot(all.equal(fvec, seq(0,4) * 1.1))
 > 
-> if (npyHasIntegerSupport()) {
-+     ivec <- npyLoad("ivec.npy", "integer")
-+     ivec
-+     stopifnot(all.equal(ivec, seq(0,4)))
-+ }
+> ivec <- npyLoad("ivec.npy", "integer")
+> print(ivec)
+[1] 0 1 2 3 4
+> stopifnot(all.equal(ivec, seq(0,4)))
+> 
 > 
 > 
 > proc.time()
    user  system elapsed 
-  0.588   0.024   0.456 
+  0.408   0.025   0.418 
