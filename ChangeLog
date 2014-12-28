@@ -1,3 +1,10 @@
+2014-12-28  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Edited Title: and Description:; bumped Date: and Version:
+
+	* tests/loadFiles.R: Print results; remove test for [known] int support
+	* tests/loadFiles.Rout.save: Updated as well
+
 2014-12-01  Romain Francois  <romain@r-enthusiasts.com>
 
 	* src/cnpyMod.cpp: Use const_iterator
