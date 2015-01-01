@@ -1,3 +1,7 @@
+2015-01-01  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/cnpyMod.cpp: Move byte-swap call off into helper functions
+
 2014-12-31  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpyMod.cpp: Correct call to byte swap for big endian systems
