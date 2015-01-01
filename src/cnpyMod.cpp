@@ -79,13 +79,13 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             double *p = reinterpret_cast<double*>(arr.data);
             ret = Rcpp::NumericVector(p, p + shape[0]);
 #ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>());
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>);
 #endif
         } else if (type == "integer") {
             int64_t *p = reinterpret_cast<int64_t*>(arr.data);
             ret = Rcpp::IntegerVector(p, p + shape[0]);
 #ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>());
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>);
 #endif
         } else {
             arr.destruct();
@@ -100,7 +100,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
                 ret = Rcpp::NumericMatrix(shape[0], shape[1], reinterpret_cast<double*>(arr.data));
             }
 #ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>());
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>);
 #endif
         } else if (type == "integer") {
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
@@ -110,7 +110,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
                 ret = transpose(Rcpp::IntegerMatrix(shape[0], shape[1], reinterpret_cast<int64_t*>(arr.data)));
             }
 #ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>());
+            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>);
 #endif
         } else {
             arr.destruct();
