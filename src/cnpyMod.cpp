@@ -77,41 +77,43 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
     if (shape.size() == 1) {
         if (type == "numeric") {
             double *p = reinterpret_cast<double*>(arr.data);
-            ret = Rcpp::NumericVector(p, p + shape[0]);
 #ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>());
+            std::transform(p, p + shape[0], p, swap_endian<double>);
 #endif
+            ret = Rcpp::NumericVector(p, p + shape[0]);
         } else if (type == "integer") {
             int64_t *p = reinterpret_cast<int64_t*>(arr.data);
-            ret = Rcpp::IntegerVector(p, p + shape[0]);
 #ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>());
+            std::transform(p, p + shape[0], p, swap_endian<int64_t>);
 #endif
+            ret = Rcpp::IntegerVector(p, p + shape[0]);
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");
         } 
     } else if (shape.size() == 2) {
         if (type == "numeric") {
+            double *p = reinterpret_cast<double*>(arr.data);
+#ifdef WORDS_BIGENDIAN
+            std::transform(p, p + shape[0], p, swap_endian<double>);
+#endif
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
-                ret = transpose(Rcpp::NumericMatrix(shape[1], shape[0], reinterpret_cast<double*>(arr.data)));
+                ret = transpose(Rcpp::NumericMatrix(shape[1], shape[0], p));
             } else {
-                ret = Rcpp::NumericMatrix(shape[0], shape[1], reinterpret_cast<double*>(arr.data));
+                ret = Rcpp::NumericMatrix(shape[0], shape[1], p);
             }
-#ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<double>());
-#endif
         } else if (type == "integer") {
+            int64_t *p = reinterpret_cast<int64_t*>(arr.data);
+#ifdef WORDS_BIGENDIAN
+            std::transform(p, p + shape[0], p, swap_endian<int64_t>);
+#endif
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
-                ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], reinterpret_cast<int64_t*>(arr.data)));
+                ret = transpose(Rcpp::IntegerMatrix(shape[1], shape[0], p));
             } else {
-                ret = transpose(Rcpp::IntegerMatrix(shape[0], shape[1], reinterpret_cast<int64_t*>(arr.data)));
+                ret = Rcpp::IntegerMatrix(shape[0], shape[1], p);
             }
-#ifdef WORDS_BIGENDIAN
-            std::transform(ret.begin(), ret.end(), ret.begin(), swap_endian<int64_t>());
-#endif
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");
