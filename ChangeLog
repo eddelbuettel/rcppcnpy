@@ -1,3 +1,8 @@
+2015-01-02  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/cnpyMod.cpp: Apply correction by Wush Wu to correct (if needed)
+	for endianness before instantiating vectors
+
 2015-01-01  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpyMod.cpp: Move byte-swap call off into helper functions
