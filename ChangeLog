@@ -1,7 +1,23 @@
+2015-01-03  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Bump Date: and Version: 
+
+	* src/cnpyMod.cpp: Several corrections on file save:
+	  - Correct saving on integer matrices and vectors by
+	    testing for integer before testing for numeric (which is always true
+	    for int as well)
+	  - Convert integer object to int64_t and save as int64_t
+	  - For good measure, properly specify template type when saving
+	  - [So far untested] On big endian systems, convert before writing
+
+	* tests/saveAndLoad.R: Added tests for saving (and loading) of both
+	uncompressed and compressed integer matrices
+	* tests/saveAndLoad.Rout.saev: Updated corresponding reference output
+
 2015-01-02  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpyMod.cpp: Apply correction by Wush Wu to correct (if needed)
-	for endianness before instantiating vectors
+	for endianness before instantiating vectors when reading from file
 
 2015-01-01  Dirk Eddelbuettel  <edd@debian.org>
 
