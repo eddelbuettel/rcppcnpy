@@ -1,5 +1,7 @@
 2015-01-03  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION: Bump Date: and Version: 
+
 	* src/cnpyMod.cpp: Several corrections on file save:
 	  - Correct saving on integer matrices and vectors by
 	    testing for integer before testing for numeric (which is always true
