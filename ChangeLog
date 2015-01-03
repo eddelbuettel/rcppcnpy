@@ -8,6 +8,10 @@
 	  - For good measure, properly specify template type when saving
 	  - [So far untested] On big endian systems, convert before writing
 
+	* tests/saveAndLoad.R: Added tests for saving (and loading) of both
+	uncompressed and compressed integer matrices
+	* tests/saveAndLoad.Rout.saev: Updated corresponding reference output
+
 2015-01-02  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpyMod.cpp: Apply correction by Wush Wu to correct (if needed)

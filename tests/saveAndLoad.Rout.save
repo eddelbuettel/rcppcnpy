@@ -1,6 +1,6 @@
 
-R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -22,21 +22,39 @@ Type 'q()' to quit R.
 > set.seed(42)
 > M1 <- matrix(rnorm(1e6), 1e3, 1e3)
 > 
+> ## double precision floating point, uncompressed
 > tempmatfile <- tempfile(pattern="npymat", fileext=".npy")
 > npySave(tempmatfile, M1)
-> 
 > M2 <- npyLoad(tempmatfile)
 > identical(M1, M2)
 [1] TRUE
 > 
+> ## double precision floating point, compressed
 > tempmatfile <- tempfile(pattern="npymat", fileext=".npy.gz")
 > npySave(tempmatfile, M1)
-> 
 > M3 <- npyLoad(tempmatfile)
 > identical(M1, M3)
 [1] TRUE
 > 
 > 
+> 
+> ## integer, uncompressed
+> M4 <- matrix(as.integer(round(M1)), 1e3, 1e3)
+> tempmatfile <- tempfile(pattern="intnpymat", fileext=".npy")
+> npySave(tempmatfile, M4)
+> M5 <- npyLoad(tempmatfile, "integer")
+> identical(M4, M5)
+[1] TRUE
+> 
+> ## integer, compressed
+> tempmatfile <- tempfile(pattern="intnpymat", fileext=".npy.gz")
+> npySave(tempmatfile, M4)
+> 
+> M6 <- npyLoad(tempmatfile, "integer")
+> identical(M4, M6)
+[1] TRUE
+> 
+> 
 > proc.time()
    user  system elapsed 
-  1.620   0.288   1.328 
+  1.687   0.066   1.739 
