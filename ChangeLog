@@ -1,3 +1,7 @@
+2015-01-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Add Wush to Author:, bump Date: and Version: 
+
 2015-01-04  Wush Wu <wush978@gmail.com>
 
 	* src/cnpy.cpp: Make BigEndianTest() unconditional
