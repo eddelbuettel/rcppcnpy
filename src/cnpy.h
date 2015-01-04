@@ -277,9 +277,12 @@ namespace cnpy {
         header += "NUMPY";
         header += (char) 0x01; //major version of numpy format
         header += (char) 0x00; //minor version of numpy format
+#ifdef WORDS_BIGENDIAN
+        header += swap_endian<unsigned short>((unsigned short) dict.size());
+#else
         header += (unsigned short) dict.size();
+#endif
         header.insert(header.end(),dict.begin(),dict.end());
-
         return header;
     }
 
