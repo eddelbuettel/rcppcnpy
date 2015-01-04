@@ -5,6 +5,8 @@
 	* src/cnpy.h: Remove BigEndianTest()
 	* src/cnpy.cpp: Always set header entry to little endian
 	* src/cnpyMod.cpp: Use Rcpp::clone() for deep copy
+	* tests/saveAndLoad.R: Some simplifications
+	* tests/saveAndLoad.Rout.saev: Updated corresponding reference output
 
 2015-01-04  Wush Wu <wush978@gmail.com>
 
