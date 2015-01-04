@@ -20,7 +20,19 @@ stopifnot(identical(M1sd, sd(M1)))
 M3 <- npyLoad(tempmatfile)
 stopifnot(identical(M1, M3))
 
+## double precision floating point vector
+dim(M1) <- NULL
+tempmatfile <- tempfile(pattern="npyvec", fileext=".npy")
+npySave(tempmatfile, M1)
+stopifnot(identical(M1sd, sd(M1)))
+M2 <- npyLoad(tempmatfile)
+stopifnot(identical(M1, M2))
 
+tempmatfile <- tempfile(pattern="npyvec", fileext=".npy.gz")
+npySave(tempmatfile, M1)
+stopifnot(identical(M1sd, sd(M1)))
+M3 <- npyLoad(tempmatfile)
+stopifnot(identical(M1, M3))
 
 ## integer, uncompressed
 M4 <- matrix(as.integer(round(M1)), 1e3, 1e3)
@@ -38,3 +50,17 @@ stopifnot(identical(M4sd, sd(M4)))
 M6 <- npyLoad(tempmatfile, "integer")
 stopifnot(identical(M4, M6))
 
+## integer vector
+dim(M4) <- NULL
+tempmatfile <- tempfile(pattern="intnpyvec", fileext=".npy")
+M4sd <- sd(M4)
+npySave(tempmatfile, M4)
+stopifnot(identical(M4sd, sd(M4)))
+M5 <- npyLoad(tempmatfile, "integer")
+stopifnot(identical(M4, M5))
+
+tempmatfile <- tempfile(pattern="intnpyvec", fileext=".npy.gz")
+npySave(tempmatfile, M4)
+stopifnot(identical(M4sd, sd(M4)))
+M6 <- npyLoad(tempmatfile, "integer")
+stopifnot(identical(M4, M6))
