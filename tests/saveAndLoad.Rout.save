@@ -36,7 +36,22 @@ Type 'q()' to quit R.
 > identical(M1, M3)
 [1] TRUE
 > 
+> ## double precision floating point vector
+> dim(M1) <- NULL
+> tempmatfile <- tempfile(pattern="npyvec", fileext=".npy")
+> npySave(tempmatfile, M1)
+Saving Numeric Vector
+> M2 <- npyLoad(tempmatfile)
+> identical(M1, M2)
+[1] TRUE
 > 
+> ## double precision floating point vector, compressed
+> tempmatfile <- tempfile(pattern="npyvec", fileext=".npy.gz")
+> npySave(tempmatfile, M1)
+Saving Numeric Vector
+> M3 <- npyLoad(tempmatfile)
+> identical(M1, M3)
+[1] TRUE
 > 
 > ## integer, uncompressed
 > M4 <- matrix(as.integer(round(M1)), 1e3, 1e3)
@@ -49,12 +64,25 @@ Type 'q()' to quit R.
 > ## integer, compressed
 > tempmatfile <- tempfile(pattern="intnpymat", fileext=".npy.gz")
 > npySave(tempmatfile, M4)
-> 
 > M6 <- npyLoad(tempmatfile, "integer")
 > identical(M4, M6)
 [1] TRUE
 > 
+> ## integer vector, uncompressed
+> dim(M4) <- NULL
+> tempmatfile <- tempfile(pattern="intnpyvec", fileext=".npy")
+> npySave(tempmatfile, M4)
+> M5 <- npyLoad(tempmatfile, "integer")
+> identical(M4, M5)
+[1] TRUE
+> 
+> ## integer vector, compressed
+> tempmatfile <- tempfile(pattern="intnpyvec", fileext=".npy.gz")
+> npySave(tempmatfile, M4)
+> M6 <- npyLoad(tempmatfile, "integer")
+> identical(M4, M6)
+[1] TRUE
 > 
 > proc.time()
    user  system elapsed 
-  1.687   0.066   1.739 
+  2.509   0.144   2.640 
