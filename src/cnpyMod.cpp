@@ -159,9 +159,12 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             }
         } else if (::Rf_isNumeric(x)) {
             Rcpp::Rcout << "Saving Numeric Vector\n";
-            Rcpp::NumericVector vec(x);
 #ifdef WORDS_BIGENDIAN
+            Rcpp::NumericVector vec(Rf_length(x));
+            std::copy(REAL(x), REAL(x) + Rf_length(x), vec.begin());
             std::transform(vec.begin(), vec.end(), vec.begin(), swap_endian<double>);
+#else
+            Rcpp::NumericVector vec(x);
 #endif
             std::vector<unsigned int> shape = 
                 Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
