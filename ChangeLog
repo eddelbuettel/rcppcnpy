@@ -1,6 +1,14 @@
+2015-01-04  Wush Wu <wush978@gmail.com>
+
+	* src/cnpy.cpp: Make BigEndianTest() unconditional
+	* src/cnpy.h: Move swapEndian() here and use in header
+	* src/cnpyMod.cpp: Correct saved size for matrices, ensure deep copy
+	for integer
+	* tests/saveAndLoad.R: Add more tests
+
 2015-01-03  Dirk Eddelbuettel  <edd@debian.org>
 
-	* DESCRIPTION: Bump Date: and Version: 
+	* DESCRIPTION: Bump Date: and Version:
 
 	* src/cnpyMod.cpp: Several corrections on file save:
 	  - Correct saving on integer matrices and vectors by
