@@ -79,7 +79,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
         if (type == "numeric") {
             double *p = reinterpret_cast<double*>(arr.data);
 #ifdef WORDS_BIGENDIAN
-            std::transform(p, p + shape[0], p, swap_endian<double>);
+            std::transform(p, p + shape[0] * shape[1], p, swap_endian<double>);
 #endif
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
@@ -90,7 +90,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
         } else if (type == "integer") {
             int64_t *p = reinterpret_cast<int64_t*>(arr.data);
 #ifdef WORDS_BIGENDIAN
-            std::transform(p, p + shape[0], p, swap_endian<int64_t>);
+            std::transform(p, p + shape[0] * shape[1], p, swap_endian<int64_t>);
 #endif
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
