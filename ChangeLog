@@ -1,13 +1,17 @@
 2015-01-04  Dirk Eddelbuettel  <edd@debian.org>
 
-	* DESCRIPTION: Add Wush to Author:, bump Date: and Version: 
+	* DESCRIPTION: Add Wush to Author:, bump Date: and Version:
+
+	* src/cnpy.h: Remove BigEndianTest()
+	* src/cnpy.cpp: Always set header entry to little endian
 
 2015-01-04  Wush Wu <wush978@gmail.com>
 
 	* src/cnpy.cpp: Make BigEndianTest() unconditional
 	* src/cnpy.h: Move swapEndian() here and use in header
-	* src/cnpyMod.cpp: Correct saved size for matrices, ensure deep copy
-	for integer
+	* src/cnpyMod.cpp:
+	  - Correct saved size for matrices,
+	  - Ensure deep copy prior to swapping endianness
 	* tests/saveAndLoad.R: Add more tests
 
 2015-01-03  Dirk Eddelbuettel  <edd@debian.org>

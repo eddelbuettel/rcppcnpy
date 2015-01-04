@@ -66,7 +66,6 @@ namespace cnpy {
         }
     };
 
-    char BigEndianTest();
     char map_type(const std::type_info& t);
     template<typename T> std::vector<char> create_npy_header(const T* data, const unsigned int* shape, const unsigned int ndims);
     void parse_npy_header(FILE* fp,unsigned int& word_size, unsigned int*& shape, unsigned int& ndims, bool& fortran_order);
@@ -256,7 +255,7 @@ namespace cnpy {
 
         std::vector<char> dict;
         dict += "{'descr': '";
-        dict += BigEndianTest();
+        dict += '<';            // always write little endian
         dict += map_type(typeid(T));
         dict += tostring(sizeof(T));
         dict += "', 'fortran_order': False, 'shape': (";
