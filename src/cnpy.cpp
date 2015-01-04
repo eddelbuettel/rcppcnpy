@@ -18,11 +18,16 @@
 #include <Rconfig.h>            // use R configuration test result for endianness
 
 char cnpy::BigEndianTest() {
+  return '<';
+/* 
+  Wush: RcppCNPy only write binary in little endian
+
 #ifdef WORDS_BIGENDIAN
     return '>';                 // if defined, we have big endian
 #else
     return '<';                 // else (the default) it is little endian
 #endif
+*/
 }
 
 char cnpy::map_type(const std::type_info& t)
