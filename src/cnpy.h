@@ -27,6 +27,22 @@
 #define R_NO_REMAP
 #include <Rinternals.h>      	// for Rf_error
 
+// cf http://stackoverflow.com/a/4956493/143305
+template <typename T>
+T swap_endian(T u) {
+    union {
+        T u;
+        unsigned char u8[sizeof(T)];
+    } source, dest;
+
+    source.u = u;
+
+    for (size_t k = 0; k < sizeof(T); k++)
+        dest.u8[k] = source.u8[sizeof(T) - k - 1];
+
+    return dest.u;
+}
+
 namespace cnpy {
 
     inline void Rassert(bool val, std::string txt) {
@@ -261,9 +277,12 @@ namespace cnpy {
         header += "NUMPY";
         header += (char) 0x01; //major version of numpy format
         header += (char) 0x00; //minor version of numpy format
+#ifdef WORDS_BIGENDIAN
+        header += swap_endian<unsigned short>((unsigned short) dict.size());
+#else
         header += (unsigned short) dict.size();
+#endif
         header.insert(header.end(),dict.begin(),dict.end());
-
         return header;
     }
 

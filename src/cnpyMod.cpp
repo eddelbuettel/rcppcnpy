@@ -37,22 +37,6 @@ T transpose(const T & m) {      // tranpose for IntegerMatrix / NumericMatrix, s
     return(z);
 }
 
-// cf http://stackoverflow.com/a/4956493/143305
-template <typename T>
-T swap_endian(T u) {
-    union {
-        T u;
-        unsigned char u8[sizeof(T)];
-    } source, dest;
-
-    source.u = u;
-
-    for (size_t k = 0; k < sizeof(T); k++)
-        dest.u8[k] = source.u8[sizeof(T) - k - 1];
-
-    return dest.u;
-}
-
 // cf stackoverflow.com/questions/874134
 bool hasEnding(std::string const &full, std::string const &ending) {
     if (full.length() >= ending.length()) {
@@ -95,7 +79,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
         if (type == "numeric") {
             double *p = reinterpret_cast<double*>(arr.data);
 #ifdef WORDS_BIGENDIAN
-            std::transform(p, p + shape[0], p, swap_endian<double>);
+            std::transform(p, p + shape[0] * shape[1], p, swap_endian<double>);
 #endif
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
@@ -106,7 +90,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
         } else if (type == "integer") {
             int64_t *p = reinterpret_cast<int64_t*>(arr.data);
 #ifdef WORDS_BIGENDIAN
-            std::transform(p, p + shape[0], p, swap_endian<int64_t>);
+            std::transform(p, p + shape[0] * shape[1], p, swap_endian<int64_t>);
 #endif
             // invert dimension for creation, and then tranpose to correct Fortran-vs-C storage
             if (dotranspose) {
@@ -175,9 +159,12 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
             }
         } else if (::Rf_isNumeric(x)) {
             Rcpp::Rcout << "Saving Numeric Vector\n";
-            Rcpp::NumericVector vec(x);
 #ifdef WORDS_BIGENDIAN
+            Rcpp::NumericVector vec(Rf_length(x));
+            std::copy(REAL(x), REAL(x) + Rf_length(x), vec.begin());
             std::transform(vec.begin(), vec.end(), vec.begin(), swap_endian<double>);
+#else
+            Rcpp::NumericVector vec(x);
 #endif
             std::vector<unsigned int> shape = 
                 Rcpp::as<std::vector<unsigned int> >(Rcpp::IntegerVector::create(vec.length()));
