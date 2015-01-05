@@ -160,7 +160,7 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode) {
         } else if (::Rf_isNumeric(x)) {
             Rcpp::Rcout << "Saving Numeric Vector\n";
 #ifdef WORDS_BIGENDIAN
-            Rcpp::NumericVector vec = Rcpp::clone(x); // ensures a deep copy
+            Rcpp::NumericVector vec(Rcpp::clone(x)); // ensures a deep copy
             std::transform(vec.begin(), vec.end(), vec.begin(), swap_endian<double>);
 #else
             Rcpp::NumericVector vec(x);
