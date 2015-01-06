@@ -2,21 +2,17 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in version 0.2.4 (2015-xx-yy)}{
+\section{Changes in version 0.2.4 (2015-01-05)}{
   \itemize{
-    \item Support for saving integer objects was incorrect and has been
+    \item Support for saving integer objects was not correct and has been
     fixed
-    \item Support for loading and saving on big-endian systems was
+    \item Support for loading and saving on 'big endian' systems was
     incomplete, has been greatly expanded and corrected, thanks in large
-    part to very diligent testing by Wush Wu
+    part to very diligent testing as well as patching by Wush Wu
     \item The implementation now uses const iterators, thanks to a pull
     request by Romain Francois
-    \item The vignette no longer assumes that one call \code{gzip} via
-    \code{system} as the world's leading consumer OS may get in the way.
-    \item The default build now uses C++11 to ensure that we can work
-    with \code{long long} types used by Python as well; enabling C++11
-    is a crude and blunt tool required as CRAN otherwise insists on
-    C++98 which sadly does not contain \code{long long} types.
+    \item The vignette no longer assumes that one can call \code{gzip}
+    via \code{system} as the world's leading consumer OS may disagree.
   }
 }
 

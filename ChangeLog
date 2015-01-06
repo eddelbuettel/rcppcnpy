@@ -1,3 +1,13 @@
+2015-01-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION: Version 0.2.4
+
+	* inst/NEWS.Rd: Updated with release news
+
+2015-01-05  Wush Wu <wush978@gmail.com>
+
+	* src/cnpyMod.cpp: Correct the clone() instantiation for big endian
+
 2015-01-04  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Add Wush to Author:, bump Date: and Version:
