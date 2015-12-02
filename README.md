@@ -1,6 +1,6 @@
 ## RcppCNPy
 
-[![Build Status](https://travis-ci.org/eddelbuettel/rcppccnpy.svg)](https://travis-ci.org/eddelbuettel/rcppccnpy) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](http://cran.rstudio.com/package=RcppCNPy) [![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy)
+[![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.svg)](https://travis-ci.org/eddelbuettel/rcppccnpy) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](http://cran.rstudio.com/package=RcppCNPy) [![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy)
 
 Rcpp bindings for NumPy files
 
