@@ -130,7 +130,6 @@ cnpy::NpyArray load_the_npy_file(FILE* fp) {
     bool fortran_order;
     cnpy::parse_npy_header(fp,word_size,shape,ndims,fortran_order);
     unsigned long long size = 1; //long long so no overflow when multiplying by word_size
-    //unsigned long size = 1; //long long so no overflow when multiplying by word_size
     for(unsigned int i = 0;i < ndims;i++) size *= shape[i];
 
     cnpy::NpyArray arr;
@@ -151,7 +150,6 @@ cnpy::NpyArray gzload_the_npy_file(gzFile fp) {
     bool fortran_order;
     cnpy::parse_npy_gzheader(fp,word_size,shape,ndims,fortran_order);
     unsigned long long size = 1; //long long so no overflow when multiplying by word_size
-    //unsigned long size = 1; //long long so no overflow when multiplying by word_size
     for(unsigned int i = 0;i < ndims;i++) size *= shape[i];
 
     cnpy::NpyArray arr;

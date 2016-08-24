@@ -1,6 +1,7 @@
 2016-08-24  Dirk Eddelbuettel  <edd@debian.org>
 
-	* src/cnpy.cpp: Carry one small fix over from cnpy upstream
+	* src/cnpy.cpp: Carry one small fix over from cnpy upstream; also
+	applied to gzfile variant; revert to using 'long long' under C++11
 
 2015-02-12  Dirk Eddelbuettel  <edd@debian.org>
 
