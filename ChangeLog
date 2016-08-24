@@ -3,6 +3,8 @@
 	* src/cnpy.cpp: Carry one small fix over from cnpy upstream; also
 	applied to gzfile variant; revert to using 'long long' under C++11
 
+	* .travis.yml: Switch to using run.sh for Travis CI
+
 2015-02-12  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .travis.yml: Use ppa:edd/misc to apt-get install Rcpp and highlight
