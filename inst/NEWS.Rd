@@ -2,6 +2,14 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.5 (2016-08-26)}{
+  \itemize{
+    \item Synchronized code with the \code{cnpy} repository
+    \item Updated vignette
+    \item Expanded DESCRIPTION
+  }
+}
+
 \section{Changes in version 0.2.4 (2015-01-05)}{
   \itemize{
     \item Support for saving integer objects was not correct and has been

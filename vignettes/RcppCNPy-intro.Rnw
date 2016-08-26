@@ -46,7 +46,7 @@ prettyVersion <- packageDescription("RcppCNPy")[["Version"]]
 prettyDate <- format(Sys.Date(), "%B %e, %Y")
 @
 
-\author{Dirk Eddelbuettel}
+\author{Dirk Eddelbuettel \and Wush Wu}
 \title{\pkg{RcppCNPy}: Reading and writing \pkg{NumPy} binary files}
 \date{\pkg{RcppCNPy} version \Sexpr{prettyVersion} as of \Sexpr{prettyDate}}
 

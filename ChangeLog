@@ -1,6 +1,8 @@
 2016-08-26  Dirk Eddelbuettel  <edd@debian.org>
 
-	* vignettes/RcppCNPy-intro.Rnw: Updated vignette
+	* vignettes/RcppCNPy-intro.Rnw: Updated vignette, added Wush
+
+	* README.md: Updated, uses canonical URLs for CRAN
 
 2016-08-24  Dirk Eddelbuettel  <edd@debian.org>
 

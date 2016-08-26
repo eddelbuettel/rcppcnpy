@@ -1,4 +1,4 @@
-## RcppCNPy [![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.svg)](https://travis-ci.org/eddelbuettel/rcppccnpy) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](http://cran.rstudio.com/package=RcppCNPy) [![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy)
+## RcppCNPy [![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.svg)](https://travis-ci.org/eddelbuettel/rcppccnpy) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](http://cran.r-project.org/package=RcppCNPy) [![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy)
 
 Rcpp bindings for NumPy files
 
@@ -10,12 +10,13 @@ with (or for) the NumPy extension for Python.  Vectors and matrices of
 numeric types can be read or written to and from files as well as compressed
 files. Support for integer files is available if the package has been built
 with -std=c++11 which is the default starting with release 0.2.3 following
-the release of R 3.1.0.
+the release of R 3.1.0, and available on all platforms following the release
+of R 3.3.0 with the updated 'Rtools'.
 
 ### Status
 
-On [CRAN](https://cran.rstudio.com/web/packages/RcppCNPy/index.html), stable and
-mostly feature-complete.
+On [CRAN](https://cran.r-project.org/package=RcppCNPy), stable and mostly
+feature-complete.
 
 ### Author
 
