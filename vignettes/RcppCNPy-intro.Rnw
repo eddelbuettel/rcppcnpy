@@ -8,7 +8,7 @@
 
 \usepackage[bf,sf,compact,small]{titlesec}
 
-\usepackage[margin=1in,paper=letterpaper]{geometry}
+\usepackage[margin=0.875in,paper=letterpaper]{geometry}
 
 %\usepackage[T1]{fontenc}
 %\usepackage{pslatex}        % just like RJournal
@@ -26,8 +26,8 @@
 
 \newcommand{\R}{\proglang{R}\ } % NB forces a space so not good before % fullstop etc.
 \newcommand{\Rns}{\proglang{R}} % without the space
-\newcommand{\Cpp}{\proglang{C++}\ }
-\newcommand{\Python}{\proglang{Python}\ }
+%\newcommand{\Cpp}{\proglang{C++}\ }
+%\newcommand{\Python}{\proglang{Python}\ }
 
 \newcommand{\CRAN}[1]{\url{http://CRAN.R-Project.org/package=#1}}
 
@@ -57,37 +57,38 @@ prettyDate <- format(Sys.Date(), "%B %e, %Y")
   \noindent This document introduces the \pkg{RcppCNPy} package for reading
   and writing files created by or for the \pkg{NumPy} module for
   \proglang{Python}.
+  
+  %\pkg{RcppCNPy} is based on \pkg{cnpy}, a small and standalone
+  %\proglang{C++} library written by Carl Rogers.
+  % and uses \pkg{Rcpp} to provide \pkg{cnpy} to \proglang{R}.
 
-  \pkg{RcppCNPy} is based on \pkg{cnpy}, a \proglang{C++}
-  library written by Carl Rogers.
 }
 
 \section{Motivation}
 
 \proglang{Python}\footnote{\url{http://www.python.org}} is a widely-used
-programming language. It is deployed for use cases ranging from simple
-scripting to larger-scale application development. \Python is also popular
+and popular programming language. It is deployed in use cases ranging from simple
+scripting to larger-scale application development. \proglang{Python} is also popular
 for quantitative and scientific application due to the existence of extension
 modules such as \pkg{NumPy}\footnote{\url{http://numpy.scipy.org/}} (which is
-shorthand for Numeric Python).
+shorthand for Numeric Python) and many other packages for data analysis.
 
-\pkg{NumPy} can be used for $N$-dimensional arrays, and provides an efficient
-binary storage model for these files.  In practice, $N$ is often equal to
-two, and matrices processed or generated in \Python can be stored in this
-form.
+\pkg{NumPy} is used to efficiently represent $N$-dimensional arrays,
+and provides an efficient binary storage model for these files.  In
+practice, $N$ is often equal to two, and matrices processed or
+generated in \proglang{Python} can be stored in this form. As
+\pkg{NumPy} is popular, many project utilize this file format.
 
-\R has no dedicated reading or writing functionality for these files.
-However, Carl Rogers has provided a small \Cpp library called
+\R has no dedicated reading or writing functionality for these type of files.
+However, Carl Rogers has provided a small \proglang{Cpp} library called
 \pkg{cnpy}\footnote{\url{https://github.com/rogersce/cnpy}} which is released
 under the MIT license. Using the `Rcpp modules' feature in
-%\pkg{Rcpp}\footnote{Eddelbuettel and Fran\c{c}cois, 2011, JSS, 40(8),
-%  \url{http://www.jstatsoft.org/v40/i08/}}\footnote{\CRAN{Rcpp}}, we provide
-\pkg{Rcpp} \shortcites{CRAN:Rcpp} \citep{Eddelbuettel:2013:Rcpp,CRAN:Rcpp}, we provide
+\pkg{Rcpp} \shortcites{CRAN:Rcpp} \citep{JSS:Rcpp,Eddelbuettel:2013:Rcpp,CRAN:Rcpp}, we provide
 (some) features of this library to \Rns.
 
 \section{Examples}
 
-\subsection{Data creation in \Python}
+\subsection{Data creation in \proglang{Python}}
 
 The first code example simply creates two files in \proglang{Python}: a
 two-dimensional rectangular array as well as a vector.
@@ -121,7 +122,7 @@ array([ 0. ,  1.1,  2.2,  3.3,  4.4])
 >>>
 @ 
 
-As illustrated, \Python uses the \proglang{Fortran} convention for storing
+As illustrated, \proglang{Python} uses the \proglang{Fortran} convention for storing
 matrices and higher-dimensional arrays: a matrix constructed from a single
 sequence has its first consecutive elements in its first row---whereas \Rns,
 following the \proglang{C} convention, has these first few values in its first
@@ -172,8 +173,8 @@ same data as we stored.
 
 \subsection{Reading compressed data in \R}
 
-A useful extension to the \pkg{cnpy} is the support of \pkg{gzip}-compressed
-data.
+A useful extension to the \pkg{cnpy} library is the support of
+\pkg{gzip}-compressed data.
 
 <<eval=FALSE>>=
 mat2 <- npyLoad("fmat.npy.gz")
@@ -197,9 +198,10 @@ npySave("simplevec.npy", v)
 @ 
 
 
-\subsection{Data reading in \Python}
+\subsection{Data reading in \proglang{Python}}
 
-Reading the data back in \Python is straightforward too:
+Reading the data back in \proglang{Python} is also straightforward as shown in
+the following example:
 
 <<lang=py>>=
 >>> m = np.load("randmat.npy")
@@ -214,25 +216,34 @@ array([ 10.,  11.,  12.])
 >>> 
 @
 
+\subsection{Integer support}
+
+Support for integer data types has been conditional on use of either
+the \code{-std=c++0x} or the \code{-std=c++11} compiler extensions.
+Only these standards support the \code{long long int} type needed to
+represent \code{int64} data on a 32-bit OS.  Following the release of
+\R 3.1.0, it has been enabled by default in \pkg{RcppCNPy} (whereas it
+previously required a manual rebuild), and following the release of R
+3.3.0 with its updated Windows toolchain, C++11 is now available on
+all common R platforms. Consequently, support for large integers in
+\pkg{RcppCNPy} is no longer just a compile-time option for some
+platforms, but generally available on all (current) R installations.
+
+
 
 \section{Performance}
 
-The \R script \code{timing} in the \code{demo/} directory of package
+The \R script \code{timing} in the \code{demo/} directory of the package
 \pkg{RcppCNPy} provides a simple benchmark.  Given two values $n$ and $k$, a
 matrix of size $n \times k$ is created with $n$ rows and $k$ columns. It is
 written to temporary files in
-% \begin{enumerate}
-% \item ascii format using \code{write.table()};
-% \item \code{NumPy} format using \code{npySave()}; and
-% \item \code{NumPy} format using \code{npySave()} followed by a call to \code{gzip}.
-% \end{enumerate}
 i) ascii format using \code{write.table()};
 ii) \code{NumPy} format using \code{npySave()}; and
 iii) \code{NumPy} format using \code{npySave()} with compression via
 the \code{zlib} library (used also by \code{gzip}).
 
 Table~\ref{tab:benchmark} shows some timing comparisons for a matrix with
-five million elements.  Reading the \code{npy} is clearly fastest as it
+five million elements.  Reading the \code{npy} data is clearly fastest as it
 required only parsing of the header, followed by a single large binary read
 (and the transpose required to translate the representation used by \Rns). The
 compressed file requires only one-fourth of the disk space, but takes
@@ -247,16 +258,16 @@ slowest.
         \toprule
         {\bf Access method \phantom{X}} & {\bf Time in sec.} & {\bf Relative to best} \\
         \cmidrule(r){1-3}
-     \code{npyLoad(pyfile)}   &    1.95 &  1.00 \\
-   \code{npyLoad(pygzfile)}   &    4.92 &  2.53 \\
- \code{read.table(}txtfile)   &  128.85 & 66.24 \\
+     \code{npyLoad(pyfile)}   &    0.074 &  1.000  \\
+   \code{npyLoad(pygzfile)}   &    0.190 &  2.568 \\
+ \code{read.table(}txtfile)   &    4.189 & 56.608 \\
         \bottomrule
       \end{tabular}
     \end{small}
     \caption{Performance comparison of data reads using a matrix of size
       $10^5 \times 50$. File size are 39.7mb for ascii, 40.0mb for npy and
       10.8mb for npy.gz. Ten replications were performed, and total times
-      are shown.}
+      are shown. R 3.3.1 was used on a laptop with an SSD disk. }
     \label{tab:benchmark}
   \end{center}
 \end{table}
@@ -264,15 +275,6 @@ slowest.
 
 
 \section{Limitations}
-
-\subsection{Integer support}
-
-Support for integer data types is conditional on use of either the
-\code{-std=c++0x} or the newer \code{-std=c++11} compiler extension switches.
-Only these newer standard supports the \code{long long int} type needed to
-represent \code{int64} data on a 32-bit OS.  Following the release of \R
-3.1.0, it has been enabled by default (whereas it previously required a
-manual rebuild).
 
 \subsection{Higher-dimensional arrays}
 
@@ -289,9 +291,9 @@ feature could also be exported.
 The \pkg{RcppCNPy} package provides simple reading and writing of \pkg{NumPy}
 files, using the \pkg{cnpy} library.
 %
-Reading of compressed files is also supported as an extension. This offers
-users a balance between more compact storage at the prices of slightly longer
-read times.
+Reading of compressed files is also supported as an extension,
+offering more compact storage at the cost of slightly longer read
+times.
 
 <<print=FALSE,echo=FALSE>>=
 unlink("fmat.npy")

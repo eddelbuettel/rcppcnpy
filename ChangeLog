@@ -1,3 +1,7 @@
+2016-08-26  Dirk Eddelbuettel  <edd@debian.org>
+
+	* vignettes/RcppCNPy-intro.Rnw: Updated vignette
+
 2016-08-24  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpy.cpp: Carry one small fix over from cnpy upstream; also
