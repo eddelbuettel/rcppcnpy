@@ -20,7 +20,7 @@ feature-complete.
 
 ### Author
 
-Dirk Eddelbuettel
+Dirk Eddelbuettel and Wush Wu
 
 ### License
 
