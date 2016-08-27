@@ -1,9 +1,10 @@
 ---
 title: 'RcppCNPy: Read-Write Support for NumPy Files in R'
 tags:
-  - example
-  - tags
-  - for the paper
+  - Python
+  - NumPy
+  - R
+  - data transfer
 authors:
   - name: Dirk Eddelbuettel
   - orcid: 0000-0001-6419-907X

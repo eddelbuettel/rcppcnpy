@@ -1,0 +1,23 @@
+{
+  "@context": "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+    {
+      "@id": "http://orcid.org/0000-0001-6419-907X",
+      "@type": "Person",
+      "email": "edd@debian.org",
+      "name": "Dirk Eddelbuettel",
+      "affiliation": "Debian and R Projects"
+    }
+  ],
+  "identifier": "",
+  "codeRepository": "https://github.com/eddelbuettel/rcppcnpy",
+  "datePublished": "2016-08-27",
+  "dateModified": "2016-08-27",
+  "dateCreated": "2016-08-27",
+  "description": "Rcpp bindings for NumPy files",
+  "keywords": "Python, NumPy, R, data transfer",
+  "license": "GPL-2",
+  "title": "RcppCNPy",
+  "version": "0.2.5"
+}
