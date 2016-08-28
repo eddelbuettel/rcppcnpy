@@ -19,7 +19,7 @@ The following Python code
 
 ```{.python}
 >>> import numpy as np
->>> fm = np.arange(12).reshape(3,4) * 1.1                                                                                                                                                                           
+>>> fm = np.arange(12).reshape(3,4) * 1.1
 >>> fm
 array([[  0. ,   1.1,   2.2,   3.3],
        [  4.4,   5.5,   6.6,   7.7],
@@ -27,7 +27,7 @@ array([[  0. ,   1.1,   2.2,   3.3],
 >>> np.save("fmat.npy", fm)
 >>> 
 >>> im = np.arange(3,4)
->>> im = np.arange(12).reshape(3,4)                                                                                                                                                                                 
+>>> im = np.arange(12).reshape(3,4)
 >>> im
 array([[ 0,  1,  2,  3],
        [ 4,  5,  6,  7],
