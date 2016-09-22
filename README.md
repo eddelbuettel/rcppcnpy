@@ -28,7 +28,6 @@ array([[  0. ,   1.1,   2.2,   3.3],
        [  8.8,   9.9,  11. ,  12.1]])
 >>> np.save("fmat.npy", fm)
 >>> 
->>> im = np.arange(3,4)
 >>> im = np.arange(12).reshape(3,4)
 >>> im
 array([[ 0,  1,  2,  3],
