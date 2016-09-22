@@ -6,9 +6,12 @@ tags:
   - R
   - data transfer
 authors:
-  - name: Dirk Eddelbuettel
-  - orcid: 0000-0001-6419-907X
-affiliation: Debian and R Projects
+ - name: Dirk Eddelbuettel
+   orcid: 0000-0001-6419-907X
+   affiliation: Debian and R Projects
+ - name: Wush Wu
+   orcid: null
+   affiliation: Institute of Electrical Engineering, National Taiwan University
 date: 26 August 2016
 bibliography: paper.bib
 ---
@@ -22,7 +25,7 @@ quantitative and scientific application due to the existence of extension module
 [NumPy](http://www.numpy.org/) (which is shorthand for Numeric Python) and many other
 packages for data analysis.
 
-[NumPy](http://www.numpy.org/) is used to efficiently represent N-dimensional arrays, and
+[NumPy](http://www.numpy.org/) [@NumPy] is used to efficiently represent N-dimensional arrays, and
 provides an efficient binary storage model for these files.  In practice, N is often equal
 to two, and matrices processed or generated in [Python](https://https://www.python.org/)
 can be stored in this form. As [NumPy](http://www.numpy.org/) is popular, many project

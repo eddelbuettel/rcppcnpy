@@ -8,7 +8,14 @@
       "email": "edd@debian.org",
       "name": "Dirk Eddelbuettel",
       "affiliation": "Debian and R Projects"
-    }
+    },
+    {
+      "@id": "",
+      "@type": "Person",
+      "email": "wush978@gmail.com",
+      "name": "Wush Wu",
+      "affiliation": "Institute of Electrical Engineering, National Taiwan University"
+    }      
   ],
   "identifier": "",
   "codeRepository": "https://github.com/eddelbuettel/rcppcnpy",
