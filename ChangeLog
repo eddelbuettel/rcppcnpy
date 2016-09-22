@@ -1,3 +1,13 @@
+2016-09-22  Dirk Eddelbuettel  <edd@debian.org>
+
+	* README.md: Remove one redundant code line
+
+2016-09-21  Dirk Eddelbuettel  <edd@debian.org>
+
+	* README.md: Added 'Feedback' section, added JOSS badge
+
+	* man/RcppCNPy-package.Rd: Add examples
+
 2016-08-26  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION: Version 0.2.5
