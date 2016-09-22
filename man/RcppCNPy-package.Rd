@@ -69,5 +69,26 @@
   \code{\link[Rcpp:Rcpp-package]{Rcpp}} 
 }
 \examples{
-  ## TODO, but see demo()
+\dontrun{
+    library(RcppCNPy)
+
+    ## load NumPy file with floating-point data
+    fmat <- npyLoad("fmat.npy")
+    
+    ## load NumPy file with integer data
+    imat <- npyLoad("imat.npy", "integer")
+
+    ## save floating-point data: matrix and vector
+    M <- matrix(0:11, 3, 4, byrow=TRUE) * 1.1
+    v <- v <- 0:4 * 1.1
+    npySave("fmat.npy", M)
+    npySave("fvec.npy", v)
+
+    ## save integer data: matrix and vector
+    M <- matrix(0:11, 3, 4, byrow=TRUE)
+    v <- v <- 0:4 
+    npySave("imat.npy", M)
+    npySave("ivec.npy", v)
+    
+    }  
 }
