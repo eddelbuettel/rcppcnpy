@@ -1,10 +1,10 @@
 ---
 title: 'RcppCNPy: Read-Write Support for NumPy Files in R'
 tags:
-  - Python
-  - NumPy
-  - R
-  - data transfer
+ - Python
+ - NumPy
+ - R
+ - data transfer
 authors:
  - name: Dirk Eddelbuettel
    orcid: 0000-0001-6419-907X
@@ -33,9 +33,10 @@ utilize this file format.
 
 [R](https://www.r-project.org) has no dedicated reading or writing functionality for these
 type of files.  However, Carl Rogers has provided a small C++ library called
-[cnpy](https://github.com/rogersce/cnpy). Using the _Rcpp modules_ feature in
+[cnpy](https://github.com/rogersce/cnpy) [@CNPy]. Using the _Rcpp modules_ feature in
 [Rcpp](http://dirk.eddelbuettel.com/code/rcpp.html) [@Eddelbuettel:2013:Rcpp,@CRAN:Rcpp],
-we provide (some) features of this library to [R](https://www.r-project.org).
+we provide (some) features of this library to [R](https://www.r-project.org) via the 
+[RcppCNPy](https://dirk.eddelbuettel.com/code/rcpp.cnpy.html) package [@CRAN:RcppCNPy].
 
 # References
 
