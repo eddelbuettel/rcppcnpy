@@ -68,6 +68,14 @@ correctly with little-vs-big endian switches.
 
 More details are available in the [package vignette](https://cran.r-project.org/web/packages/RcppCNPy/vignettes/RcppCNPy-intro.pdf).
 
+### Installation
+
+The package is on [CRAN](https://cran.r-project.org) and can be installed per:
+
+```{r}
+R> install.packages(RCppCNPy)
+```
+
 ### Status
 
 On [CRAN](https://cran.r-project.org/package=RcppCNPy), stable and mostly
@@ -75,8 +83,10 @@ feature-complete.
 
 ### Feedback
 
-Please use the GitHub [issue tracker](https://github.com/eddelbuettel/rcppcnpy/issues) for
-bug reports, feature requests or general discussions.
+Contributions are welcome, please use the GitHub
+[issue tracker](https://github.com/eddelbuettel/rcppcnpy/issues) for
+bug reports, feature requests or general discussions before sending
+[pull requests](https://github.com/eddelbuettel/rcppcnpy/pulls).
 
 ### Author
 
