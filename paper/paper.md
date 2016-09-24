@@ -10,7 +10,7 @@ authors:
    orcid: 0000-0001-6419-907X
    affiliation: Debian and R Projects
  - name: Wush Wu
-   orcid: null
+   orcid: 0000-0001-5180-0567
    affiliation: Institute of Electrical Engineering, National Taiwan University
 date: 26 August 2016
 bibliography: paper.bib
