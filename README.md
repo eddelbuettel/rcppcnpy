@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.svg)](https://travis-ci.org/eddelbuettel/rcppccnpy) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](http://cran.r-project.org/package=RcppCNPy) [![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy)
 [![status](http://joss.theoj.org/papers/6afd88394721d1f421f5a023467a8b86/status.svg)](http://joss.theoj.org/papers/6afd88394721d1f421f5a023467a8b86)
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.155066.svg)](https://doi.org/10.5281/zenodo.155066)
 
 ### About
 
