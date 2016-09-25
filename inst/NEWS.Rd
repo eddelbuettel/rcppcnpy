@@ -60,7 +60,7 @@
     \item Added new function to test from R whether integers supported
     \item Updated tests for integer support, if available
     \item Updated vignette and discussion about need for rebuilding only
-    \cpkg{RcppCNPy} with the \code{-std=c++11} flag if integer support is
+    \pkg{RcppCNPy} with the \code{-std=c++11} flag if integer support is
     desired 
     \item Updated tests for integer support, if available
     \item Updated THANKS file
