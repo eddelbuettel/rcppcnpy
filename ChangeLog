@@ -1,3 +1,11 @@
+2016-09-25  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/CITATION: Added with new JOSS paper
+
+2016-09-24  Dirk Eddelbuettel  <edd@debian.org>
+
+	* README.md: Added Zenodo doi reference
+
 2016-09-22  Dirk Eddelbuettel  <edd@debian.org>
 
 	* README.md: Remove one redundant code line
