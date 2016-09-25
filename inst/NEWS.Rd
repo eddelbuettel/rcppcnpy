@@ -2,7 +2,7 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in version 0.2.6 (2016-09-xx)}{
+\section{Changes in version 0.2.6 (2016-09-25)}{
   \itemize{
     \item Expanded documentation in README.md
     \item Added examples to help page
