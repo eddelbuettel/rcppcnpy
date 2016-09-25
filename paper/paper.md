@@ -6,9 +6,9 @@ tags:
   - R
   - data transfer
 authors:
-  - name: Dirk Eddelbuettel
-  - orcid: 0000-0001-6419-907X
-affiliation: Debian and R Projects
+ - name: Dirk Eddelbuettel
+   orcid: 0000-0001-6419-907X
+   affiliation: Debian and R Projects
 date: 26 August 2016
 bibliography: paper.bib
 ---
