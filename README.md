@@ -1,6 +1,8 @@
-## RcppCNPy [![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.svg)](https://travis-ci.org/eddelbuettel/rcppccnpy) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](http://cran.r-project.org/package=RcppCNPy) [![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy)
+## RcppCNPy: Rcpp bindings for NumPy files
 
-Rcpp bindings for NumPy files
+[![Build Status](https://travis-ci.org/eddelbuettel/rcppcnpy.svg)](https://travis-ci.org/eddelbuettel/rcppccnpy) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](https://cran.r-project.org/package=RcppCNPy) [![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy)
+[![status](http://joss.theoj.org/papers/6afd88394721d1f421f5a023467a8b86/status.svg)](http://joss.theoj.org/papers/6afd88394721d1f421f5a023467a8b86)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.155066.svg)](https://doi.org/10.5281/zenodo.155066)
 
 ### About
 
@@ -66,10 +68,25 @@ correctly with little-vs-big endian switches.
 
 More details are available in the [package vignette](https://cran.r-project.org/web/packages/RcppCNPy/vignettes/RcppCNPy-intro.pdf).
 
+### Installation
+
+The package is on [CRAN](https://cran.r-project.org) and can be installed per:
+
+```{r}
+R> install.packages(RCppCNPy)
+```
+
 ### Status
 
 On [CRAN](https://cran.r-project.org/package=RcppCNPy), stable and mostly
 feature-complete.
+
+### Feedback
+
+Contributions are welcome, please use the GitHub
+[issue tracker](https://github.com/eddelbuettel/rcppcnpy/issues) for
+bug reports, feature requests or general discussions before sending
+[pull requests](https://github.com/eddelbuettel/rcppcnpy/pulls).
 
 ### Author
 

@@ -1,0 +1,20 @@
+citHeader("To cite RcppCNPy in publications use:")
+
+citEntry(entry = "Article",
+  title        = "{RcppCNPy}: Read-Write Support for NumPy Files in R",
+  author       = personList(as.person("Dirk Eddelbuettel"), as.person("Wush Wu")),
+  journal      = "Journal of Open Source Software",
+  publisher    = "The Open Journal",
+  year         = "2016",
+  volume       = "1",
+  issue        = "5",
+  month        = "September",
+  url          = "http://dx.doi.org/10.21105/joss.00055",
+
+  textVersion  =
+  paste("Dirk Eddelbuettel, Wush Wu (2016).",
+        "RcppCNPy: Read-Write Support for NumPy Files in R.",
+        "Journal of Open Source Software, 1(5), September 2016.",
+        "URL http://dx.doi.org/10.21105/joss.00055")
+)
+

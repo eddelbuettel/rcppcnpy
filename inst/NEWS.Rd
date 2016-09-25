@@ -2,6 +2,14 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.6 (2016-09-25)}{
+  \itemize{
+    \item Expanded documentation in README.md
+    \item Added examples to help page
+    \item Added CITATION file for JOSS paper
+  }
+}
+    
 \section{Changes in version 0.2.5 (2016-08-26)}{
   \itemize{
     \item Synchronized code with the \code{cnpy} repository
@@ -52,7 +60,7 @@
     \item Added new function to test from R whether integers supported
     \item Updated tests for integer support, if available
     \item Updated vignette and discussion about need for rebuilding only
-    \cpkg{RcppCNPy} with the \code{-std=c++11} flag if integer support is
+    \pkg{RcppCNPy} with the \code{-std=c++11} flag if integer support is
     desired 
     \item Updated tests for integer support, if available
     \item Updated THANKS file
