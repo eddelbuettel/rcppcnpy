@@ -1,6 +1,10 @@
 2016-09-25  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION (Version, Date): Version 0.2.6
+
 	* inst/CITATION: Added with new JOSS paper
+
+	* README.md: One more canonical URL
 
 2016-09-24  Dirk Eddelbuettel  <edd@debian.org>
 

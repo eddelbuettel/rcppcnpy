@@ -66,7 +66,7 @@ allows reading and writing of gzip-compressed files.
 The package has been tested and used on several architecture, and copes
 correctly with little-vs-big endian switches.
 
-More details are available in the [package vignette](https://cran.r-project.org/web/packages/RcppCNPy/vignettes/RcppCNPy-intro.pdf).
+More details are available in the [package vignette](https://cran.r-project.org/package=RcppCNPy/vignettes/RcppCNPy-intro.pdf).
 
 ### Installation
 
