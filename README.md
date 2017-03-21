@@ -73,7 +73,7 @@ More details are available in the [package vignette](https://cran.r-project.org/
 The package is on [CRAN](https://cran.r-project.org) and can be installed per:
 
 ```{r}
-R> install.packages(RCppCNPy)
+R> install.packages("RCppCNPy")
 ```
 
 ### Status
