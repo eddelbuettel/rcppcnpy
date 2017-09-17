@@ -1,4 +1,4 @@
 import(methods)
-import(Rcpp)
-useDynLib(RcppCNPy)
+importFrom("Rcpp", "loadModule")
+useDynLib(RcppCNPy, .registration=TRUE)
 exportPattern("^[[:alpha:]]+")
