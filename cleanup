@@ -1,9 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 rm -f src/*.o src/*.so src/symbols.rds
 
-rm -rf vignettes/auto/ vignettes/*.log vignettes/*.aux vignettes/*.out vignettes/*.tex \
-       vignettes/*.blg vignettes/*.bbl
+rm -rf vignettes/auto/ vignettes/*.{log,aux,out,tex,blg,bbl,xwm} vignettes/pinp.cls 
 
 find . -name \*~ -exec rm {} \;
 
