@@ -86,6 +86,19 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
+
+```{r echo = FALSE, message = FALSE}
+if (identical(Sys.info()[['sysname']], "Windows")) {
+    knitr::opts_chunk$set(eval = FALSE)                                      
+    msg <- paste("Note: Some examples in this vignette require Python", 
+                 "but you are running this vignette on Windows where Python",
+                 "is much less likely to be present, or even known to be",
+                 "missing (i.e. win-builder) so examples will not be evaluated.")
+    msg <- paste(strwrap(msg), collapse="\n")
+    message(msg) 
+}
+```
+
 # Motivation
 
 \proglang{Python}\footnote{\url{http://www.python.org}} is a widely-used

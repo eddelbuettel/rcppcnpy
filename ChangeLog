@@ -4,7 +4,8 @@
 
 	* cleanup: Expanded cleanup
 
-	* vignettes/RcppCNPy-intro.Rmd: Re-built under pinp 0.0.2
+	* vignettes/RcppCNPy-intro.Rmd: Re-built under pinp 0.0.2; also
+	disable evaluation if Sys.info() detects the wonders of Windows
 
 2017-09-17  Dirk Eddelbuettel  <edd@debian.org>
 
