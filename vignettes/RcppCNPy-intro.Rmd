@@ -4,7 +4,7 @@ title: |
        | Reading and writing \pkg{NumPy} binary files
 
 author:
-  - name: Dirk Eddelbuettel  
+  - name: Dirk Eddelbuettel
     affiliation: a
   - name: Wush Wu
     affiliation: b
@@ -23,6 +23,10 @@ abstract: |
   and writing files created by or for the \pkg{NumPy} module for
   \proglang{Python}.
 
+acknowledgements: |
+  This short paper about the \pkg{RcppCNPy} package can be cited as \citet{JOSS:RcppCNPy}; 
+  see the `citation("RcppCNPy")` command in R for details.
+
 footer_contents: "RcppCNPy Vignette"
 
 output: pinp::pinp
@@ -32,6 +36,48 @@ header-includes:
   \newcommand{\pkg}[1]{\textbf{#1}}
   \newcommand{\R}{\proglang{R}\ } 
   \newcommand{\Rns}{\proglang{R}} 
+
+include-after: |
+  \begin{thebibliography}{4}
+  \newcommand{\enquote}[1]{``#1''}
+  \providecommand{\natexlab}[1]{#1}
+  \providecommand{\url}[1]{\texttt{#1}}
+  \providecommand{\urlprefix}{URL }
+  \expandafter\ifx\csname urlstyle\endcsname\relax
+    \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+    \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+    \urlstyle{rm}\Url}\fi
+  \providecommand{\eprint}[2][]{\url{#2}}
+  
+  \bibitem[{Eddelbuettel(2013)}]{Eddelbuettel:2013:Rcpp}
+  Eddelbuettel D (2013).
+  \newblock \emph{Seamless R and C++ Integration with Rcpp}.
+  \newblock Use R! Springer, New York.
+  \newblock ISBN 978-1-4614-6867-7.
+  
+  \bibitem[{Eddelbuettel and Fran\c{c}ois(2011)}]{JSS:Rcpp}
+  Eddelbuettel D, Fran\c{c}ois R (2011).
+  \newblock \enquote{{Rcpp}: Seamless {R} and {C++} Integration.}
+  \newblock \emph{Journal of Statistical Software}, \textbf{40}(8), 1--18.
+  \newblock \urlprefix\url{http://www.jstatsoft.org/v40/i08/}.
+  
+  \bibitem[{Eddelbuettel \emph{et~al.}(2017)Eddelbuettel, Fran\c{c}ois, Allaire,
+    Ushey, Kou, Russel, Chambers, and Bates}]{CRAN:Rcpp}
+  Eddelbuettel D, Fran\c{c}ois R, Allaire J, Ushey K, Kou Q, Russel N, Chambers
+    J, Bates D (2017).
+  \newblock \emph{{Rcpp}: Seamless {R} and {C++} Integration}.
+  \newblock R package version 0.12.12,
+    \urlprefix\url{http://CRAN.R-Project.org/package=Rcpp}.
+  
+  \bibitem[{Eddelbuettel and Wu(2016)}]{JOSS:RcppCNPy}
+  Eddelbuettel D, Wu W (2016).
+  \newblock \enquote{{RcppCNPy}: Read-Write Support for {NumPy} Files in R.}
+  \newblock \emph{The Journal of Open Source Software}, \textbf{1}(5).
+  \newblock \doi{10.21105/joss.00055}.
+  \newblock \urlprefix\url{https://doi.org/10.21105/joss.00055}.
+
+  \end{thebibliography}
+
 
 vignette: >
   %\VignetteIndexEntry{RcppCNPy-intro}
@@ -225,24 +271,12 @@ unlink("randmat.npy")
 unlink("simplevec.npy")
 ```
 
-\begin{thebibliography}{}
+# Summary
 
-\bibitem[\protect\citeauthoryear{Eddelbuettel}{Eddelbuettel}{2013}]{Eddelbuettel:2013:Rcpp}
-Eddelbuettel, D. (2013).
-\newblock {\em Seamless R and C++ Integration with Rcpp}.
-\newblock Use R! New York: Springer.
+The \pkg{RcppCNPy} package provides simple reading and writing of
+\pkg{NumPy} files, using the \pkg{cnpy} library. Reading of compressed
+files is also supported as an extension, offering more compact storage
+at the cost of slightly longer read times.
 
-\bibitem[\protect\citeauthoryear{Eddelbuettel and Fran\c{c}ois}{Eddelbuettel
-  and Fran\c{c}ois}{2011}]{JSS:Rcpp}
-Eddelbuettel, D. and R.~Fran\c{c}ois (2011).
-\newblock {Rcpp}: Seamless {R} and {C++} integration.
-\newblock {\em Journal of Statistical Software\/}~{\em 40\/}(8), 1--18.
-
-\bibitem[\protect\citeauthoryear{Eddelbuettel, Fran\c{c}ois, Allaire, Ushey,
-  Kou, Russel, Chambers, and Bates}{Eddelbuettel et~al.}{2017}]{CRAN:Rcpp}
-Eddelbuettel, D., R.~Fran\c{c}ois, J.~Allaire, K.~Ushey, Q.~Kou, N.~Russel,
-  J.~Chambers, and D.~Bates (2017).
-\newblock {\em {Rcpp}: Seamless {R} and {C++} Integration}.
-\newblock R package version 0.12.12.
-
-\end{thebibliography}
+<!-- local tweak to the pnasbreak command -->
+\renewcommand{\pnasbreak}{\begin{strip}\vskip0pt\end{strip}}

@@ -1,3 +1,11 @@
+2017-09-22  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Release 0.2.7
+
+	* cleanup: Expanded cleanup
+
+	* vignettes/RcppCNPy-intro.Rmd: Re-built under pinp 0.0.2
+
 2017-09-17  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Roll minor version
