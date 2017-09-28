@@ -37,6 +37,11 @@ T transpose(const T & m) {      // tranpose for IntegerMatrix / NumericMatrix, s
     return(z);
 }
 
+template <typename T>
+int int8_to(const int8_t m) { // convert int8_t to T
+  return(static_cast<T>(m));
+}
+
 // cf stackoverflow.com/questions/874134
 bool hasEnding(std::string const &full, std::string const &ending) {
     if (full.length() >= ending.length()) {
@@ -76,6 +81,19 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             Rf_error("Unsupported type in npyLoad");
         } 
     } else if (shape.size() == 2) {
+        if (arr.word_size == 1) {
+          // 1 byte data: No endianness required?
+          int8_t *p = reinterpret_cast<int8_t*>(arr.data);
+          if (dotranspose) {
+            Rcpp::IntegerMatrix m = Rcpp::no_init(shape[1], shape[0]);
+            std::transform(p, p + shape[0] * shape[1], m.begin(), int8_to<int>);
+            ret = transpose(m);
+          } else {
+            Rcpp::IntegerMatrix m = Rcpp::no_init(shape[0], shape[1]);
+            std::transform(p, p + shape[0] * shape[1], m.begin(), int8_to<int>);
+            ret = m;
+          }
+        } else {
         if (type == "numeric") {
             double *p = reinterpret_cast<double*>(arr.data);
 #ifdef WORDS_BIGENDIAN
@@ -101,6 +119,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
         } else {
             arr.destruct();
             Rf_error("Unsupported type in npyLoad");
+        }
         }
     } else {
         arr.destruct();
