@@ -2,6 +2,13 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.8 (2018-01-04)}{
+  \itemize{
+    \item Vignette sets knitr option \code{python.reticulate=FALSE} to
+    avoid another depedency just for the vignette [CRAN request]
+  }
+}
+
 \section{Changes in version 0.2.7 (2017-09-22)}{
   \itemize{
     \item Vignette updated to Rmd and use of \code{pinp} package

@@ -1,3 +1,10 @@
+2018-01-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Release 0.2.8
+
+	* vignettes/RcppCNPy-intro.Rmd: Set knitr chunk option
+	'python.reticulate=FALSE' to avoid vignette dependency
+
 2017-09-22  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Release 0.2.7
