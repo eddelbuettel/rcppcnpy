@@ -1,3 +1,11 @@
+2018-02-27  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/cnpyMod.cpp (npySave): Add new option to check directory
+	and path before attempting to save
+
+	* R/utils.R (.checkPath): New helper function to check if a
+	directory contained in a path exists
+
 2018-01-04  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Release 0.2.8

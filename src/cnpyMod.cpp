@@ -110,7 +110,12 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
     return ret;
 }
 
-void npySave(std::string filename, Rcpp::RObject x, std::string mode) { 
+void npySave(std::string filename, Rcpp::RObject x, std::string mode, bool checkPath) {
+    if (checkPath) {
+        Rcpp::Environment ns = Rcpp::Environment::namespace_env("RcppCNPy");
+        Rcpp::Function checkPath = ns[".checkPath"];
+        checkPath(filename);
+    }
     if (::Rf_isMatrix(x)) {
         if (::Rf_isInteger(x)) {
             Rcpp::IntegerMatrix mat = transpose(Rcpp::IntegerMatrix(x));
@@ -199,7 +204,8 @@ RCPP_MODULE(cnpy){
              &npySave,          		// function pointer to helper function defined above
              List::create( Named("filename"),   // function arguments including default value
                            Named("object"), 
-                           Named("mode") = "w"),
+                           Named("mode") = "w",
+                           Named("checkPath") = false),
              "save an R object (vector or matrix of type integer or numeric) to an npy file");
 
     function("npyHasIntegerSupport", &npyHasIntegerSupport, 
