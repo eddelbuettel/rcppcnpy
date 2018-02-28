@@ -206,7 +206,7 @@ RCPP_MODULE(cnpy){
              List::create( Named("filename"),   // function arguments including default value
                            Named("object"), 
                            Named("mode") = "w",
-                           Named("checkPath") = false),
+                           Named("checkPath") = true),
              "save an R object (vector or matrix of type integer or numeric) to an npy file");
 
     function("npyHasIntegerSupport", &npyHasIntegerSupport, 

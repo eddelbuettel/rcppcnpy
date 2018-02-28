@@ -1,7 +1,9 @@
 2018-02-28  Dirk Eddelbuettel  <edd@debian.org>
 
-	* src/cnpyMod.cpp (npySave): Operate on bool from R
+	* src/cnpyMod.cpp (npySave): Operate on bool from R; default to TRUE
 	* R/utils.R (.checkPath): Now just returns the dir.exists() result
+
+	* man/RcppCNPy-package.Rd: Updated documentation for new argument
 
 2018-02-27  Dirk Eddelbuettel  <edd@debian.org>
 
