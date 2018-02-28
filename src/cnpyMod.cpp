@@ -114,7 +114,8 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode, bool check
     if (checkPath) {
         Rcpp::Environment ns = Rcpp::Environment::namespace_env("RcppCNPy");
         Rcpp::Function checkPath = ns[".checkPath"];
-        checkPath(filename);
+        bool res = Rcpp::as<bool>(checkPath(filename));
+        if (!res) Rcpp::stop("Filename contains non-existing directory.");
     }
     if (::Rf_isMatrix(x)) {
         if (::Rf_isInteger(x)) {
