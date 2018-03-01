@@ -21,7 +21,7 @@
 }
 \usage{
   npyLoad(filename, type="numeric", dotranspose=TRUE)
-  npySave(filename, object, mode="w")
+  npySave(filename, object, mode="w", checkPath=TRUE)
   npyHasIntegerSupport()
 }
 \arguments{
@@ -32,11 +32,16 @@
   \item{object}{an R object, currently limited to a vector or matrix of
     either integer or numeric type}
   \item{dotranspose}{a boolean variable indicating whether a
-  two-dimensional object should be transposed after reading, default is yes}
+    two-dimensional object should be transposed after reading, default
+    is true}
   \item{mode}{a one-character string indicating whether files are
     appended to ("a") or written ("w", the default). In case of writing
     \code{gzip}-ed file, this option is not supported as such files can
     only be (over-)written, and bot appended.
+  }
+  \item{checkPath}{a boolean variable indicating whether a path implied
+    in the \code{filename} argument is to be checked for existing
+    directories, default is true.
   }
 }
 \details{

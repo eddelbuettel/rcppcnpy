@@ -2,10 +2,17 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.9 (2018-xx-yy)}{
+  \itemize{
+    \item The \code{npySave} function has a new option to check the path
+    in the given filename.
+  }
+}
+
 \section{Changes in version 0.2.8 (2018-01-04)}{
   \itemize{
     \item Vignette sets knitr option \code{python.reticulate=FALSE} to
-    avoid another depedency just for the vignette [CRAN request]
+    avoid another dependency just for the vignette [CRAN request]
   }
 }
 
