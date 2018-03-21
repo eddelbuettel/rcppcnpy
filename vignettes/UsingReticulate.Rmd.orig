@@ -1,0 +1,144 @@
+---
+title: Using \pkg{reticulate} to read and write \pkg{NumPy} files
+
+author:
+  - name: Dirk Eddelbuettel
+    affiliation: a
+address:
+  - code: a
+    address: \url{http://dirk.eddelbuettel.com}
+
+lead_author_surname: Eddelbuettel
+
+doi: "https://cran.r-project.org/package=RcppCNPy"
+
+abstract: |
+  This vignette shows how to use the \pkg{reticulate} package for to directly
+  access the \pkg{NumPy} module for \proglang{Python}.
+
+footer_contents: "RcppCNPy Vignette"
+
+output: pinp::pinp
+
+header-includes:
+  \newcommand{\proglang}[1]{\textsf{#1}}
+  \newcommand{\pkg}[1]{\textbf{#1}}
+  \newcommand{\R}{\proglang{R}\ } 
+  \newcommand{\Rns}{\proglang{R}} 
+
+include-after: |
+  \begin{thebibliography}{4}
+  \newcommand{\enquote}[1]{``#1''}
+  \providecommand{\natexlab}[1]{#1}
+  \providecommand{\url}[1]{\texttt{#1}}
+  \providecommand{\urlprefix}{URL }
+  \expandafter\ifx\csname urlstyle\endcsname\relax
+    \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+    \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+    \urlstyle{rm}\Url}\fi
+  \providecommand{\eprint}[2][]{\url{#2}}
+
+  \bibitem[{Allaire \emph{et~al.}(2018)Allaire, Ushey, RStudio, Tang, Eddelbuettel, 
+    Lewis, and Geelnard}]{CRAN:reticulate}
+  Allaire JJ, Ushey K, RStudio, Tang Y, Eddelbuettel D, Lewis B, Geelnard M (2018).
+  \newblock \emph{{reticulate}: Interface to {Python}}.
+  \newblock R package version 1.5,
+    \urlprefix\url{http://CRAN.R-Project.org/package=reticulate}.
+ 
+  \bibitem[{Eddelbuettel and Wu(2016)}]{JOSS:RcppCNPy}
+  Eddelbuettel D, Wu W (2016).
+  \newblock \enquote{{RcppCNPy}: Read-Write Support for {NumPy} Files in R.}
+  \newblock \emph{The Journal of Open Source Software}, \textbf{1}(5).
+  \newblock \doi{10.21105/joss.00055}.
+  \newblock \urlprefix\url{https://doi.org/10.21105/joss.00055}.
+
+  \end{thebibliography}
+
+
+vignette: >
+  %\VignetteIndexEntry{RcppCNPy-reticulate}
+  %\VignetteKeywords{Python, NumPy, R, data transfer}
+  %\VignettePackage{RcppCNPy}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+
+```{r echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(python.reticulate = FALSE)
+## knitr::opts_chunk$set(eval = FALSE)
+```
+
+# Motivation
+
+The RcppCNPy package by \citet{JOSS:RcppCNPy} provides a simple and
+reliable access to NumPy files.  It does not require Python as it relies on
+the CNPy library which is connected to R with the help of Rcpp. Now, thanks
+to the reticulate package by \citet{CRAN:reticulate}, we can also consider an
+alternative which does not require CNPy--but which requires Python.  Thanks
+to reticulate, we can (on a correctly set up machine, how to do that is
+beyond the scope of this note but described in the reticulate documentation)
+use Python to read NumPy data.  And reticulate will faithfully transfer the
+data for us.
+
+```{r prep, include=FALSE}
+file.copy("~/git/rcppcnpy/tests/fmat.npy", ".")  
+file.copy("~/git/rcppcnpy/tests/fmat.npy.gz", ".")  
+file.copy("~/git/rcppcnpy/tests/fvec.npy", ".")  
+file.copy("~/git/rcppcnpy/tests/imat.npy", ".")  
+file.copy("~/git/rcppcnpy/tests/ivec.npy", ".")  
+```
+
+
+# Simple Examples
+
+```{r ex1}
+### load reticulate and use it to load numpy
+library(reticulate)
+np <- import("numpy")
+
+## data reading
+(mat <- np$load("fmat.npy"))
+(vec <- np$load("fvec.npy"))
+```
+
+Integer data can be read the same way:
+
+```{r ex2}
+(imat <- np$load("imat.npy"))
+```
+
+# Compressed Files
+
+The gzip Python module allows us to access compressed files.
+
+```{r ex3}
+## compressed data: import gzip
+gz <- import("gzip")
+
+## use it to create handle to uncompressed file 
+(mat2 <- np$load(gz$GzipFile("fmat.npy.gz","r")))
+```
+
+# Saving Files
+
+Similarly, files can be saved via reticulate access to NumPy.
+
+```{r ex4}
+tfile <- tempfile(fileext=".npy")
+
+set.seed(42)
+(m <- matrix(sort(rnorm(6)), 3, 2))
+
+np$save(tfile, m)
+
+(m2 <- np$load(tfile))
+all.equal(m, m2)
+```
+
+```{r cleanup, include=FALSE}
+unlink("fmat.npy")  
+unlink("fmat.npy.gz")  
+unlink("fvec.npy")  
+unlink("imat.npy")  
+unlink("ivec.npy")  
+```
