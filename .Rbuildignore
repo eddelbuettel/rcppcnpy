@@ -5,3 +5,4 @@ LICENSE
 ^paper
 ^local
 ^.*\.tar\.gz$
+vignettes/UsingReticulate.Rmd.orig
