@@ -85,7 +85,8 @@ file.copy("~/git/rcppcnpy/tests/fmat.npy", ".")
 file.copy("~/git/rcppcnpy/tests/fmat.npy.gz", ".")  
 file.copy("~/git/rcppcnpy/tests/fvec.npy", ".")  
 file.copy("~/git/rcppcnpy/tests/imat.npy", ".")  
-file.copy("~/git/rcppcnpy/tests/ivec.npy", ".")  
+file.copy("~/git/rcppcnpy/tests/ivec.npy", ".")
+options(width=50)
 ```
 
 
@@ -135,10 +136,40 @@ np$save(tfile, m)
 all.equal(m, m2)
 ```
 
+# Savez Array Files
+
+We can also access `savez` files.  First we save two vectors two different
+ways:
+
+```{r ex5}
+x <- seq(1, 10)
+y <- sin(x)
+np$savez("file1.npz", x, y)
+np$savez("file2.npz", x=x, y=y)
+```
+
+We can access these files with and without names:
+
+```{r ex6}
+npz1 <- np$load("file1.npz")
+npz1$files
+npz1$f[["arr_0"]]
+npz1$f[["arr_1"]]
+
+
+npz2 <- np$load("file2.npz")
+npz2$files
+npz2$f[["x"]]
+npz2$f[["y"]]
+
+
+
 ```{r cleanup, include=FALSE}
 unlink("fmat.npy")  
 unlink("fmat.npy.gz")  
 unlink("fvec.npy")  
 unlink("imat.npy")  
 unlink("ivec.npy")  
+unlink("file1.npz")  
+unlink("file2.npz")  
 ```

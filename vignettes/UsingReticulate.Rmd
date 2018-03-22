@@ -109,7 +109,7 @@ np <- import("numpy")
 \end{verbatim}
 \end{ShadedResult}
 
-```{r ex1a
+```{r ex1a}
 (vec <- np$load("fvec.npy"))
 ```
 
@@ -200,10 +200,97 @@ all.equal(m, m2)
 \end{verbatim}
 \end{ShadedResult}
 
+# Savez Array Files
+
+We can also access `savez` files.  First we save two vectors two different
+ways:
+
+```{r ex5}
+x <- seq(1, 10)
+y <- sin(x)
+np$savez("file1.npz", x, y)
+np$savez("file2.npz", x=x, y=y)
+```
+
+We can access these files with and without names:
+
+```{r ex6}
+npz1 <- np$load("file1.npz")
+npz1$files
+```
+
+\begin{ShadedResult}
+\begin{verbatim}
+#  [1] "arr_1" "arr_0"
+\end{verbatim}
+\end{ShadedResult}
+
+```{r ex6a}
+npz1$f[["arr_0"]]
+```
+
+\begin{ShadedResult}
+\begin{verbatim}
+#   [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+\end{ShadedResult}
+
+
+```{r ex6b}
+npz1$f[["arr_1"]]
+```
+
+\begin{ShadedResult}
+\begin{verbatim}
+#   [1]  0.841471  0.909297  0.141120 -0.756802
+#   [5] -0.958924 -0.279415  0.656987  0.989358
+#   [9]  0.412118 -0.544021
+\end{verbatim}
+\end{ShadedResult}
+
+
+```{r ex6c}
+npz2 <- np$load("file2.npz")
+npz2$files
+```
+
+\begin{ShadedResult}
+\begin{verbatim}
+#  [1] "y" "x"
+\end{verbatim}
+\end{ShadedResult}
+
+```{r ex6d}
+npz2$f[["x"]]
+```
+
+\begin{ShadedResult}
+\begin{verbatim}
+#   [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+\end{ShadedResult}
+
+
+```{r ex6e}
+npz2$f[["y"]]
+```
+
+\begin{ShadedResult}
+\begin{verbatim}
+#   [1]  0.841471  0.909297  0.141120 -0.756802
+#   [5] -0.958924 -0.279415  0.656987  0.989358
+#   [9]  0.412118 -0.544021
+\end{verbatim}
+\end{ShadedResult}
+
+
+
 ```{r cleanup, include=FALSE}
 unlink("fmat.npy")  
 unlink("fmat.npy.gz")  
 unlink("fvec.npy")  
 unlink("imat.npy")  
 unlink("ivec.npy")  
+unlink("file1.npz")  
+unlink("file2.npz")  
 ```
