@@ -1,3 +1,12 @@
+2018-03-22  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Version, Date): Release 0.2.9
+
+2018-03-21  Dirk Eddelbuettel  <edd@debian.org>
+
+	* vignettes/UsingReticulate.Rmd: New vignette showing how to use the
+	reticulate package (and vignette results 'fixed' to not add dependency)
+
 2018-02-28  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/cnpyMod.cpp (npySave): Operate on bool from R; default to TRUE
