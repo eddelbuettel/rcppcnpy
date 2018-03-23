@@ -13,7 +13,7 @@ lead_author_surname: Eddelbuettel
 doi: "https://cran.r-project.org/package=RcppCNPy"
 
 abstract: |
-  This vignette shows how to use the \pkg{reticulate} package for to directly
+  This vignette shows how to use the \pkg{reticulate} package to directly
   access the \pkg{NumPy} module for \proglang{Python}.
 
 footer_contents: "RcppCNPy Vignette"
