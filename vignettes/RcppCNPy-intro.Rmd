@@ -134,11 +134,11 @@ import numpy as np
 
 mat = np.arange(12).reshape(3,4) * 1.1
 np.save("fmat.npy", mat)
-print mat
+print(mat)
 
 vec = np.arange(5) * 1.1
 np.save("fvec.npy", vec)
-print vec
+print(vec)
 ``` 
 
 As illustrated, \proglang{Python} uses the \proglang{Fortran} convention for storing
@@ -198,9 +198,9 @@ the following example:
 ```{python pyex2}
 import numpy as np  
 m = np.load("randmat.npy")
-print m
+print(m)
 v = np.load("simplevec.npy")
-print v
+print(v)
 ```
 
 ## Integer support
@@ -284,13 +284,6 @@ unlink("fvec.npy")
 unlink("randmat.npy")
 unlink("simplevec.npy")
 ```
-
-# Summary
-
-The \pkg{RcppCNPy} package provides simple reading and writing of
-\pkg{NumPy} files, using the \pkg{cnpy} library. Reading of compressed
-files is also supported as an extension, offering more compact storage
-at the cost of slightly longer read times.
 
 <!-- local tweak to the pnasbreak command -->
 \renewcommand{\pnasbreak}{\begin{strip}\vskip0pt\end{strip}}
