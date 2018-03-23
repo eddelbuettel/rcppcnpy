@@ -6,7 +6,7 @@
   \itemize{
     \item The \code{npySave} function has a new option to check the path
     in the given filename.
-    \item A new vignette was added showing how the pkg{reticulate}
+    \item A new vignette was added showing how the \pkg{reticulate}
     package can be used instead.
   }
 }
