@@ -228,7 +228,7 @@ ii) \code{NumPy} format using \code{npySave()}; and
 iii) \code{NumPy} format using \code{npySave()} with compression via
 the \code{zlib} library (used also by \code{gzip}).
 
-Table~\ref{tab:benchmark} shows some timing comparisons for a matrix with
+Table \ref{tab:benchmark} shows some timing comparisons for a matrix with
 five million elements.  Reading the \code{npy} data is clearly fastest as it
 required only parsing of the header, followed by a single large binary read
 (and the transpose required to translate the representation used by \Rns). The
