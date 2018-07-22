@@ -56,16 +56,16 @@ options(width=50)
 # Motivation
 
 The \pkg{RcppCNPy} package by \citet{JOSS:RcppCNPy} provides a simple and
-reliable access to NumPy files.  It does not require \proglang{Python} as it
-relies on the CNPy library which is connected to \proglang{R} with the help
+reliable access to \pkg{NumPy} files.  It does not require \proglang{Python} as it
+relies on the \pkg{cnpy} library which is connected to \proglang{R} with the help
 of \pkg{Rcpp} \pkg{Rcpp} \shortcites{CRAN:Rcpp}
 \citep{JSS:Rcpp,Eddelbuettel:2013:Rcpp,CRAN:Rcpp}.
 
 Now, thanks to the \pkg{reticulate} package by \citet{CRAN:reticulate}, we
-can consider an alternative which does not require CNPy--but which requires
+can consider an alternative which does not require \pkg{cnpy}--but which requires
 Python.  We can (on a correctly set up machine, how to do that is beyond the
 scope of this note but described in the reticulate documentation) use Python
-to read NumPy data via \pkg{reticulate}.  
+to read \pkg{NumPy} data via \pkg{reticulate}.  
 
 ```{r prep, include=FALSE, eval=TRUE}
 file.copy("~/git/rcppcnpy/tests/fmat.npy", ".")  
@@ -76,16 +76,16 @@ file.copy("~/git/rcppcnpy/tests/ivec.npy", ".")
 ```
 
 This short note reproduces all the examples in the primary \pkg{RcppCNPy}
-vignette, but using \pkg{reticulate} instead of CNPy.
+vignette, but using \pkg{reticulate} instead of \pkg{cnpy}.
 
 # Simple Examples
 
 ```{r ex1}
-## load reticulate and use it to load numpy
+# load reticulate and use it to load numpy
 library(reticulate)    
 np <- import("numpy")
 
-## data reading
+# data reading
 mat <- np$load("fmat.npy")
 mat
 
@@ -105,8 +105,9 @@ imat
 The gzip \proglang{Python} module allows us to access compressed files.
 
 ```{r ex3}
-gz <- import("gzip")  # for compressed data  
-## use it to create handle to uncompressed file 
+# use the gzip modules for compressed data  
+gz <- import("gzip")  
+# use it to create handle to uncompressed file 
 mat2 <- np$load(gz$GzipFile("fmat.npy.gz","r"))
 mat2
 ```
@@ -114,7 +115,7 @@ mat2
 
 # Saving Files
 
-Similarly, files can be saved via reticulate access to NumPy.
+Similarly, files can be saved via reticulate access to \pkg{NumPy}.
 
 ```{r ex4}
 tfile <- tempfile(fileext=".npy")
@@ -162,6 +163,11 @@ npz2$f[["y"]]
 ```
 
 
+# Summary
+
+While the \pkg{RcppCNPy} package provides functions for the simple reading
+and writing of \pkg{NumPy} files, we can also use the \pkg{reticulate}
+package to access the \pkg{NumPy} functionality directly from \Rns.
 
 
 ```{r cleanup, include=FALSE}
@@ -174,10 +180,3 @@ unlink("file1.npz")
 unlink("file2.npz")  
 ```
 
-\phantom{XXX}
-
-\phantom{XXX}
-
-\phantom{XXX}
-
-\phantom{XXX}

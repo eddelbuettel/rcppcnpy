@@ -10,9 +10,9 @@ author:
     affiliation: b
 address:
   - code: a
-    address: \url{http://dirk.eddelbuettel.com}
+    address: http://dirk.eddelbuettel.com
   - code: b
-    address: \url{https://github.com/wush978}
+    address: https://github.com/wush978
 
 lead_author_surname: Eddelbuettel and Wu
 
