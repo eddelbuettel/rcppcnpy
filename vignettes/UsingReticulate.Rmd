@@ -3,10 +3,10 @@ title: Using \pkg{reticulate} to read and write \pkg{NumPy} files
 
 author:
   - name: Dirk Eddelbuettel
-    affiliation: a
+    affiliation: 1
 address:
-  - code: a
-    address: \url{http://dirk.eddelbuettel.com}
+  - code: 1
+    address: http://dirk.eddelbuettel.com
 
 lead_author_surname: Eddelbuettel
 
@@ -18,7 +18,9 @@ abstract: |
 
 footer_contents: "RcppCNPy Vignette"
 
-output: pinp::pinp
+output: 
+    pinp::pinp:
+      collapse: true
 
 header-includes:
   \newcommand{\proglang}[1]{\textsf{#1}}
@@ -26,34 +28,7 @@ header-includes:
   \newcommand{\R}{\proglang{R}\ } 
   \newcommand{\Rns}{\proglang{R}} 
 
-include-after: |
-  \begin{thebibliography}{4}
-  \newcommand{\enquote}[1]{``#1''}
-  \providecommand{\natexlab}[1]{#1}
-  \providecommand{\url}[1]{\texttt{#1}}
-  \providecommand{\urlprefix}{URL }
-  \expandafter\ifx\csname urlstyle\endcsname\relax
-    \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
-    \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
-    \urlstyle{rm}\Url}\fi
-  \providecommand{\eprint}[2][]{\url{#2}}
-
-  \bibitem[{Allaire \emph{et~al.}(2018)Allaire, Ushey, RStudio, Tang, Eddelbuettel, 
-    Lewis, and Geelnard}]{CRAN:reticulate}
-  Allaire JJ, Ushey K, RStudio, Tang Y, Eddelbuettel D, Lewis B, Geelnard M (2018).
-  \newblock \emph{{reticulate}: Interface to {Python}}.
-  \newblock R package version 1.5,
-    \urlprefix\url{http://CRAN.R-Project.org/package=reticulate}.
- 
-  \bibitem[{Eddelbuettel and Wu(2016)}]{JOSS:RcppCNPy}
-  Eddelbuettel D, Wu W (2016).
-  \newblock \enquote{{RcppCNPy}: Read-Write Support for {NumPy} Files in R.}
-  \newblock \emph{The Journal of Open Source Software}, \textbf{1}(5).
-  \newblock \doi{10.21105/joss.00055}.
-  \newblock \urlprefix\url{https://doi.org/10.21105/joss.00055}.
-
-  \end{thebibliography}
-
+bibliography: RcppCNPy.bib
 
 vignette: >
   %\VignetteIndexEntry{RcppCNPy-reticulate}
@@ -64,23 +39,35 @@ vignette: >
 
 
 ```{r echo = FALSE, message = FALSE}
-knitr::opts_chunk$set(python.reticulate = FALSE)
-knitr::opts_chunk$set(eval = FALSE)  ## fake to not have the packag rely on reticulate
+```{r echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(python.reticulate = TRUE)
+if (identical(Sys.info()[['sysname']], "Windows")) {
+    knitr::opts_chunk$set(eval = FALSE)                                      
+    msg <- paste("Note: Some examples in this vignette require Python", 
+                 "but you are running this vignette on Windows where Python",
+                 "is much less likely to be present, or even known to be",
+                 "missing (i.e. win-builder) so examples will not be evaluated.")
+    msg <- paste(strwrap(msg), collapse="\n")
+    message(msg) 
+}
+options(width=50)
 ```
 
 # Motivation
 
-The RcppCNPy package by \citet{JOSS:RcppCNPy} provides a simple and
-reliable access to NumPy files.  It does not require Python as it relies on
-the CNPy library which is connected to R with the help of Rcpp. Now, thanks
-to the reticulate package by \citet{CRAN:reticulate}, we can also consider an
-alternative which does not require CNPy--but which requires Python.  Thanks
-to reticulate, we can (on a correctly set up machine, how to do that is
-beyond the scope of this note but described in the reticulate documentation)
-use Python to read NumPy data.  And reticulate will faithfully transfer the
-data for us.
+The \pkg{RcppCNPy} package by \citet{JOSS:RcppCNPy} provides a simple and
+reliable access to NumPy files.  It does not require \proglang{Python} as it
+relies on the CNPy library which is connected to \proglang{R} with the help
+of \pkg{Rcpp} \pkg{Rcpp} \shortcites{CRAN:Rcpp}
+\citep{JSS:Rcpp,Eddelbuettel:2013:Rcpp,CRAN:Rcpp}.
 
-```{r prep, include=FALSE}
+Now, thanks to the \pkg{reticulate} package by \citet{CRAN:reticulate}, we
+can consider an alternative which does not require CNPy--but which requires
+Python.  We can (on a correctly set up machine, how to do that is beyond the
+scope of this note but described in the reticulate documentation) use Python
+to read NumPy data via \pkg{reticulate}.  
+
+```{r prep, include=FALSE, eval=TRUE}
 file.copy("~/git/rcppcnpy/tests/fmat.npy", ".")  
 file.copy("~/git/rcppcnpy/tests/fmat.npy.gz", ".")  
 file.copy("~/git/rcppcnpy/tests/fvec.npy", ".")  
@@ -88,72 +75,42 @@ file.copy("~/git/rcppcnpy/tests/imat.npy", ".")
 file.copy("~/git/rcppcnpy/tests/ivec.npy", ".")  
 ```
 
+This short note reproduces all the examples in the primary \pkg{RcppCNPy}
+vignette, but using \pkg{reticulate} instead of CNPy.
 
 # Simple Examples
 
 ```{r ex1}
-### load reticulate and use it to load numpy
-library(reticulate)
+## load reticulate and use it to load numpy
+library(reticulate)    
 np <- import("numpy")
 
 ## data reading
-(mat <- np$load("fmat.npy"))
+mat <- np$load("fmat.npy")
+mat
+
+vec <- np$load("fvec.npy")
+vec
 ```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#       [,1] [,2] [,3] [,4]
-#  [1,]  0.0  1.1  2.2  3.3
-#  [2,]  4.4  5.5  6.6  7.7
-#  [3,]  8.8  9.9 11.0 12.1
-\end{verbatim}
-\end{ShadedResult}
-
-```{r ex1a}
-(vec <- np$load("fvec.npy"))
-```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#  [1] 0.0 1.1 2.2 3.3 4.4
-\end{verbatim}
-\end{ShadedResult}
 
 Integer data can be read the same way:
 
 ```{r ex2}
-(imat <- np$load("imat.npy"))
+imat <- np$load("imat.npy")
+imat
 ```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#       [,1] [,2] [,3] [,4]
-#  [1,]    0    1    2    3
-#  [2,]    4    5    6    7
-#  [3,]    8    9   10   11
-\end{verbatim}
-\end{ShadedResult}
 
 # Compressed Files
 
-The gzip Python module allows us to access compressed files.
+The gzip \proglang{Python} module allows us to access compressed files.
 
 ```{r ex3}
-## compressed data: import gzip
-gz <- import("gzip")
-
+gz <- import("gzip")  # for compressed data  
 ## use it to create handle to uncompressed file 
-(mat2 <- np$load(gz$GzipFile("fmat.npy.gz","r")))
+mat2 <- np$load(gz$GzipFile("fmat.npy.gz","r"))
+mat2
 ```
 
-\begin{ShadedResult}
-\begin{verbatim}
-#       [,1] [,2] [,3] [,4]
-#  [1,]  0.0  1.1  2.2  3.3
-#  [2,]  4.4  5.5  6.6  7.7
-#  [3,]  8.8  9.9 11.0 12.1
-\end{verbatim}
-\end{ShadedResult}
 
 # Saving Files
 
@@ -161,49 +118,23 @@ Similarly, files can be saved via reticulate access to NumPy.
 
 ```{r ex4}
 tfile <- tempfile(fileext=".npy")
-
 set.seed(42)
-(m <- matrix(sort(rnorm(6)), 3, 2))
-```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#            [,1]     [,2]
-#  [1,] -0.564698 0.404268
-#  [2,] -0.106125 0.632863
-#  [3,]  0.363128 1.370958
-\end{verbatim}
-\end{ShadedResult}
-
-```{r ex4a}
+m <- matrix(sort(rnorm(6)), 3, 2)
+m
 np$save(tfile, m)
 
-(m2 <- np$load(tfile))
-```
+m2 <- np$load(tfile)
+m2
 
-\begin{ShadedResult}
-\begin{verbatim}
-#            [,1]     [,2]
-#  [1,] -0.564698 0.404268
-#  [2,] -0.106125 0.632863
-#  [3,]  0.363128 1.370958
-\end{verbatim}
-\end{ShadedResult}
-
-```{r ex4b}
 all.equal(m, m2)
 ```
 
-\begin{ShadedResult}
-\begin{verbatim}
-#  [1] TRUE
-\end{verbatim}
-\end{ShadedResult}
 
 # Savez Array Files
 
-We can also access `savez` files.  First we save two vectors two different
-ways:
+We can also access `savez` files.  
+
+First we save two vectors two different ways:
 
 ```{r ex5}
 x <- seq(1, 10)
@@ -217,71 +148,19 @@ We can access these files with and without names:
 ```{r ex6}
 npz1 <- np$load("file1.npz")
 npz1$files
-```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#  [1] "arr_1" "arr_0"
-\end{verbatim}
-\end{ShadedResult}
-
-```{r ex6a}
 npz1$f[["arr_0"]]
-```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#   [1]  1  2  3  4  5  6  7  8  9 10
-\end{verbatim}
-\end{ShadedResult}
-
-
-```{r ex6b}
 npz1$f[["arr_1"]]
 ```
 
-\begin{ShadedResult}
-\begin{verbatim}
-#   [1]  0.841471  0.909297  0.141120 -0.756802
-#   [5] -0.958924 -0.279415  0.656987  0.989358
-#   [9]  0.412118 -0.544021
-\end{verbatim}
-\end{ShadedResult}
+Ditto for the second file:
 
-
-```{r ex6c}
+```{r ex7}
 npz2 <- np$load("file2.npz")
 npz2$files
-```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#  [1] "y" "x"
-\end{verbatim}
-\end{ShadedResult}
-
-```{r ex6d}
 npz2$f[["x"]]
-```
-
-\begin{ShadedResult}
-\begin{verbatim}
-#   [1]  1  2  3  4  5  6  7  8  9 10
-\end{verbatim}
-\end{ShadedResult}
-
-
-```{r ex6e}
 npz2$f[["y"]]
 ```
 
-\begin{ShadedResult}
-\begin{verbatim}
-#   [1]  0.841471  0.909297  0.141120 -0.756802
-#   [5] -0.958924 -0.279415  0.656987  0.989358
-#   [9]  0.412118 -0.544021
-\end{verbatim}
-\end{ShadedResult}
 
 
 
@@ -294,3 +173,11 @@ unlink("ivec.npy")
 unlink("file1.npz")  
 unlink("file2.npz")  
 ```
+
+\phantom{XXX}
+
+\phantom{XXX}
+
+\phantom{XXX}
+
+\phantom{XXX}
