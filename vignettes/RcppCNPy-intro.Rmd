@@ -10,9 +10,9 @@ author:
     affiliation: b
 address:
   - code: a
-    address: \url{http://dirk.eddelbuettel.com}
+    address: http://dirk.eddelbuettel.com
   - code: b
-    address: \url{https://github.com/wush978}
+    address: https://github.com/wush978
 
 lead_author_surname: Eddelbuettel and Wu
 
@@ -24,12 +24,14 @@ abstract: |
   \proglang{Python}.
 
 acknowledgements: |
-  This short paper about the \pkg{RcppCNPy} package can be cited as \citet{JOSS:RcppCNPy}; 
+  This paper can be cited as \citet{JOSS:RcppCNPy}; 
   see the `citation("RcppCNPy")` command in R for details.
 
 footer_contents: "RcppCNPy Vignette"
 
-output: pinp::pinp
+output: 
+  pinp::pinp:
+    collapse: true
 
 header-includes:
   \newcommand{\proglang}[1]{\textsf{#1}}
@@ -37,47 +39,7 @@ header-includes:
   \newcommand{\R}{\proglang{R}\ } 
   \newcommand{\Rns}{\proglang{R}} 
 
-include-after: |
-  \begin{thebibliography}{4}
-  \newcommand{\enquote}[1]{``#1''}
-  \providecommand{\natexlab}[1]{#1}
-  \providecommand{\url}[1]{\texttt{#1}}
-  \providecommand{\urlprefix}{URL }
-  \expandafter\ifx\csname urlstyle\endcsname\relax
-    \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
-    \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
-    \urlstyle{rm}\Url}\fi
-  \providecommand{\eprint}[2][]{\url{#2}}
-  
-  \bibitem[{Eddelbuettel(2013)}]{Eddelbuettel:2013:Rcpp}
-  Eddelbuettel D (2013).
-  \newblock \emph{Seamless R and C++ Integration with Rcpp}.
-  \newblock Use R! Springer, New York.
-  \newblock ISBN 978-1-4614-6867-7.
-  
-  \bibitem[{Eddelbuettel and Fran\c{c}ois(2011)}]{JSS:Rcpp}
-  Eddelbuettel D, Fran\c{c}ois R (2011).
-  \newblock \enquote{{Rcpp}: Seamless {R} and {C++} Integration.}
-  \newblock \emph{Journal of Statistical Software}, \textbf{40}(8), 1--18.
-  \newblock \urlprefix\url{http://www.jstatsoft.org/v40/i08/}.
-  
-  \bibitem[{Eddelbuettel \emph{et~al.}(2017)Eddelbuettel, Fran\c{c}ois, Allaire,
-    Ushey, Kou, Russel, Chambers, and Bates}]{CRAN:Rcpp}
-  Eddelbuettel D, Fran\c{c}ois R, Allaire J, Ushey K, Kou Q, Russel N, Chambers
-    J, Bates D (2017).
-  \newblock \emph{{Rcpp}: Seamless {R} and {C++} Integration}.
-  \newblock R package version 0.12.12,
-    \urlprefix\url{http://CRAN.R-Project.org/package=Rcpp}.
-  
-  \bibitem[{Eddelbuettel and Wu(2016)}]{JOSS:RcppCNPy}
-  Eddelbuettel D, Wu W (2016).
-  \newblock \enquote{{RcppCNPy}: Read-Write Support for {NumPy} Files in R.}
-  \newblock \emph{The Journal of Open Source Software}, \textbf{1}(5).
-  \newblock \doi{10.21105/joss.00055}.
-  \newblock \urlprefix\url{https://doi.org/10.21105/joss.00055}.
-
-  \end{thebibliography}
-
+bibliography: RcppCNPy.bib
 
 vignette: >
   %\VignetteIndexEntry{RcppCNPy-intro}
@@ -88,7 +50,7 @@ vignette: >
 
 
 ```{r echo = FALSE, message = FALSE}
-knitr::opts_chunk$set(python.reticulate = FALSE)
+knitr::opts_chunk$set(python.reticulate = TRUE)
 if (identical(Sys.info()[['sysname']], "Windows")) {
     knitr::opts_chunk$set(eval = FALSE)                                      
     msg <- paste("Note: Some examples in this vignette require Python", 
@@ -171,6 +133,7 @@ A useful extension to the \pkg{cnpy} library is the support of
 
 ```{r rex2, eval=FALSE}
 mat2 <- npyLoad("fmat.npy.gz")
+mat2
 ``` 
 
 Support for writing compressed files has been added in version 0.2.0.
@@ -285,5 +248,3 @@ unlink("randmat.npy")
 unlink("simplevec.npy")
 ```
 
-<!-- local tweak to the pnasbreak command -->
-\renewcommand{\pnasbreak}{\begin{strip}\vskip0pt\end{strip}}

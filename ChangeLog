@@ -1,3 +1,12 @@
+2018-07-22  Dirk Eddelbuettel  <edd@debian.org>
+
+	* vignettes/RcppCNPy-intro.Rmd: Updated, now with collapse option
+	* vignettes/UsingReticulate.Rmd: Idem
+
+	* vignettes/RcppCNPy.bib: New file to allow pandoc version 2.* use
+
+	* .travis.yml: Also install r-cran-reticulate
+
 2018-03-22  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Release 0.2.9
