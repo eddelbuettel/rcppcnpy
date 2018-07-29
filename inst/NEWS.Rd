@@ -2,6 +2,17 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.10 (2018-07-29)}{
+  \itemize{
+    \item The vignettes have been updated using \sQuote{collapse} mode
+    and edited.
+    \item The README.md now refers to \CRANpkg{reticulate} as an
+    alternative and points to the \dQuote{Using reticulate} vignette.
+    \item The file \code{src/RcppExports.cpp} is used for package
+    registration instead of \code{src/init.c}.
+  }
+}
+
 \section{Changes in version 0.2.9 (2018-03-22)}{
   \itemize{
     \item The \code{npySave} function has a new option to check the path

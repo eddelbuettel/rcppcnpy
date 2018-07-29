@@ -81,6 +81,13 @@ R> install.packages("RcppCNPy")
 On [CRAN](https://cran.r-project.org/package=RcppCNPy), stable and mostly
 feature-complete.
 
+### Alternative: [reticulate](https://github.com/rstudio/reticulate)
+
+The [reticulate](https://github.com/rstudio/reticulate) package can also provide easy and comprehensive access
+to NumPy data; see the 
+[additional vignette in RcppCNPy](https://cran.r-project.org/package=RcppCNPy/vignettes/UsingReticulate.pdf) 
+for examples and more details.
+
 ### Feedback
 
 Contributions are welcome, please use the GitHub
