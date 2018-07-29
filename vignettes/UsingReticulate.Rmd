@@ -68,11 +68,11 @@ scope of this note but described in the reticulate documentation) use Python
 to read \pkg{NumPy} data via \pkg{reticulate}.  
 
 ```{r prep, include=FALSE, eval=TRUE}
-file.copy("~/git/rcppcnpy/tests/fmat.npy", ".")  
-file.copy("~/git/rcppcnpy/tests/fmat.npy.gz", ".")  
-file.copy("~/git/rcppcnpy/tests/fvec.npy", ".")  
-file.copy("~/git/rcppcnpy/tests/imat.npy", ".")  
-file.copy("~/git/rcppcnpy/tests/ivec.npy", ".")  
+file.copy("../tests/fmat.npy", ".")  
+file.copy("../tests/fmat.npy.gz", ".")  
+file.copy("../tests/fvec.npy", ".")  
+file.copy("../tests/imat.npy", ".")  
+file.copy("../tests/ivec.npy", ".")  
 ```
 
 This short note reproduces all the examples in the primary \pkg{RcppCNPy}
