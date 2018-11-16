@@ -54,7 +54,12 @@
   Integer support requires access to the \code{long long} type which is
   available if the package is built using the C++11 standard; this is
   the default since release 0.2.3 which came out after R 3.1.0 permitted
-  used of C++11 in CRAN packages.
+  use of C++11 in CRAN packages.
+
+  Note that R uses only one \code{integer} type (which uses 32 bits) and
+  one \code{double} floating point type (which uses 64 bits). If Python
+  data of either type with a different bitsize is to be shared with R,
+  it has be cast to the corresponding width used by R first.
 }
 \author{
   Dirk Eddelbuettel provided the binding to R (using the Rcpp package).

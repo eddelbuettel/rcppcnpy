@@ -1,3 +1,8 @@
+2018-11-16  Dirk Eddelbuettel  <edd@debian.org>
+
+	* man/RcppCNPy-package.Rd: Add that 32bit integer and 64bit floats
+	are the key types, and casting may be needed from other width.
+
 2018-09-02  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .travis.yml: Switch Travis CI to R 3.5 repo
