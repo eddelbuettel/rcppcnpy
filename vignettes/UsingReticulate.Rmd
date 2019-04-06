@@ -18,6 +18,8 @@ abstract: |
 
 footer_contents: "RcppCNPy Vignette"
 
+skip_final_break: true
+
 output: 
     pinp::pinp:
       collapse: true
@@ -38,7 +40,6 @@ vignette: >
 ---
 
 
-```{r echo = FALSE, message = FALSE}
 ```{r echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(python.reticulate = TRUE)
 if (identical(Sys.info()[['sysname']], "Windows")) {
@@ -73,6 +74,7 @@ file.copy("../tests/fmat.npy.gz", ".")
 file.copy("../tests/fvec.npy", ".")  
 file.copy("../tests/imat.npy", ".")  
 file.copy("../tests/ivec.npy", ".")  
+file.copy("../tests/arr.npy", ".")  
 ```
 
 This short note reproduces all the examples in the primary \pkg{RcppCNPy}
@@ -162,13 +164,15 @@ npz2$f[["x"]]
 npz2$f[["y"]]
 ```
 
+# Three-dimentional Arrays
 
-# Summary
+We can also import three-dimensional array from \pkg{NumPy} as the 
+next example shows.
 
-While the \pkg{RcppCNPy} package provides functions for the simple reading
-and writing of \pkg{NumPy} files, we can also use the \pkg{reticulate}
-package to access the \pkg{NumPy} functionality directly from \Rns.
-
+```{r ex8}
+arr <- np$load("arr.npy")
+arr
+```
 
 ```{r cleanup, include=FALSE}
 unlink("fmat.npy")  
@@ -178,5 +182,17 @@ unlink("imat.npy")
 unlink("ivec.npy")  
 unlink("file1.npz")  
 unlink("file2.npz")  
+unlink("arr.npy")
 ```
+
+# Summary
+
+While the \pkg{RcppCNPy} package provides functions for the simple reading
+and writing of \pkg{NumPy} files, we can also use the \pkg{reticulate}
+package to access the \pkg{NumPy} functionality directly from \Rns.
+
+\pkg{RcppCNPy} remains an attractive option for simple, direct and lighter-weight 
+file imports whereas \pkg{reticulate} by by \citet{CRAN:reticulate} shines a more
+full-featured access to many more aspects of \proglang{Python}.
+
 

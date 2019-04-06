@@ -1,3 +1,9 @@
+2019-04-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* vignettes/UsingReticulate.Rmd: Added brief section on 3d-arrays
+
+	* tests/createFiles.py: Created three-dim array for vignette
+
 2018-11-16  Dirk Eddelbuettel  <edd@debian.org>
 
 	* man/RcppCNPy-package.Rd: Add that 32bit integer and 64bit floats

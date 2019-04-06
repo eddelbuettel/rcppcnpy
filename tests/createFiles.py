@@ -10,3 +10,9 @@ np.save("imat.npy", np.arange(12).reshape(3,4))
 # simple float and integer vectors
 np.save("fvec.npy", np.arange(5) * 1.1)
 np.save("ivec.npy", np.arange(5))
+
+# three dimensional array
+arr = np.array(list(range(24))).reshape(4,3,2)
+np.save("arr.npy", arr)
+#print(arr[:,:,0])
+#print(arr[:,:,1])
