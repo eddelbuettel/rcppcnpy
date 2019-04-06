@@ -1,5 +1,7 @@
 2019-04-05  Dirk Eddelbuettel  <edd@debian.org>
 
+	* README.md: Add dependency badge
+
 	* vignettes/UsingReticulate.Rmd: Added brief section on 3d-arrays
 
 	* tests/createFiles.py: Created three-dim array for vignette
