@@ -2,16 +2,26 @@
 
 language: c
 sudo: required
-dist: trusty
+dist: bionic
+
+
+jobs:
+  include:
+    #- name: r-3.5
+    #  env: R_VERSION="3.5"
+    - name: r-4.0
+      env: R_VERSION="4.0"
 
 before_install:
   - curl -OLs https://eddelbuettel.github.io/r-travis/run.sh && chmod 0755 run.sh
   # add our launchpad repo which has (inter alia) r-cran-pinp
-  - sudo add-apt-repository -y ppa:edd/r-3.5
+  #- sudo add-apt-repository -y ppa:edd/r-3.5
   - ./run.sh bootstrap
 
 install:
-  - ./run.sh install_aptget r-cran-rcpp r-cran-pinp r-cran-reticulate
+  # rmarkdown also gets knitr, reticulate also gets Rcpp
+  - ./run.sh install_aptget r-cran-rmarkdown r-cran-reticulate
+  - ./run.sh install_r pinp
 
 script:
   - ./run.sh run_tests
@@ -23,7 +33,3 @@ notifications:
   email:
     on_success: change
     on_failure: change
-
-    
-
-
