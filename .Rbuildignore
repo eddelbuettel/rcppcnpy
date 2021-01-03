@@ -1,8 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 LICENSE
-^.*\.travis\.yml$
+^\.travis\.yml$
 ^paper
 ^local
 ^.*\.tar\.gz$
 vignettes/UsingReticulate.Rmd.orig
+^\.github
