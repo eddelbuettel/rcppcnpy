@@ -1,3 +1,7 @@
+2021-04-15  Dirk Eddelbuettel  <edd@debian.org>
+
+	* README.md: Update two URLs to https
+
 2021-01-03  Dirk Eddelbuettel  <edd@debian.org>
 
         * .github/workflows/ci.yaml: Add CI runner using r-ci

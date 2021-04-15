@@ -5,9 +5,9 @@
 [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) 
 [![CRAN](http://www.r-pkg.org/badges/version/RcppCNPy)](https://cran.r-project.org/package=RcppCNPy) 
 [![Dependencies](https://tinyverse.netlify.com/badge/RcppCNPy)](https://cran.r-project.org/package=RcppCNPy) 
-[![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](http://www.r-pkg.org/pkg/RcppCNPy) 
+[![Downloads](http://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](https://www.r-pkg.org:443/pkg/RcppCNPy) 
 [![Last Commit](https://img.shields.io/github/last-commit/eddelbuettel/rcppcnpy)](https://github.com/eddelbuettel/rcppcnpy)  
-[![status](http://joss.theoj.org/papers/6afd88394721d1f421f5a023467a8b86/status.svg)](http://joss.theoj.org/papers/6afd88394721d1f421f5a023467a8b86) 
+[![status](https://joss.theoj.org/papers/10.21105/joss.00055/status.svg)](https://joss.theoj.org/papers/10.21105/joss.00055) 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.155066.svg)](https://doi.org/10.5281/zenodo.155066)
 
 ### About
