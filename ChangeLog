@@ -1,3 +1,7 @@
+2021-04-24  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (URL): Add repo
+
 2021-04-15  Dirk Eddelbuettel  <edd@debian.org>
 
 	* README.md: Update two URLs to https

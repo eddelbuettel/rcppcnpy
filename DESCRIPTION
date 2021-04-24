@@ -11,7 +11,7 @@ Description: The 'cnpy' library written by Carl Rogers provides read and write
  files as well as compressed files. Support for integer files is available if
  the package has been built with -std=c++11 which should be the default on
  all platforms since the release of R 3.3.0.
-URL: http://dirk.eddelbuettel.com/code/rcpp.cnpy.html
+URL: https://github.com/eddelbuettel/rcppcnpy, https://dirk.eddelbuettel.com/code/rcpp.cnpy.html
 BugReports: https://github.com/eddelbuettel/rcppcnpy/issues
 License: GPL (>= 2)
 Depends: R (>= 3.1.0)
