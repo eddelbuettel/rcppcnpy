@@ -6,3 +6,7 @@ src/*.so
 src/*.dll
 paper/joss/*.html
 *.tar.gz
+GPATH
+GRTAGS
+GTAGS
+paper/runMe.sh
