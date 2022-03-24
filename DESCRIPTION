@@ -17,5 +17,4 @@ License: GPL (>= 2)
 Depends: R (>= 3.1.0)
 Imports: methods, Rcpp
 LinkingTo: Rcpp
-Suggests: reticulate
-VignetteBuilder: knitr
+Suggests: reticulate, pinp
