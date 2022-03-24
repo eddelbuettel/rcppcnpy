@@ -1,9 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 
 rm -f src/*.o src/*.so src/symbols.rds
 
-rm -rf vignettes/auto/ vignettes/*.{log,aux,out,tex,blg,bbl,xwm} \
-   vignettes/pinp.cls vignettes/jss.bst
+rm -rf vignettes/auto/ vignettes/rmd/pinp.cls vignettes/rmd/jss.bst
+
+for e in log aux out tex blg bbl xwm; do
+    rm -f vignettes/rmd/${e}
+done
 
 find . -name \*~ -exec rm {} \;
 
