@@ -1,3 +1,11 @@
+2022-03-24  Dirk Eddelbuettel  <edd@debian.org>
+
+	* DESCRIPTION (Suggests): Removed knitr, rmarkdown and pinp
+
+	* vignettes/*.Rnw: Created to Rnw wrappers for pdf vignettes
+	* vignettes/rmd/*: Moved Rmd and bib files from vignettes/
+	* vignettes/pdf/*: Moved pdf vignettes/ created from Rmd
+
 2021-12-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* README.md: Remove unused continuous integration artifact and badge

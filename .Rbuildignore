@@ -6,4 +6,5 @@ LICENSE
 ^local
 ^.*\.tar\.gz$
 vignettes/UsingReticulate.Rmd.orig
+vignettes/rmd
 ^\.github

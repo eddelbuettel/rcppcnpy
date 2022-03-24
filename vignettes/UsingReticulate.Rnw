@@ -1,0 +1,10 @@
+\documentclass{article}
+\usepackage{pdfpages}
+%\VignetteIndexEntry{RcppCNPy-reticulate}
+%\VignetteKeywords{Python, NumPy, R, data transfer}
+%\VignettePackage{RcppCNPy}
+%\VignetteEncoding{UTF-8}
+
+\begin{document}
+\includepdf[pages=-, fitpaper=true]{pdf/UsingReticulate.pdf}
+\end{document}
