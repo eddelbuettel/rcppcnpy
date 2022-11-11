@@ -8,3 +8,6 @@ LICENSE
 vignettes/UsingReticulate.Rmd.orig
 vignettes/rmd
 ^\.github
+^GPATH
+^GRTAGS
+^GTAGS

@@ -2,6 +2,19 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.11 (2022-03-24)}{
+  \itemize{
+    \item The reticulate vignette has new section on 3d-arrays.
+    \item Added clarification to the manual page that the default types
+    are 32-bit integer and 64-bit double (as we are working with R here).
+    \item Several updates have been made to the CI system; it now runs
+    \href{https://eddelbuettel.github.io/r-ci/}{r-ci}.
+    \item The README.md was updated with some new badges.
+    \item The vignettes are now pre-made to avoid any external
+    dependencies.
+  }
+}
+
 \section{Changes in version 0.2.10 (2018-07-29)}{
   \itemize{
     \item The vignettes have been updated using \sQuote{collapse} mode
