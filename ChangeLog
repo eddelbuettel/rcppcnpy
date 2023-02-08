@@ -1,5 +1,7 @@
 2023-02-08  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION (Version, Date): Roll minor version
+
 	* src/Makevars: No longer set CXX_STD
 	* src/Makevars.win: Idem
 
