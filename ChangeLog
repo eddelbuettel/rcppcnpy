@@ -1,3 +1,7 @@
+2023-02-08  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/CITATION: Update to new format preferred by r-devel
+
 2022-11-10  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .github/workflows/ci.yaml (jobs): Update to actions/checkout@v3
