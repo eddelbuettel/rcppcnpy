@@ -2,6 +2,18 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.12 (2022-11-27)}{
+  \itemize{
+    \item The continuous integration workflow received a trivial update,
+    twice.
+    \item The C++ compilation standard is now implicit per CRAN and R
+    preference.
+    \item The CITATION file format has been updated for the current usage.
+    \item Two print format string issues reported by current R-devel have
+    been addressed.
+  }
+}
+
 \section{Changes in version 0.2.11 (2022-03-24)}{
   \itemize{
     \item The reticulate vignette has new section on 3d-arrays.
