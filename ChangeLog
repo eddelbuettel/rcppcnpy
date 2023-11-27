@@ -1,3 +1,10 @@
+2023-11-27  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/cnpy.h (Rassert): Add format string to Rf_error call
+	* src/cnpy.h (npy_save): Correct printf string for long size
+
+	* .github/workflows/ci.yaml (jobs): Update to actions/checkout@v4
+
 2023-02-08  Dirk Eddelbuettel  <edd@debian.org>
 
 	* DESCRIPTION (Version, Date): Roll minor version

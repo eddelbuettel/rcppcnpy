@@ -46,7 +46,7 @@ T swap_endian(T u) {
 namespace cnpy {
 
     inline void Rassert(bool val, std::string txt) {
-       if ( ! val) Rf_error(txt.c_str());
+        if ( ! val) Rf_error("%s", txt.c_str());
     }
 
     struct NpyArray {
@@ -109,7 +109,7 @@ namespace cnpy {
             Rassert(!fortran_order, "Data in Fortran order");
 
             if(word_size != sizeof(T)) {
-  	        Rf_error("cnpy error: %s has word size %d but npy_save appending data sized %d\n", fname.c_str(), word_size, sizeof(T));
+  	        Rf_error("cnpy error: %s has word size %u but npy_save appending data sized %u\n", fname.c_str(), word_size, static_cast<unsigned int>(sizeof(T)));
 		//assert( word_size == sizeof(T) );
             }
             if(tmp_dims != ndims) {
