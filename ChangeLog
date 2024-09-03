@@ -1,5 +1,9 @@
 2024-09-03  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION (Version, Date): Release 0.2.13
+
+	* DESCRIPTION (Authors@R): Added
+
 	* tests/saveAndLoad.R: Wrap invisisble() around npySave() calls as
 	the function returns NULL under current Rcpp
 	* tests/saveAndLoad.Rout.save: Idem

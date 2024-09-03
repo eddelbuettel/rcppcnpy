@@ -2,7 +2,16 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in version 0.2.12 (2022-11-27)}{
+\section{Changes in version 0.2.13 (2024-09-03)}{
+  \itemize{
+    \item A test script was updated to account for the fact that it now
+    returns a few instances of NULL under current \pkg{Rcpp}.
+    \item Small package maintenance updates have been made to the README and
+    DESCRIPTION files as well as to the continuous integration setup.
+  }
+}
+
+\section{Changes in version 0.2.12 (2023-11-27)}{
   \itemize{
     \item The continuous integration workflow received a trivial update,
     twice.
