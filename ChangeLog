@@ -1,3 +1,9 @@
+2024-09-03  Dirk Eddelbuettel  <edd@debian.org>
+
+	* tests/saveAndLoad.R: Wrap invisisble() around npySave() calls as
+	the function returns NULL under current Rcpp
+	* tests/saveAndLoad.Rout.save: Idem
+
 2024-07-15  Dirk Eddelbuettel  <edd@debian.org>
 
 	* README.md: Switch some URLs from http to https
