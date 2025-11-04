@@ -2,6 +2,16 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 0.2.14 (2024-11-03)}{
+  \itemize{
+    \item The \pkg{rbenchmark} package is now a Suggests: as it appears in
+    \code{demo}
+    \item The continuous integration setup now uses \code{r-ci} with its
+    embedded setup step
+    \item The URL used for the GPL-2 is now the R Project copy
+  }
+}
+
 \section{Changes in version 0.2.13 (2024-09-03)}{
   \itemize{
     \item A test script was updated to account for the fact that it now

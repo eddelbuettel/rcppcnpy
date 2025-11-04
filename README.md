@@ -1,7 +1,7 @@
 ## RcppCNPy: Rcpp bindings for NumPy files
 
 [![CI](https://github.com/eddelbuettel/rcppcnpy/workflows/ci/badge.svg)](https://github.com/eddelbuettel/rcppcnpy/actions?query=workflow%3Aci)
-[![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) 
+[![License](https://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](https://www.r-project.org/Licenses/GPL-2)
 [![CRAN](https://www.r-pkg.org/badges/version/RcppCNPy)](https://cran.r-project.org/package=RcppCNPy) 
 [![Dependencies](https://tinyverse.netlify.app/badge/RcppCNPy)](https://cran.r-project.org/package=RcppCNPy) 
 [![Downloads](https://cranlogs.r-pkg.org/badges/RcppCNPy?color=brightgreen)](https://www.r-pkg.org:443/pkg/RcppCNPy) 
