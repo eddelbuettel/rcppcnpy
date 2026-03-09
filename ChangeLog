@@ -1,5 +1,7 @@
 2026-03-09  Dirk Eddelbuettel  <edd@debian.org>
 
+	* DESCRIPTION (Version, Date): Roll micro version and date
+
 	* src/cnpy.cpp: Switch from Rf_error to Rcpp::stop to take advantage
 	of better error handling and unwinding, add Rcpp/Lightest header
 	* src/cnpyMod.cpp: Idem
