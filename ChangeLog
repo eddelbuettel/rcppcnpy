@@ -1,3 +1,10 @@
+2026-03-09  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/cnpy.cpp: Switch from Rf_error to Rcpp::stop to take advantage
+	of better error handling and unwinding, add Rcpp/Lightest header
+	* src/cnpyMod.cpp: Idem
+	* src/cnpy.h: Idem
+
 2026-01-14  Dirk Eddelbuettel  <edd@debian.org>
 
 	* .github/workflows/ci.yaml: Switch to actions/checkout@v6

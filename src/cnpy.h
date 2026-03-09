@@ -1,11 +1,10 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 
 //Copyright (C) 2011  Carl Rogers
 //Released under MIT License
 //license available in LICENSE file, or at http://www.opensource.org/licenses/mit-license.php
 
 // Changes for RcppCNPy are 
-// Copyright (C) 2012 - 2013  Dirk Eddelbuettel
+// Copyright (C) 2012-2026  Dirk Eddelbuettel
 // and licensed under GNU GPL (>= 2) 
 
 #ifndef LIBCNPY_H_
@@ -24,8 +23,7 @@
 
 #include <cstdint>		// for std::int64_t, needs c++11 switch
 
-#define R_NO_REMAP
-#include <Rinternals.h>      	// for Rf_error
+#include <Rcpp/Lightest>      	// for Rcpp::stop
 
 // cf http://stackoverflow.com/a/4956493/143305
 template <typename T>
@@ -46,7 +44,7 @@ T swap_endian(T u) {
 namespace cnpy {
 
     inline void Rassert(bool val, std::string txt) {
-        if ( ! val) Rf_error("%s", txt.c_str());
+        if ( ! val) Rcpp::stop("%s", txt.c_str());
     }
 
     struct NpyArray {
@@ -109,17 +107,17 @@ namespace cnpy {
             Rassert(!fortran_order, "Data in Fortran order");
 
             if(word_size != sizeof(T)) {
-  	        Rf_error("cnpy error: %s has word size %u but npy_save appending data sized %u\n", fname.c_str(), word_size, static_cast<unsigned int>(sizeof(T)));
+  	        Rcpp::stop("cnpy error: %s has word size %u but npy_save appending data sized %u\n", fname.c_str(), word_size, static_cast<unsigned int>(sizeof(T)));
 		//assert( word_size == sizeof(T) );
             }
             if(tmp_dims != ndims) {
-	        Rf_error("cnpy error: npy_save attempting to append misdimensioned data to %s\n", fname.c_str());
+	        Rcpp::stop("cnpy error: npy_save attempting to append misdimensioned data to %s\n", fname.c_str());
                 //assert(tmp_dims == ndims);
             }
 
             for(unsigned int i = 1; i < ndims; i++) {
                 if(shape[i] != tmp_shape[i]) {
-		    Rf_error("cnpy error: npy_save attempting to append misshaped data to %s\n", fname.c_str());
+		    Rcpp::stop("cnpy error: npy_save attempting to append misshaped data to %s\n", fname.c_str());
                     //assert(shape[i] == tmp_shape[i]);
                 }
             }
@@ -148,7 +146,7 @@ namespace cnpy {
     template<typename T> void npy_gzsave(std::string fname, const T* data, const unsigned int* shape, const unsigned int ndims) {
         gzFile fp = gzopen(fname.c_str(),"wb");
 	if(!fp) {
-	  Rf_error("npy_gzsave: Error! Unable to open file %s!\n",fname.c_str());
+            Rcpp::stop("npy_gzsave: Error! Unable to open file %s!\n",fname.c_str());
 	}
 	std::vector<char> header = create_npy_header(data,shape,ndims);
 	gzwrite(fp, &header[0], sizeof(char) * header.size());

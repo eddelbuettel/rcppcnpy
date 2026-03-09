@@ -1,8 +1,7 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
-//
+
 // cnpyMod.cpp: Rcpp R/C++ modules interface to cnpy
 //
-// Copyright (C) 2012 - 2014  Dirk Eddelbuettel
+// Copyright (C) 2012-2026  Dirk Eddelbuettel
 //
 // This file is part of RcppCNPy.
 //
@@ -19,7 +18,7 @@
 // You should have received a copy of the GNU General Public License
 // along with RcppCNPy.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <Rcpp.h>               // need to include the main Rcpp header file only
+#include <Rcpp/Rcpp>            // need to include the main Rcpp header file only
 #include "cnpy.h"               // (local copy of) header for cnpy library
 
 template <typename T>
@@ -73,7 +72,7 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             ret = Rcpp::IntegerVector(p, p + shape[0]);
         } else {
             arr.destruct();
-            Rf_error("Unsupported type in npyLoad");
+            Rcpp::stop("Unsupported type in npyLoad");
         } 
     } else if (shape.size() == 2) {
         if (type == "numeric") {
@@ -100,11 +99,11 @@ Rcpp::RObject npyLoad(const std::string & filename, const std::string & type, co
             }
         } else {
             arr.destruct();
-            Rf_error("Unsupported type in npyLoad");
+            Rcpp::stop("Unsupported type in npyLoad");
         }
     } else {
         arr.destruct();
-        Rf_error("Unsupported dimension in npyLoad");
+        Rcpp::stop("Unsupported dimension in npyLoad");
     }
     arr.destruct();
     return ret;
@@ -146,7 +145,7 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode, bool check
                 cnpy::npy_save<double>(filename, mat.begin(), &(shape[0]), 2, mode);
             }
         } else {
-            Rf_error("Unsupported matrix type\n");
+            Rcpp::stop("Unsupported matrix type\n");
         }
     } else if (::Rf_isVector(x)) {
         if (::Rf_isInteger(x)) {
@@ -179,10 +178,10 @@ void npySave(std::string filename, Rcpp::RObject x, std::string mode, bool check
                 cnpy::npy_save<double>(filename, vec.begin(), &(shape[0]), 1, mode);
             }
         } else {
-            Rf_error("Unsupported vector type\n");
+            Rcpp::stop("Unsupported vector type\n");
         }
     } else {
-        Rf_error("Unsupported type\n");
+        Rcpp::stop("Unsupported type\n");
     }
 }
 

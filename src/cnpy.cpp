@@ -1,21 +1,20 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 
 //Copyright (C) 2011  Carl Rogers
 //Released under MIT License
 //license available in LICENSE file, or at http://www.opensource.org/licenses/mit-license.php
 
 // Changes for RcppCNPy are 
-// Copyright (C) 2012 - 2016  Dirk Eddelbuettel
+// Copyright (C) 2012-2026  Dirk Eddelbuettel
 // and licensed under GNU GPL (>= 2) 
 
-#include"cnpy.h"
-#include<complex>
-#include<cstdlib>
-#include<algorithm>
-#include<cstring>
-#include<iomanip>
+#include "cnpy.h"
+#include <complex>
+#include <cstdlib>
+#include <algorithm>
+#include <cstring>
+#include <iomanip>
 
-#include <Rconfig.h>            // use R configuration test result for endianness
+#include <Rcpp/Lightest>            // use R configuration test result for endianness
 
 char cnpy::map_type(const std::type_info& t)
 {
@@ -63,7 +62,7 @@ void cnpy::parse_npy_header(FILE* fp, unsigned int& word_size, unsigned int*& sh
     char buffer[256];
     size_t res = fread(buffer,sizeof(char),11,fp);       
     if (res != 11)
-        Rf_error("cnpy::parse_npy_header read discprepancy");
+        Rcpp::stop("cnpy::parse_npy_header read discprepancy");
     std::string header = fgets(buffer,256,fp);
     Rassert(header[header.size()-1] == '\n', "header ended improperly");
 
@@ -107,7 +106,7 @@ void cnpy::parse_zip_footer(FILE* fp, unsigned short& nrecs, unsigned int& globa
     fseek(fp,-22,SEEK_END);
     size_t res = fread(&footer[0],sizeof(char),22,fp);
     if (res != 22)
-       Rf_error("cnpy::parse_zip_footer read discprepancy");
+       Rcpp::stop("cnpy::parse_zip_footer read discprepancy");
 
     unsigned short disk_no, disk_start, nrecs_on_disk, comment_len;
     disk_no = *(unsigned short*) &footer[4];
@@ -140,7 +139,7 @@ cnpy::NpyArray load_the_npy_file(FILE* fp) {
     arr.fortran_order = fortran_order;
     size_t nread = fread(arr.data,word_size,size,fp);
     if (nread != size)
-        Rf_error("cnpy::load_the_npy_file read size discrepancy");
+        Rcpp::stop("cnpy::load_the_npy_file read size discrepancy");
     return arr;
 }
 
@@ -160,14 +159,14 @@ cnpy::NpyArray gzload_the_npy_file(gzFile fp) {
     arr.fortran_order = fortran_order;
     size_t nread = gzread(fp,arr.data,word_size*size);
     if (nread != size*word_size)
-        Rf_error("cnpy::gzload_the_npy_file read size discrepancy");
+        Rcpp::stop("cnpy::gzload_the_npy_file read size discrepancy");
     return arr;
 }
 
 cnpy::npz_t cnpy::npz_load(std::string fname) {
     FILE* fp = fopen(fname.c_str(),"rb");
 
-    if(!fp) Rf_error("npz_load: Error! Unable to open file %s!\n",fname.c_str());
+    if(!fp) Rcpp::stop("npz_load: Error! Unable to open file %s!\n",fname.c_str());
     Rassert(fp, "fp error");
 
     cnpy::npz_t arrays;  
@@ -176,7 +175,7 @@ cnpy::npz_t cnpy::npz_load(std::string fname) {
         std::vector<char> local_header(30);
         size_t headerres = fread(&local_header[0],sizeof(char),30,fp);
         if (headerres != 30)
-	    Rf_error("cnpy::npz_load read discprepancy on header");
+	    Rcpp::stop("cnpy::npz_load read discprepancy on header");
 
         //if we've reached the global header, stop reading
         if(local_header[2] != 0x03 || local_header[3] != 0x04) break;
@@ -186,7 +185,7 @@ cnpy::npz_t cnpy::npz_load(std::string fname) {
         std::string varname(name_len,' ');
         size_t vname_res = fread(&varname[0],sizeof(char),name_len,fp);
         if (vname_res != name_len) 
-            Rf_error("cnpy::npz_load read discprepancy on name_len");
+            Rcpp::stop("cnpy::npz_load read discprepancy on name_len");
 
         //erase the lagging .npy        
         varname.erase(varname.end()-4,varname.end());
@@ -197,7 +196,7 @@ cnpy::npz_t cnpy::npz_load(std::string fname) {
             std::vector<char> buff(extra_field_len);
             size_t efield_res = fread(&buff[0],sizeof(char),extra_field_len,fp);
             if (efield_res != extra_field_len) 
-                Rf_error("cnpy::npz_load read discprepancy on extra_field_len");
+                Rcpp::stop("cnpy::npz_load read discprepancy on extra_field_len");
         }
 
         arrays[varname] = load_the_npy_file(fp);
@@ -211,14 +210,14 @@ cnpy::NpyArray cnpy::npz_load(std::string fname, std::string varname) {
     FILE* fp = fopen(fname.c_str(),"rb");
 
     if(!fp) {
-        Rf_error("npz_load: Error! Unable to open file %s!\n",fname.c_str());
+        Rcpp::stop("npz_load: Error! Unable to open file %s!\n",fname.c_str());
     }       
 
     while(1) {
         std::vector<char> local_header(30);
         size_t header_res = fread(&local_header[0],sizeof(char),30,fp);
         if (header_res != 30)
-            Rf_error("cnpy::npz_load read discprepancy on header");
+            Rcpp::stop("cnpy::npz_load read discprepancy on header");
 
         //if we've reached the global header, stop reading
         if(local_header[2] != 0x03 || local_header[3] != 0x04) break;
@@ -228,7 +227,7 @@ cnpy::NpyArray cnpy::npz_load(std::string fname, std::string varname) {
         std::string vname(name_len,' ');
         size_t vname_res = fread(&vname[0],sizeof(char),name_len,fp);      
         if (vname_res != name_len)
-	    Rf_error("cnpy::npz_load read discprepancy on name_len");      
+	    Rcpp::stop("cnpy::npz_load read discprepancy on name_len");
         vname.erase(vname.end()-4,vname.end()); //erase the lagging .npy
 
         //read in the extra field
@@ -248,7 +247,7 @@ cnpy::NpyArray cnpy::npz_load(std::string fname, std::string varname) {
     }
 
     fclose(fp);
-    Rf_error("npz_load: Error! Variable name %s not found in %s!\n",varname.c_str(),fname.c_str());
+    Rcpp::stop("npz_load: Error! Variable name %s not found in %s!\n",varname.c_str(),fname.c_str());
     // never reached -- not satisfying -Wall -pedantic 
     cnpy::NpyArray unused;
     unused.word_size = 0;
@@ -261,7 +260,7 @@ cnpy::NpyArray cnpy::npy_load(std::string fname) {
     FILE* fp = fopen(fname.c_str(), "rb");
 
     if(!fp) {
-        Rf_error("npy_load: Error! Unable to open file %s!\n",fname.c_str());
+        Rcpp::stop("npy_load: Error! Unable to open file %s!\n",fname.c_str());
     }
 
     NpyArray arr = load_the_npy_file(fp);
@@ -273,7 +272,7 @@ cnpy::NpyArray cnpy::npy_load(std::string fname) {
 cnpy::NpyArray cnpy::npy_gzload(std::string fname) {
     gzFile fp = gzopen(fname.c_str(), "rb");
     if(!fp) {
-        Rf_error("npy_gzload: Error! Unable to open file %s!\n",fname.c_str());
+        Rcpp::stop("npy_gzload: Error! Unable to open file %s!\n",fname.c_str());
     }
     NpyArray arr = gzload_the_npy_file(fp);
     gzclose(fp);
@@ -284,7 +283,7 @@ void cnpy::parse_npy_gzheader(gzFile fp, unsigned int& word_size, unsigned int*&
     char buffer[256];
     size_t res = gzread(fp,buffer,sizeof(char)*11);
     if (res != 11)
-        Rf_error("cnpy::parse_npy_gzheader read discprepancy");
+        Rcpp::stop("cnpy::parse_npy_gzheader read discprepancy");
     std::string header = gzgets(fp, buffer,256);
     Rassert(header[header.size()-1] == '\n', "header ended improperly");
 
