@@ -1,8 +1,8 @@
 Package: RcppCNPy
 Type: Package
 Title: Read-Write Support for 'NumPy' Files via 'Rcpp'
-Version: 0.2.14.1
-Date: 2026-03-09
+Version: 0.2.15
+Date: 2026-03-13
 Authors@R: c(person("Dirk", "Eddelbuettel", role = c("aut", "cre"), email = "edd@debian.org",
                     comment = c(ORCID = "0000-0001-6419-907X")),
              person("Wush", "Wu", role="aut", comment = c(ORCID = "0000-0001-5180-0567")),

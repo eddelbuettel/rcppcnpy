@@ -2,7 +2,14 @@
 \title{News for Package \pkg{RcppCNPy}}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
-\section{Changes in version 0.2.14 (2024-11-03)}{
+\section{Changes in version 0.2.15 (2026-03-13)}{
+  \itemize{
+    \item Replaced Rf_error with Rcpp::stop in three files
+    \item Maintenance updates to continuous integration
+  }
+}
+
+\section{Changes in version 0.2.14 (2025-11-03)}{
   \itemize{
     \item The \pkg{rbenchmark} package is now a Suggests: as it appears in
     \code{demo}
